@@ -61,7 +61,7 @@
                                                            </span>
                                                            <h2 class="StepTitle">Manage User</h2>
                                                            <p class="links cl-effect-1">
-                                                               <a href="operateeUser.php">
+                                                               <a href="operateUser.php">
                                                                     <?php 
                                                                          $qUser=mysqli_query($deal,"SELECT * FROM users ");
                                                                          $numUser=mysqli_num_rows($qUser);
