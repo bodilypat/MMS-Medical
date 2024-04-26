@@ -83,7 +83,7 @@
 										<td>
 											<a href="editPatient.php?editid=<?php echo $recordset['ID'];?>">
 											<i class="fa fa-edit"></i></a> || 
-											<a href="dataPatient.php?infoid=<?php echo $recordset['ID'];?>">
+											<a href="dataPatient.php?did=<?php echo $recordset['ID'];?>">
 												<i class="fa fa-eye"></i></a>
 										</td>
 									</tr>
