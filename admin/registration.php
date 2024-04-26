@@ -1,16 +1,16 @@
 <?php
-	include_once('include/config.php');
+	include_once('../define/config.php');
 	if(isset($_POST['submit']))
 	{
-		$fullName=$_POST['fullname'];
+		$userName=$_POST['fullname'];
 		$userAdd=$_POST['address'];
 		$userCity=$_POST['city'];
-		$userGender=$_POST['gender'];
+		$userGen=$_POST['gender'];
 		$userEmail=$_POST['email'];
 		$userPass=md5($_POST['password']);
 
 		$qUser=mysql_query("INSERT INTO users(fullname,address,city,gender,email,password) 
-		                    VALUES('$fullName','$userAdd','$userCity','$userGender','$userEmail','$pass')");
+		                    VALUES('$userName','$userAdd','$userCity','$userGen','$userEmail','$userPass')");
 		if($qUser)
 		{
 			echo "<script>alert('Successfully Registered. You can login now');</script>";
@@ -21,7 +21,7 @@
 <html lang="en">
 	<head>
 		<title>User Registration</title>
-		<!-- CSS -->
+		<!-- custom CSS -->
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
@@ -36,9 +36,7 @@
 					<form name="registration" id="registration"  method="post">
 						<fieldset>
 							<legend>Sign Up</legend>
-							<p>
-								Enter your personal details below:
-							</p>
+							<p>Enter your personal details below:</p>
 							<div class="form-group">
 								<input name="fullname" type="text" class="form-control"  placeholder="Full Name" required>
 							</div>
@@ -51,10 +49,10 @@
 							<div class="form-group">
 								<label class="block">Gender</label>
 								<div class="clip-radio radio-primary">
-									<input type="radio" id="rg-female" name="gender" value="female" >
-									<label for="rg-female">Female</label>
-									<input type="radio" id="rg-male" name="gender" value="male">
-									<label for="rg-male">Male</label>
+									<input id="female" name="gender" type="radio" value="female" >
+									<label for="Female">Female</label>
+									<input id="male" name="gender" type="radio" value="male">
+									<label for="Male">Male</label>
 								</div>
 							</div>
 							<p>Enter your account details below:</p>
@@ -103,8 +101,8 @@
 			</div>
 		</div>
 		<!-- javascript -->
-		<script src="assets/js/main.js"></script>
-		<script src="assets/js/login.js"></script>
+		<script src="assign/js/main.js"></script>
+		<script src="assign/js/login.js"></script>
 		<script>
 			jQuery(document).ready(function() {
 				Main.init();
@@ -115,11 +113,11 @@
 		function userAvailability() {
 			$("#loaderIcon").show();
 			jQuery.ajax({
-			url: "check_availability.php",
+			url: "checkAvailability.php",
 			data:'email='+$("#email").val(),
 			type: "POST",
 			success:function(data){
-				$("#user-availability-status1").html(data);
+				$("#user-availability-status").html(data);
 				$("#loaderIcon").hide();
 				},
 				error:function (){}
