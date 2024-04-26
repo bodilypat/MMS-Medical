@@ -1,8 +1,7 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	include('include/config.php');
-	include('include/checklogin.php');
+	include('../define/config.php');
+	include('../define/checklogin.php');
 	check_login();
 ?>
 <!DOCTYPE html>
@@ -10,17 +9,17 @@
 	<head>
 		<title>User  | Dashboard</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">		
-			<?php include('include/header.php');?>					
+			<?php include('../define/header.php');?>					
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 					<!-- section: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -42,11 +41,7 @@
 											<i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> 
 										</span>
 										<h2 class="StepTitle">My Profile</h2>											
-										<p class="links cl-effect-1">
-											<a href="edit-profile.php">
-												Update Profile
-											</a>
-										</p>
+										<p class="links cl-effect-1"><a href="editProfile.php">Update Profile</a></p>
 									</div>
 								</div>
 							</div>
@@ -58,11 +53,7 @@
 										      <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> 
 										</span>
 										<h2 class="StepTitle">My Appointments</h2>											
-											<p class="cl-effect-1">
-												<a href="appointment-history.php">
-													View Appointment History
-												</a>
-											</p>
+											<p class="cl-effect-1"><a href="appointmentHistory.php">View Appointment History</a></p>
 									</div>
 								</div>
 							</div>
@@ -73,12 +64,8 @@
 											<i class="fa fa-square fa-stack-2x text-primary"></i> 
 											<i class="fa fa-terminal fa-stack-1x fa-inverse"></i> 
 										 </span>
-										 <h2 class="StepTitle"> Book My Appointment</h2>												
-											<p class="links cl-effect-1">
-												<a href="book-appointment.php">
-													Book Appointment
-												</a>
-											</p>
+										 <h2 class="StepTitle">Book My Appointment</h2>												
+											<p class="links cl-effect-1"><a href="bookAppointment.php">Book Appointment</a></p>
 									</div>
 								</div>
 							</div>
@@ -88,11 +75,11 @@
 		  </div>
 	</div>
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>		
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>		
 	<!-- JAVASCRIPTS -->
-	<script src="assign/js/main.js"></script>	
-	<script src="assign/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>	
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
