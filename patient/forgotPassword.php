@@ -1,7 +1,7 @@
 	<?php
 	session_start();
 	error_reporting(0);
-	include("include/config.php");
+	include("../define/config.php");
 	//Checking Details for reset password
 	if(isset($_POST['submit']))
 	{
