@@ -7,11 +7,12 @@
 			$contactno=$_POST['contactno'];
 			$email=$_POST['email'];
 			$qDoc=mysqli_query($deal,"SELECT id FROM  doctors WHERE contactno='$contactno' and docEmail='$email'");
-			$result=mysqli_num_rows($qDoc);
-		if($result >0){
+			$countRows=mysqli_num_rows($qDoc);
+
+		if($countRows >0){
 			$_SESSION['cnumber']=$contactno;
 			$_SESSION['email']=$email;
-			header('location:reset-password.php');
+			header('location:resetPassword.php');
 		} else {
 			echo "<script>alert('Invalid details. Please try with valid details');</script>";
 			echo "<script>window.location.href ='forgotPassword.php'</script>";
@@ -23,9 +24,9 @@
 	<head>
 		<title>Password Recovery</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body class="login">
 	<div class="row">
@@ -54,7 +55,7 @@
 								</button>
 							</div>
 							<div class="new-account">Already have an account? 
-								<a href="index.php">Log-in</a>
+								<a href="../index.php">Log-in</a>
 							</div>
 						</fieldset>
 					</form>
@@ -65,8 +66,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/login.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/login.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
