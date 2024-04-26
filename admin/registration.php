@@ -22,9 +22,9 @@
 	<head>
 		<title>User Registration</title>
 		<!-- custom CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="assign/css/styles.css">
+		<link rel="stylesheet" href="assign/css/plugins.css">
+		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body class="login">
 	<!-- start: REGISTRATION -->
