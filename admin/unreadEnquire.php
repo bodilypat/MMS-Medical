@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
@@ -11,17 +11,17 @@
 	<head>
 		<title>Admin | Manage Unread Queries</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">				
-			<?php include('include/header.php');?>							
+			<?php include('../define/header.php');?>							
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 					<!-- section: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -51,9 +51,9 @@
 									</thead>
 									<tbody>
 									<?php
-										$qCon=mysqli_query($con,"SELECT * FROM tblcontactus WHERE IsRead is null");
+										$qCon=mysqli_query($con,"SELECT * FROM contactus WHERE IsRead is null");
 										$count=1;
-										while($resultseet=mysqli_fetch_array($qCon))
+										while($resultset=mysqli_fetch_array($qCon))
 										{
 									?>
 
@@ -67,7 +67,7 @@
 												<td >
 													<div class="visible-md visible-lg hidden-sm hidden-xs">
 														 <a href="enquireDetails.php?enid=<?php echo $resultset['id'];?>" 
-													        class="btn btn-transparent btn-lg" title="View Details">
+													        class="btn btn-transparent btn-lg" title=" Enquire Details">
 														    <i class="fa fa-file"></i>
 														</a>
 													</div>
@@ -85,11 +85,11 @@
 		</div>
 	</div>
 	<!-- section: FOOTER -->
-	<?php include('include/footer.php');?>		
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>		
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPT -->		
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
