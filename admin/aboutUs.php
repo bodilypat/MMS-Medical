@@ -27,9 +27,9 @@
 	<head>
 		<title>Admin | About Us </title>
 		<!-- custom CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 </head>
 <body>
 	<div id="app">		
@@ -85,8 +85,8 @@
 		</div>
 	</div>	
 	<!-- JAVASCRIPT -->	
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
