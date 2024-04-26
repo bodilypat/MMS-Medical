@@ -1,7 +1,7 @@
 	<?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
@@ -64,9 +64,9 @@
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="app-content">				
-			<?php include('include/header.php');?>						
+			<?php include('../define/header.php');?>						
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
 				<!-- section: PAGE TITLE -->
@@ -94,12 +94,13 @@
 															<select name="DoctorSpecial" class="form-control" required="true">
 																<option value="">Select Specialization</option>
 																<?php 
+																	/* query object from DB */
 																      $qDS=mysqli_query($deal,"SELECT * FROM doctorSpecialized");
-																	  while($recordset=mysqli_fetch_array($qDS))
+																	  while($result=mysqli_fetch_array($qDS))
 																	  {
 																?>
-																<option value="<?php echo htmlentities($recordset['specilization']);?>">
-																	<?php echo htmlentities($recordset['specilization']);?>
+																<option value="<?php echo htmlentities($result['specilization']);?>">
+																	<?php echo htmlentities($result['specilization']);?>
 																</option>
 																<?php } ?>																
 															</select>
@@ -112,7 +113,7 @@
                                                         <div class="form-group">
 															<label for="Address">Doctor Clinic Address</label>
 															<textarea name="clinicaddress" class="form-control"  
-															   	placeholder="Doctor Clinic Address" required="true">
+															   	placeholder="Clinic Address" required="true">
 															</textarea>
 														</div>
 														<div class="form-group">
@@ -121,7 +122,7 @@
 																   placeholder="Doctor Consultancy Fees" required="true">
 														</div>	
 														<div class="form-group">
-															<label for="ContactNo">Contact no</label>
+															<label for="Contactno">Contact no</label>
 															<input name="doctorcontact" type="text"  class="form-control"  
 																   placeholder="Doctor Contact no" required="true">
 														</div>
@@ -142,7 +143,7 @@
 															<input name="cfpass" type="password"  class="form-control"  
 																   placeholder="Confirm Password" required="required">
 														</div>																																										
-														<button type="submit" name="submit" id="submit" class="btn btn-o btn-primary">
+														<button id="submit" type="submit" name="submit"  class="btn btn-o btn-primary">
 															Submit
 														</button>
 													</form>
