@@ -1,14 +1,14 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 		} else{
 		if(isset($_POST['submit']))
 		{
 		
-			$infoID=$_GET['infoid'];
+			$patID=$_GET['pid'];
 			$bloodPass=$_POST['bloodpressure'];
 			$bloodSu=$_POST['bloodssuger'];
 			$Weight=$_POST['weight'];
@@ -32,9 +32,9 @@
 	<head>
 		<title>Doctor | Manage Patients</title>
 		<!-- css -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
@@ -59,10 +59,10 @@
 							<div class="col-md-12">
 								<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Patients</span></h5>
 								<?php
-                               		$infoID=$_GET['infoid'];
+                               		$patID=$_GET['infoid'];
                                		$qPat=mysqli_query($deal,"SELECT * FROM patients WHERE ID='$infoID'");
 									$count=1;
-									while ($infopat=mysqli_fetch_array($qPat)) {
+									while ($resultset=mysqli_fetch_array($qPat)) {
                                 ?>
 								<table border="1" class="table table-bordered">
  									<tr align="center">
@@ -71,32 +71,32 @@
 
 									<tr>
 										<th scope>Patient Name</th>
-											<td><?php  echo $infopat['PatientName'];?></td>
+											<td><?php  echo $resultset['PatientName'];?></td>
 										<th scope>Patient Email</th>
-										<td><?php  echo $infopat['PatientEmail'];?></td>
+										<td><?php  echo $resultset['PatientEmail'];?></td>
 									</tr>
 									<tr>
 										<th scope>Patient Mobile Number</th>
-											<td><?php  echo $infopat['PatientContno'];?></td>
+											<td><?php  echo $resultset['PatientContno'];?></td>
 										<th>Patient Address</th>
-											<td><?php  echo $infopat['PatientAdd'];?></td>
+											<td><?php  echo $resultset['PatientAdd'];?></td>
 									</tr>
 									<tr>
 										<th>Patient Gender</th>
-											<td><?php  echo $infopat['PatientGender'];?></td>
+											<td><?php  echo $resultset['PatientGender'];?></td>
 										<th>Patient Age</th>
-											<td><?php  echo $infopat['PatientAge'];?></td>
+											<td><?php  echo $resultset['PatientAge'];?></td>
 									</tr>
   									<tr>    
 										<th>Patient Medical History(if any)</th>
-											<td><?php  echo $infopat['PatientMedhis'];?></td>
+											<td><?php  echo $resultset['PatientMedhis'];?></td>
 										<th>Patient Reg Date</th>
-											<td><?php  echo $infopat['CreationDate'];?></td>
+											<td><?php  echo $resultset['CreationDate'];?></td>
 								    </tr>
                             		<?php }?>
                                 </table>
 								<?php  
-									 $qMhis=mysqli_query($deal,"SELECT * FROM medicalhistory  WHERE PatientID='$infoID'");
+									 $qMhis=mysqli_query($deal,"SELECT * FROM medicalhistory  WHERE PatientID='$patID'");
  								?>
 								<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
   									<tr align="center">
@@ -133,11 +133,11 @@
 		</div>
 	</div>
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
