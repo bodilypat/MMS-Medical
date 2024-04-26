@@ -162,11 +162,11 @@
 		</div>
 	</div>		
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>			
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>			
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
