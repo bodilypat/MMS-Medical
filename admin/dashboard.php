@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 	 header('location:logout.php');
 	  } else{
@@ -10,7 +10,7 @@
 <html lang="en">
 	<head>
 		<title>Admin  | Dashboard</title>
-		
+		<!-- css custom -->
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
@@ -19,9 +19,9 @@
 	</head>
 <body>
 	<div id="application">		
-    <?php include('include/sidebar.php');?>
+    <?php include('../define/sidebar.php');?>
 	    <div class="application-content">				
-		    <?php include('include/header.php');?>						
+		    <?php include('../define/header.php');?>						
 			<div class="main-content" >
 					<div class="wrap-content container" id="container">
 						<!-- PAGE TITLE -->
@@ -31,12 +31,8 @@
 									<h1 class="mainTitle">Admin | Dashboard</h1>
 								</div>
 								<ol class="breadcrumb">
-									<li>
-										<span>Admin</span>
-									</li>
-									<li class="active">
-										<span>Dashboard</span>
-									</li>
+									<li><span>Admin</span></li>
+									<li class="active"><span>Dashboard</span></li>
 								</ol>
 							</div>
 						</section>
@@ -54,11 +50,12 @@
 											<h2 class="StepTitle">Manage Users</h2>											
 											<p class="links cl-effect-1">
 												<a href="ManageUsers.php">
+													<!-- query users -->
 												    <?php $qUser = mysqli_query($deal,"SELECT * FROM users ");
-													      $nrUer = mysqli_num_rows($qUser);
+													      $userCount = mysqli_num_rows($qUser);
 													 {
 											    	?>
-											        Total Users :<?php echo htmlentities($nrUser);  } ?>		
+											        Total Users :<?php echo htmlentities($userCount);  } ?>		
 												</a>
 											</p>
 										</div>
@@ -71,11 +68,12 @@
 											<h2 class="StepTitle">Manage Doctors</h2>										
 											<p class="cl-effect-1">
 												<a href="ManageDoctors.php">
+													<!-- query Doctor -->
 													<?php $qDoc = mysqli_query($deal,"SELECT * FROM doctors ");
-													  $nrDoc = mysqli_num_rows($qDoc);
+													   $docCount = mysqli_num_rows($qDoc);
 													  {
 													?>
-													Total Doctors :<?php echo htmlentities($nrDoc);  } ?>		
+													Total Doctors :<?php echo htmlentities($docCount);  } ?>		
 												</a>												
 											</p>
 										</div>
@@ -89,11 +87,12 @@
 											<p class="links cl-effect-1">
 												<a href="bookAppointment.php">
 													<a href="appointmentHistory.php">
+														<!-- query appointment -->
 												       <?php $qApp= mysqli_query($deal,"SELECT * FROM appointment");
-                                                             $nrApp = mysqli_num_rows($qApp);
+                                                             $appCount = mysqli_num_rows($qApp);
                                                              {
                                                        ?>
-											                Total Appointments :<?php echo htmlentities($nrApp);  } ?>	
+											                Total Appointments :<?php echo htmlentities($appCount);  } ?>	
 												    </a>
 												</a>
 											</p>
@@ -110,11 +109,12 @@
 											<h2 class="StepTitle">Manage Patients</h2>			
 											<p class="links cl-effect-1">
 												<a href="managePatient.php">
+													<!-- query Patient -->
 												   <?php $qPat = mysqli_query($deal,"SELECT * FROM patients ");
-										                 $nrPat = mysqli_num_rows($qPat);
+										                 $patCount = mysqli_num_rows($qPat);
 														{
 													?>
-														Total Patients :<?php echo htmlentities($nrPat); } ?>		
+														Total Patients :<?php echo htmlentities($patCount); } ?>		
 												</a>
 											</p>
 										</div>
@@ -131,11 +131,12 @@
 											<p class="links cl-effect-1">
 												<a href="bookAppointment.php">
 													<a href="unreadQueries.php">
-														<?php 
+														<!-- query Contact -->
+														<?php 														
 															$qCon= mysqli_query($deal,"SELECT * FROM contactus where  IsRead is null");
-															$nrCon = mysqli_num_rows($qCon);
+															$conCount = mysqli_num_rows($qCon);
 													?>
-															Total New Queries :<?php echo htmlentities($nrCon);   ?>	
+															Total New Queries :<?php echo htmlentities($conCount);   ?>	
 													</a>
 												</a>
 											</p>
