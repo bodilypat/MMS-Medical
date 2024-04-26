@@ -1,13 +1,13 @@
 	<?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
-	include('include/checklogin.php');
+	include('../define/config.php');
+	include('../define/checklogin.php');
 		check_login();
 		if(isset($_POST['submit']))
 		{
-			$uEmail=$_POST['useremail'];
-			$qUser=mysqli_query($deal,"UPDATE users SET email='$uEmail' WHERE id='".$_SESSION['id']."'");
+			$userEmail=$_POST['useremail'];
+			$qUser=mysqli_query($deal,"UPDATE users SET email='$userEmail' WHERE id='".$_SESSION['id']."'");
 			if($qUser)
 			{
 				$msg="Your email updated Successfully";
@@ -20,16 +20,16 @@
 	<head>
 		<title>User | Edit Profile</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 
 </head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">				
-			<?php include('include/header.php');?>						
+			<?php include('../define/header.php');?>						
 			<div class="main-content" >
 				<div id="container" class="wrap-content container" >
 					<!-- section : PAGE TITLE -->
@@ -57,7 +57,8 @@
 												<form name="registration" id="updatemail"  method="post">
 													<div class="form-group">
 														<label for="UserEmail">User Email</label>
-														<input name="useremail" id="useremail" type="email" class="form-control"  onBlur="userAvailability()"  placeholder="Email" required>
+														<input name="useremail" id="useremail" type="email" class="form-control"  
+															   onBlur="userAvailability()"  placeholder="Email" required>
 									 					<span id="user-availability-status" style="font-size:12px;"></span>
 													</div>					
 													<button id="submit" name="submit"  type="submit" class="btn btn-o btn-primary">
@@ -76,10 +77,11 @@
 	            </div>						
 	      </div>
 	</div>
-	<?php include('include/footer.php');?>		
-	<?php include('include/setting.php');?>
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/form-elements.js"></script>
+	<?php include('../define/footer.php');?>		
+	<?php include('../define/setting.php');?>
+	<!-- javascript -->
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
