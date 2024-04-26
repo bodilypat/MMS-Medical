@@ -1,10 +1,10 @@
-<?php
-session_start();
-error_reporting(0);
-include('include/config.php');
-if(strlen($_SESSION['id']==0)) {
- header('location:logout.php');
-  } else{
+	<?php
+	session_start();
+	error_reporting(0);
+	include('../define/config.php');
+	if(strlen($_SESSION['id']==0)) {
+	header('location:logout.php');
+	} else{
 
 ?>
 <!DOCTYPE html>
@@ -12,15 +12,15 @@ if(strlen($_SESSION['id']==0)) {
 	<head>
 		<title>Admin | Information Patients</title>
 	    <!-- css -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">
-			<?php include('include/header.php');?>
+			<?php include('../define/header.php');?>
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
 						<!-- PAGE TITLE -->
@@ -53,18 +53,18 @@ if(strlen($_SESSION['id']==0)) {
 									<?php
 										$qPat=mysqli_query($deal,"SELECT * FROM patients");
 										$count=1;
-										while($infopat=mysqli_fetch_array($qPat))
+										while($resultset=mysqli_fetch_array($qPat))
 										{
 									?>
 										<tr>
 											<td class="center"><?php echo $count;?>.</td>
-											<td class="hidden-xs"><?php echo $infopat['PatientName'];?></td>
-											<td><?php echo $infopat['PatientContno'];?></td>
-											<td><?php echo $infopat['PatientGender'];?></td>
-											<td><?php echo $infopat['CreationDate'];?></td>
-											<td><?php echo $infopat['UpdationDate'];?></td>
+											<td class="hidden-xs"><?php echo $resultset['PatientName'];?></td>
+											<td><?php echo $resultset['PatientContno'];?></td>
+											<td><?php echo $resultset['PatientGender'];?></td>
+											<td><?php echo $resultset['CreationDate'];?></td>
+											<td><?php echo $resultset['UpdationDate'];?></td>
 											<td>
-												<a href="infoPatient.php?infoid=<?php echo $infopat['ID'];?>">
+												<a href="infoPatient.php?pid=<?php echo $result['ID'];?>">
                                                    <i class="fa fa-eye"></i>
                                                 </a>
 											</td>
@@ -80,11 +80,11 @@ if(strlen($_SESSION['id']==0)) {
 		</div>
 	</div>
 	<!--FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->	
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
