@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 	header('location:logout.php');
 	} else{
@@ -18,17 +18,17 @@
 	<head>
 		<title>Admin | Manage Users</title>
 		<!-- custom css -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
-	<div id="app">		
-	<?php include('include/sidebar.php');?>
-		<div class="app-content">				
-			<?php include('include/header.php');?>										
+	<div id="application">		
+	<?php include('../define/sidebar.php');?>
+		<div class="appplication-content">				
+			<?php include('../define/header.php');?>										
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 				<!-- start: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -101,11 +101,11 @@
 		</div>						
 	</div>				
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- javascript -->
-	<script src="assets/js/main.js"></script>		
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>		
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 			Main.init();
