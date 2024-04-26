@@ -17,9 +17,9 @@
 	</head>
 <body>
 	<div id="app">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="app-content">				
-			<?php include('include/header.php');?>
+			<?php include('../define/header.php');?>
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
 					<!-- section : PAGE TITLE -->
@@ -54,20 +54,21 @@
 									</thead>
 									<tbody>
 										<?php
+										/* query userlog */
 											$qUl=mysqli_query($deal,"SELECT * FROM userlog ");
 											$count=1;
-											while($recordset=mysqli_fetch_array($qUl))
+											while($resultset=mysqli_fetch_array($qUl))
 											{
 										?>
 										<tr>
 											<td class="center"><?php echo $count;?>.</td>
-											<td class="hidden-xs"><?php echo $recordset['uid'];?></td>
-											<td class="hidden-xs"><?php echo $recordset['username'];?></td>
-											<td><?php echo $recordset['userip'];?></td>
-											<td><?php echo $recordset['loginTime'];?></td>
-											<td><?php echo $recordset['logout'];?></td>												
+											<td class="hidden-xs"><?php echo $resultset['uid'];?></td>
+											<td class="hidden-xs"><?php echo $resultset['username'];?></td>
+											<td><?php echo $resultset['userip'];?></td>
+											<td><?php echo $resultset['loginTime'];?></td>
+											<td><?php echo $resultset['logout'];?></td>												
 											<td>
-												<?php if($recordset['status']==1)
+												<?php if($resultset['status']==1)
 												{
 													echo "Success";
 												}
