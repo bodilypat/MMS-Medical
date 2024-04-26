@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) 
 	{
 		header('location:logout.php');
@@ -13,18 +13,18 @@
 	<head>
 		<title>Doctor  | Dashboard</title>
 		<!-- CSS -->		
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 			<div class="application-content">				
-				<?php include('include/header.php');?>										
+				<?php include('../define/header.php');?>										
 				<div class="main-content" >
-					<div class="wrap-content container" id="container">
+					<div id="container" class="wrap-content container" >
 						<!-- section: PAGE TITLE -->
 						<section id="page-title">
 							<div class="row">
@@ -41,9 +41,14 @@
 								<div class="col-sm-4">
 									<div class="panel panel-white no-radius text-center">
 										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> </span>
+											<span class="fa-stack fa-2x"> 
+												<i class="fa fa-square fa-stack-2x text-primary"></i> 
+												<i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> 
+											</span>
 											<h2 class="StepTitle">My Profile</h2>											
-											<p class="links cl-effect-1"><a href="editProfile.php">Update Profile</a></p>
+											<p class="links cl-effect-1">
+												<a href="editProfile.php">Update Profile</a>
+											</p>
 										</div>
 									</div>
 								</div>
@@ -66,10 +71,11 @@
 				</div>
 			</div>
 			<!--FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>	
-	<script src="assign/js/main.js"></script>		
-	<script src="assign/js/form-elements.js"></script>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>	
+	<!-- JAVASCRIPT -->
+	<script src="../assign/js/main.js"></script>		
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
