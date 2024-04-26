@@ -1,5 +1,5 @@
 <?php
-include('include/config.php');
+include('../define/config.php');
 if(!empty($_POST["specilizationid"])) 
 {
 	$qDoc=mysqli_query($deal,"SELECT doctorName,id 
