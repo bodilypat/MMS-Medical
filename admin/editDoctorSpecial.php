@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
@@ -23,15 +23,15 @@
 	<head>
 		<title>Admin | Edit Doctor Specialization</title>
 		<!-- CSS -->		
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">				
-			<?php include('include/header.php');?>					
+			<?php include('../define/header.php');?>					
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
 					<!-- section: PAGE TITLE -->
@@ -64,7 +64,7 @@
 
 																$dsid=intval($_GET['id']);
 																$qDS=mysqli_query($deal,"SELECT * 
-																	                     FROM doctorSpecilization 
+																	                     FROM doctorSpecilized 
 																						 WHERE id='$dsid'");
 																while($result=mysqli_fetch_array($qDS))
 																{														
@@ -73,7 +73,7 @@
 															       value="<?php echo $result['specilization'];?>" >
 															<?php } ?>
 														</div>																																																					
-														<button type="submit" name="submit" class="btn btn-o btn-primary">
+														<button name="submit" type="submit" class="btn btn-o btn-primary">
 															Update
 														</button>
 													</form>
@@ -93,11 +93,11 @@
 		</div>
 	</div>	
 	<!--  FOOTER -->
-	<?php include('include/footer.php');?>	
-	<?php include('include/setting.php');?>		
+	<?php include('../define/footer.php');?>	
+	<?php include('../define/setting.php');?>		
 	<!-- JAVASCRIPTS -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
