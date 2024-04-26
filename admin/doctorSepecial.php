@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
@@ -16,10 +16,10 @@
 					$_SESSION['msg']="Doctor Specialization added successfully !!";
 				}
 			}
-			//Code Deletion
+			/* delete doctorSpecial  */
 			if(isset($_GET['del']))
 			{
-				$dsid=$_GET['del/*  */id'];	
+				$dsid=$_GET['delid'];	
 				mysqli_query($deal,"DELETE FROM doctorSpecialized WHERE id = '$dsid'");
 				$_SESSION['msg']="data deleted !!";
 		}
@@ -28,18 +28,18 @@
 <html lang="en">
 	<head>
 		<title>Admin | Doctor Specialization</title>
-		<!-- CSS -->		
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<!-- CSS custom -->		
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
-	<div id="app">		
-		<?php include('include/sidebar.php');?>
-		<div class="app-content">				
-			<?php include('include/header.php');?>									
+	<div id="application">		
+		<?php include('../define/sidebar.php');?>
+		<div class="appplication-content">				
+			<?php include('../define/header.php');?>									
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 					<!-- section: PAGE TITLE -->
 						<section id="page-title">
 							<div class="row">
@@ -68,10 +68,10 @@
 													<form name="doctorspecial" role="form"  method="post" >
 														<div class="form-group">
 															<label for="DoctorSpecial">Doctor Specialization</label>
-															<input type="text" name="doctorSpecial" class="form-control"  
+															<input name="doctorSpecial" type="text"  class="form-control"  
 							                                       placeholder="Enter Doctor Specialization">
 														</div>																																																						
-														<button type="submit" name="submit" class="btn btn-o btn-primary">
+														<button name="submit" type="submit"  class="btn btn-o btn-primary">
 															Submit
 														</button>
 													</form>
@@ -99,19 +99,19 @@
 									</thead>
 									<tbody>
 										<?php
-										$qDS=mysqli_query($deal,"SELECT * FROM doctorSpecialized");
-										$count=1;
-										while($result=mysqli_fetch_array($qDS))
-										{
+											$qDS=mysqli_query($deal,"SELECT * FROM doctorSpecialized");
+											$count=1;
+											while($resultset=mysqli_fetch_array($qDS))
+											{
 										?>
 										<tr>
 											<td class="center"><?php echo $count;?>.</td>
-											<td class="hidden-xs"><?php echo $result['specilization'];?></td>
-											<td><?php echo $result['creationDate'];?></td>
-											<td><?php echo $result['updationDate'];?></td>												
+											<td class="hidden-xs"><?php echo $resultset['specilization'];?></td>
+											<td><?php echo $resultset['creationDate'];?></td>
+											<td><?php echo $resultset['updationDate'];?></td>												
 											<td >
 												<div class="visible-md visible-lg hidden-sm hidden-xs">
-													<a href="editDoctorSpecial.php?eid=<?php echo $result['id'];?>" 
+													<a href="editDoctorSpecial.php?eid=<?php echo $resultset['id'];?>" 
 													   class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Edit">
 													   <i class="fa fa-pencil"></i>
 													</a>													
@@ -134,11 +134,11 @@
 			</div>						
 		</div>
 	</div>
-	<?php include('include/footer.php');?>		
-	<?php include('include/setting.php');?>		
-	<script src="assets/js/main.js"></script>
-	<!-- JAVASCRIPT -->
-	<script src="assets/js/form-elements.js"></script>
+	<?php include('../define/footer.php');?>		
+	<?php include('../define/setting.php');?>	
+	<!-- JAVASCRIPT -->	
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
