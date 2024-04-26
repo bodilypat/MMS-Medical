@@ -1,8 +1,7 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	include('include/config.php');
-	include('include/checklogin.php');
+	include('../define/config.php');
+	include('../define/checklogin.php');
 	check_login();
 	
 		if(isset($_POST['submit']))
@@ -26,19 +25,19 @@
 	<head>
 		<title>User | Edit Profile</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 
 
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">				
-			<?php include('include/header.php');?>						
+			<?php include('../define/header.php');?>						
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 					<!-- sector: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -87,7 +86,8 @@
 														</div>															
 														<div class="form-group">
 															<label for="City">City</label>
-															<input name="city" type="text"  class="form-control" required="required"  value="<?php echo htmlentities($data['city']);?>" >
+															<input name="city" type="text"  class="form-control" required="required"  
+															       value="<?php echo htmlentities($data['city']);?>" >
 														</div>			
 														<div class="form-group">
 															<label for="Gender">Gender</label>
@@ -127,11 +127,11 @@
 		</div>
 	</div>
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>	
-	<!-- start: CLIP-TWO JAVASCRIPTS -->
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/form-elements.js"></script>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>	
+	<!-- JAVASCRIPTS -->
+	<script src="../ssign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
