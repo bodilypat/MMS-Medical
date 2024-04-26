@@ -1,7 +1,7 @@
 	<?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
@@ -17,9 +17,9 @@
 	</head>
 <body>
 	<div id="app">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="app-content">				
-			<?php include('include/header.php');?>
+			<?php include('../define/header.php');?>
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
 					<!-- section : PAGE TITLE -->
@@ -32,7 +32,7 @@
 								</ol>
 						</div>
 					</section>					
-					<!-- start: BASIC EXAMPLE -->
+					<!-- content -->
 					<div class="container-fluid container-fullw bg-white">						
 						<div class="row">
 							<div class="col-md-12">									
@@ -56,8 +56,9 @@
 									</thead>
 									<tbody>
 										<?php
+										/* query object from DB */
 										$qDoc=mysqli_query($deal,"SELECT doctors.doctorName as docname,
-										                                 users.fullName as pname,appointment.*  
+										                                 users.fullName as patname,appointment.*  
 																FROM appointment join doctors on doctors.id=appointment.doctorId 
 																join users on users.id=appointment.userId ");
 										$count=1;
@@ -67,8 +68,8 @@
 										<tr>
 											<td class="center"><?php echo $count;?>.</td>
 											<td class="hidden-xs"><?php echo $resultset['docname'];?></td>
-											<td class="hidden-xs"><?php echo $resultset['pname'];?></td>
-											<td><?php echo $resultset['doctorSpecialization'];?></td>
+											<td class="hidden-xs"><?php echo $resultset['patname'];?></td>
+											<td><?php echo $resultset['doctorSpecial'];?></td>
 											<td><?php echo $resultset['consultancyFees'];?></td>
 											<td><?php echo $resultset['appointmentDate'];?> / <?php echo$resultset['appointmentTime'];?></td>
 											<td><?php echo $resultset['postingDate'];?></td>
@@ -108,10 +109,11 @@
 				</div>
 			</div>
 			<!--  FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>					
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>		
+	<!-- javascript -->			
+	<script src="assign/js/main.js"></script>
+	<script src="assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
