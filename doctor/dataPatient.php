@@ -1,28 +1,28 @@
   <?php
-  session_start();
-  error_reporting(0);
-  include('include/config.php');
-  if(strlen($_SESSION['id']==0)) {
-      header('location:logout.php');
-    } else{
-      if(isset($_POST['submit']))
-      {        
-          $patID=$_GET['infoid'];
-          $bloodpress=$_POST['bloodpressure'];
-          $bloodSu=$_POST['bloodsurgeer'];
-          $weight=$_POST['weight'];
-          $temp=$_POST['temperature'];
-          $mddpress=$_POST['pressure'];  
-          $addMdh=mysqli_query($deal, "INSERT INTO  medicalhistory(PatientID,BloodPressure,BloodSugar,Weight,Temperature,MedicalPres)
-                                       VALUES('$patID','$bloodPress','$bloodSu','$weight','$temp','$medPress')");
-      if ($addMdh) {
-      echo '<script>alert("Medicle history has been added.")</script>';
-      echo "<script>window.location.href ='managePatient.php'</script>";
-    }
-    else
-      {
-        echo '<script>alert("Something Went Wrong. Please try again")</script>';
-      }    
+    session_start();
+    error_reporting(0);
+    include('../define/config.php');
+    if(strlen($_SESSION['id']==0)) {
+        header('location:logout.php');
+        } else{
+        if(isset($_POST['submit']))
+        {        
+            $patID=$_GET['pid'];
+            $bloodpress=$_POST['bloodpressure'];
+            $bloodSu=$_POST['bloodsurgeer'];
+            $weight=$_POST['weight'];
+            $temp=$_POST['temperature'];
+            $mddpress=$_POST['pressure'];  
+            $addMdh=mysqli_query($deal, "INSERT INTO  medicalhistory(PatientID,BloodPressure,BloodSugar,Weight,Temperature,MedicalPres)
+                                        VALUES('$patID','$bloodPress','$bloodSu','$weight','$temp','$medPress')");
+        if ($addMdh) {
+        echo '<script>alert("Medicle history has been added.")</script>';
+        echo "<script>window.location.href ='managePatient.php'</script>";
+        }
+        else
+        {
+            echo '<script>alert("Something Went Wrong. Please try again")</script>';
+        }    
   }
 ?>
 <!DOCTYPE html>
@@ -30,18 +30,18 @@
 	<head>
       <title>Doctor | Manage Patients</title>
       <!-- CSS -->
-      <link rel="stylesheet" href="assign/css/styles.css">
-      <link rel="stylesheet" href="assign/css/plugins.css">
-      <link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+      <link rel="stylesheet" href="../assign/css/styles.css">
+      <link rel="stylesheet" href="../assign/css/plugins.css">
+      <link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
-		<div id="app">		
-        <?php include('include/sidebar.php');?>
-        <div class="app-content">
-            <?php include('include/header.php');?>
+		<div id="application">		
+        <?php include('../define/sidebar.php');?>
+        <div class="application-content">
+            <?php include('../define/header.php');?>
             <div class="main-content" >
-                <div class="wrap-content container" id="container">
-						        <!-- section: PAGE TITLE -->
+                <div id="container" class="wrap-content container" >
+					<!-- section: PAGE TITLE -->
                     <section id="page-title">
                         <div class="row">
                             <div class="col-sm-8"><h1 class="mainTitle">Doctor | Manage Patients</h1></div>
@@ -57,7 +57,7 @@
                             <div class="col-md-12">
                                 <h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Patients</span></h5>
                                 <?php
-                                     $patID=$_GET['infoid'];
+                                     $patID=$_GET['pid'];
                                      $qPat=mysqli_query($deal,"SELECT * FROM patient WHERE ID='$patID'");
                                      $count=1;
                                      while ($resultset=mysqli_fetch_array($qPat)) {
@@ -93,7 +93,7 @@
                                     <?php }?>
                                 </table>
                                   <?php  
-                                       $qmdh=mysqli_query($deal,"SELECT * FROM medicalhistory  WHERE PatientID='$patID'");
+                                       $qMdh=mysqli_query($deal,"SELECT * FROM medicalhistory  WHERE PatientID='$patID'");
                                   ?>
                                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                        <tr align="center">
@@ -109,16 +109,16 @@
                                             <th>Visit Date</th>
                                         </tr>
                                             <?php  
-                                                while ($resultmdh=mysqli_fetch_array($ret)) { 
+                                                while ($data=mysqli_fetch_array($qMdh)) { 
                                             ?>
                                         <tr>
                                             <td><?php echo $count;?></td>
-                                            <td><?php  echo $resultmdh['BloodPressure'];?></td>
-                                            <td><?php  echo $resultmdh['Weight'];?></td>
-                                            <td><?php  echo $resultmdh['BloodSugar'];?></td> 
-                                            <td><?php  echo $resultmdh['Temperature'];?></td>
-                                            <td><?php  echo $resultmdh['MedicalPres'];?></td>
-                                            <td><?php  echo $resultmdh['CreationDate'];?></td> 
+                                            <td><?php  echo $data['BloodPressure'];?></td>
+                                            <td><?php  echo $data['Weight'];?></td>
+                                            <td><?php  echo $data['BloodSugar'];?></td> 
+                                            <td><?php  echo $data['Temperature'];?></td>
+                                            <td><?php  echo $data['MedicalPres'];?></td>
+                                            <td><?php  echo $data['CreationDate'];?></td> 
                                         </tr>
                                           <?php $count=$count+1;} ?>
                                   </table>
@@ -128,7 +128,7 @@
                                       </button>
                                   </p>  
                                   <?php  ?>
-                                  <div id="myModal" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div id="medicalHistory" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                  <div class="modal-header">
@@ -192,11 +192,11 @@
           </div>
     </div>
 	<!--  FOOTER -->
-	<?php include('include/footer.php');?>			
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>			
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPT -->	
-	<script src="assign/js/main.js"></script>	
-	<script src="assign/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>	
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
