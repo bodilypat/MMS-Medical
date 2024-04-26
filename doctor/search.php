@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 	header('location:logout.php');
 	} else{
@@ -12,15 +12,15 @@
 	<head>
 		<title>Doctor | Manage Patients</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-	<?php include('include/sidebar.php');?>
+	<?php include('../define/sidebar.php');?>
 	<div class="application-content">
-		<?php include('include/header.php');?>
+		<?php include('../define/header.php');?>
 		<div class="main-content" >
 			<div class="wrap-content container" id="container">
 			<!-- section: PAGE TITLE -->
@@ -40,7 +40,7 @@
 							<form name="search" role="form" method="post" >
 								<div class="form-group">
 									<label for="doctorname">Search by Name/Mobile No.</label>
-									<input name="searchdata" id="searchdata" type="text"  class="form-control" value="" required='true'>
+									<input name="searchdata" id="searchdata" type="text" class="form-control" value="" required='true'>
 								</div>
 								<button id="submit" name="search" type="submit"   class="btn btn-o btn-primary">Search</button>
 							</form>	
@@ -81,9 +81,9 @@
 										<td><?php echo $recordset['CreationDate'];?></td>
 										<td><?php echo $recordset['UpdationDate'];?></td>
 										<td>
-											<a href="editPatient.php?editid=<?php echo $row['ID'];?>">
+											<a href="editPatient.php?editid=<?php echo $recordset['ID'];?>">
 											<i class="fa fa-edit"></i></a> || 
-											<a href="dataPatient.php?infoid=<?php echo $row['ID'];?>">
+											<a href="dataPatient.php?infoid=<?php echo $recordset['ID'];?>">
 												<i class="fa fa-eye"></i></a>
 										</td>
 									</tr>
@@ -105,11 +105,11 @@
 	</div>
 	</div>
 	<!--: FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
