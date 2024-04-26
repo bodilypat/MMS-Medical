@@ -1,8 +1,8 @@
 <?php 
-require_once("include/config.php");
+require_once("../define/config.php");
 if(!empty($_POST["emailid"])) {
 	    $email= $_POST["emailid"];
-		$qDoc =mysqli_query($con,"SELECT docEmail FROM doctors WHERE docEmail='$email'");
+		$qDoc =mysqli_query($deal,"SELECT docEmail FROM doctors WHERE docEmail='$email'");
 		$count=mysqli_num_rows($qDoc);
 	if($count>0)
 	{
