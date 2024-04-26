@@ -29,9 +29,9 @@
 	<head>
 		<title>Admin | Add Doctor</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	<script type="text/javascript">
 		function valid()
 		{
@@ -110,7 +110,7 @@
 															<input name="doctorname" type="text" class="form-control"  
 															       placeholder="Doctor Name" required="true">
 														</div>
-                                                        <div class="form-group">
+                                                       								 <div class="form-group">
 															<label for="Address">Doctor Clinic Address</label>
 															<textarea name="clinicaddress" class="form-control"  
 															   	placeholder="Clinic Address" required="true">
