@@ -1,28 +1,27 @@
 <?php
-session_start();
-//error_reporting(0);
-include('include/config.php');
-include('include/checklogin.php');
-check_login();
+	session_start();
+	include('../define/config.php');
+	include('../define/checklogin.php');
+	check_login();
 
-if(isset($_POST['submit']))
-{
-		$specilization=$_POST['doctorspecial'];
-		$docID=$_POST['doctorid'];
-		$userid=$_SESSION['userid'];
-		$consultFees=$_POST['consultfees'];
-		$appDate=$_POST['appointmentDate'];
-		$appTime=$_POST['appointmenttime'];
-		$userStatus=1;
-		$docStatus=1;
-		$addApp=mysqli_query($deal,"INSERT INTO appointment(doctorSpecial,doctorId,userId,consultancyFees,appointDate,appointTime,userStatus,doctorStatus) 
-					              VALUES('$specilization','$docID','$userID','$consultFees','$appDate','$appTime','$userstatus','$docStatus')");
-		if($addApp)
-		{
-			echo "<script>alert('Your appointment successfully booked');</script>";
-		}
+	if(isset($_POST['submit']))
+	{
+			$docSpecial=$_POST['doctorspecial'];
+			$did=$_POST['doctor'];
+			$uid=$_SESSION['userid'];
+			$consultFees=$_POST['consultfees'];
+			$appDate=$_POST['appointmentdate'];
+			$appTime=$_POST['appointmenttime'];
+			$userStatus=1;
+			$docStatus=1;
+			$addApp=mysqli_query($deal,"INSERT INTO appointment(doctorSpecial,doctorId,userId,consultancyFees,appointDate,appointTime,userStatus,doctorStatus) 
+									VALUES('$docSpecial','$did','$uid','$consultFees','$appDate','$appTime','$userstatus','$docStatus')");
+			if($addApp)
+			{
+				echo "<script>alert('Your appointment successfully booked');</script>";
+			}
 
-}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +29,9 @@ if(isset($_POST['submit']))
 	<head>
 		<title>User  | Book Appointment</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 		<script>
 			function getdoctor(val) {
 				$.ajax({
@@ -60,11 +59,11 @@ if(isset($_POST['submit']))
 </head>
 	<body>
 		<div id="app">		
-        <?php include('include/sidebar.php');?>
+        <?php include('../define/sidebar.php');?>
 		<div class="app-content">
-			<?php include('include/header.php');?>			
+			<?php include('../define/header.php');?>			
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 					<!-- section: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -90,10 +89,11 @@ if(isset($_POST['submit']))
 												</p>													
 												<form role="form" name="book" method="post" >													
 													<div class="form-group">
-														<label for="DoctorSpecialization">Doctor Specialization</label>
-														<select name="Doctorspecialization" class="form-control" onChange="getdoctor(this.value);" required="required">
+														<label for="DoctorSpecial">Doctor Specialization</label>
+														<select name="doctorspecial" class="form-control" 
+														        onChange="getdoctor(this.value);" required="required">
 															<option value="">Select Specialization</option>																																					
-																<?php $qDS=mysqli_query($deal,"SELECT * FROM doctorspecial");
+																<?php $qDS=mysqli_query($deal,"SELECT * FROM doctorSpecial");
 																	while($result=mysqli_fetch_array($qDS))
 																	{
 																?>																			
@@ -125,13 +125,13 @@ if(isset($_POST['submit']))
 													</div>														
 													<div class="form-group">
 														<label for="AppointmentDate">Date</label>
-														<input class="form-control datepicker" name="appdate"  required="required" data-date-format="yyyy-mm-dd">
+														<input name="appointmentdate" class="form-control datepicker"   required="required" data-date-format="yyyy-mm-dd">
 													</div>														
 													<div class="form-group">
-														<label for="Appointmenttime">Time</label>
-														<input class="form-control" name="apptime" id="timepicker1" required="required">eg : 10:00 PM
+														<label for="AppointmentTime">Time</label>
+														<input name="appointmentime" id="timepicker1" class="form-control"  required="required">eg : 10:00 PM
 													</div>																												
-													<button type="submit" name="submit" class="btn btn-o btn-primary">Submit</button>
+													<button name="submit" type="submit"  class="btn btn-o btn-primary">Submit</button>
 												</form>
 											</div>
 										</div>
@@ -144,11 +144,11 @@ if(isset($_POST['submit']))
 		</div>
 	</div>
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
