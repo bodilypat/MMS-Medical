@@ -1,15 +1,15 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
 		if(isset($_POST['submit']))
 		{
-			$docDpecial=$_POST['octorspecial'];
+			$docSpecial=$_POST['doctorspecial'];
 			$docName=$_POST['doctorname'];
-			$docAddress=$_POST['clinicaddress'];
+			$docAdd=$_POST['clinicaddress'];
 			$docFees=$_POST['doctorfees'];
 			$docContact=$_POST['doctorcontact'];
 			$docEmail=$_POST['doctoremail'];
@@ -30,19 +30,19 @@
 	<head>
 		<title>Doctr | Edit Doctor Details</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 
 
 	</head>
 <body>
-	<div id="app">		
-		<?php include('include/sidebar.php');?>
-		<div class="app-content">
-			<?php include('include/header.php');?>
+	<div id="application">		
+		<?php include('../define/sidebar.php');?>
+		<div class="application-content">
+			<?php include('../define/header.php');?>
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 					<!-- section: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -85,7 +85,7 @@
 														<option value="<?php echo htmlentities($resultset['specilization']);?>">
 																<?php echo htmlentities($resutltset['specilization']);?>
 														</option>
-															<?php $qDS=mysqli_query($deal,"select * from doctorspecial");
+															<?php $qDS=mysqli_query($deal,"SELECT * FROM doctorSpecialized");
 															while($data=mysqli_fetch_array($qDS))
 															{
 															?>
@@ -98,7 +98,7 @@
 												<div class="form-group">
 													<label for="DoctorName">Doctor Name</label>
 													<input name="doctorname" type="text"  class="form-control" 
-													       value="<?php echo htmlentities($result['doctorName']);?>" >
+													       value="<?php echo htmlentities($resultset['doctorName']);?>" >
 														</div>
 												<div class="form-group">
 													<label for="Address">Doctor Clinic Address</label>
@@ -119,7 +119,7 @@
 												<div class="form-group">
 													<label for="DoctorEmail">Doctor Email</label>
 													<input name="doctoremail" type="email"  class="form-control"  readonly="readonly"  
-													        value="<?php echo htmlentities($data['docEmail']);?>">
+													        value="<?php echo htmlentities($resultset['docEmail']);?>">
 												</div>	
 												<?php } ?>																												
 												<button type="submit" name="submit" class="btn btn-o btn-primary">
@@ -135,13 +135,13 @@
 				</div>
 			</div>
 		</div>
-		<!-- FOOTER -->
-		<?php include('include/footer.php');?>			
-		<?php include('include/setting.php');?>
-	
 	</div>
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/form-elements.js"></script>
+		<!-- FOOTER -->
+	<?php include('../define/footer.php');?>			
+	<?php include('../define/setting.php');?>
+	<!-- JAVASCRIPT -->
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
