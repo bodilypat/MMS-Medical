@@ -20,7 +20,7 @@
 			$status=1;
 
 			/* For stroing log if user login successfull*/
-			$addL=mysqli_query($deal,"INSERT INTO userlog(uid,username,userip,status) 
+			$addUL=mysqli_query($deal,"INSERT INTO userlog(uid,username,userip,status) 
 			                         VALUES('$patid','$userName','$userip','$status')");
 			header("location:dashboard.php");
 		}
