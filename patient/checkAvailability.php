@@ -1,11 +1,10 @@
 <?php 
-require_once("include/config.php");
+require_once("../define/config.php");
 
 if(!empty($_POST["email"])) 
 {
-	$u
-	$uEmail= $_POST["email"];
-	$qUser =mysqli_query($deal,"SELECT email FROM users WHERE email='$uEmail'");
+	$userEmail= $_POST["email"];
+	$qUser =mysqli_query($deal,"SELECT email FROM users WHERE email='$userEmail'");
 	$result=mysqli_num_rows($qUser);
 	if($result>0)
 	{
