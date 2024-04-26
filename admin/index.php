@@ -1,15 +1,14 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include("include/config.php");
+	include("../define/config.php");
 	if(isset($_POST['submit']))
 	{
-		$uname=$_POST['username'];
-		$upass=$_POST['password'];
+		$userName=$_POST['username'];
+		$userPass=$_POST['password'];
 
-		$qAdmin=mysqli_query($deal,"SELECT * FROM admin WHERE username='$uname' and password='$upass'");
-		$result=mysqli_fetch_array($qAdmin);
-
+		$qAd=mysqli_query($deal,"SELECT * FROM admin WHERE username='$userName' and password='$userPass'");
+		$result=mysqli_fetch_array($qAd);
 		if($result > 0)
 		{
 			$_SESSION['login']=$_POST['username'];
@@ -63,18 +62,18 @@
 									Login <i class="fa fa-arrow-circle-right"></i>
 								</button>
 							</div>
-							<a href="../../index.php">Bacto Home Page</a>							
+							<a href="../index.php">Bacto Home Page</a>							
 						</fieldset>
 					</form>
 					<div class="copyright">
-						<span class="text-bold text-uppercase">Hospital Management System</span>
+						<span class="text-bold text-uppercase">Medical Management System</span>
 					</div>			
 				</div>
 			</div>
 		</div>
 		<!-- javascript  -->	
-		<script src="assets/js/main.js"></script>
-		<script src="assets/js/login.js"></script>
+		<script src="design/js/main.js"></script>
+		<script src="design/js/login.js"></script>
 		<script>
 			jQuery(document).ready(function() {
 				Main.init();
