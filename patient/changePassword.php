@@ -1,14 +1,13 @@
 <?php
-session_start();
-//error_reporting(0);
-	include('include/config.php');
-	include('include/checklogin.php');
+	session_start();
+	include('../define/config.php');
+	include('../define/checklogin.php');
 	check_login();
 	date_default_timezone_set('America/Los_angeles');// change according timezone
 	$currentTime = date( 'd-m-Y h:i:s A', time () );
 	if(isset($_POST['submit']))
 	{
-		$qUer=mysqli_query($deal,"SELECT password 
+		$qUser=mysqli_query($deal,"SELECT password 
 		                          FROM  users 
 								  WHERE password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'");
 		$result=mysqli_fetch_array($qUser);
@@ -30,9 +29,9 @@ session_start();
 	<head>
 		<title>User  | change Password</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 
 <script type="text/javascript">
 	function valid()
@@ -68,9 +67,9 @@ session_start();
 </head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">		
-			<?php include('include/header.php');?>		
+			<?php include('define/header.php');?>		
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
 					<!-- section : PAGE TITLE -->
@@ -125,11 +124,11 @@ session_start();
 		</div>
 	</div>
 	<!--  FOOTER -->
-	<?php include('include/footer.php');?>	
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>	
+	<?php include('../define/setting.php');?>
 	<!--  JAVASCRIPTS -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
