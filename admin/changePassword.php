@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	//error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 		header('location:logout.php');
 	} else{
@@ -13,12 +13,13 @@
 		{
 			$currentPass=$_POST['cpass'];	
 			$userName=$_SESSION['login'];
+			/* get password */
 			$qAd=mysqli_query($deal,"SELECT password FROM  admin WHERE password='$currentPass' && username='$userName'");
 			$result=mysqli_fetch_array($qAd);
 			if($result > 0)
 			{
 				$npass=$_POST['nPass'];
-			    $editAd=mysqli_query($deal,"UPDATE admin SET password='$npass', updationDate='$currentTime' where username='$userName'");
+			    $editAd=mysqli_query($deal,"UPDATE admin SET password='$npass', updationDate='$currentTime' WHERE username='$userName'");
 			    $_SESSION['msg1']="Password Changed Successfully !!";
 			}
 			else
@@ -32,9 +33,9 @@
 	<head>
 		<title>Admin | change Password</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 		<script type="text/javascript">
 		function valid()
 		{
@@ -68,9 +69,9 @@
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../assign/sidebar.php');?>
 		<div class="application-content">				
-			<?php include('include/header.php');?>
+			<?php include('../assign/header.php');?>
 			</header>			
 			<div class="main-content" >
 				<div class="wrap-content container" id="container">
@@ -101,7 +102,7 @@
 													<div class="form-group">
 														<label for="CurrentPassword">Current Password</label>
 														<input name="cpass" type="password"  class="form-control"  
-														       placeholder="Enter Current Password">
+														       placeholder="Current Password">
 													</div>
 													<div class="form-group">
 														<label for="New Password">New Password</label>
@@ -113,7 +114,7 @@
 														<input name="cfpass" type="password"  class="form-control"  
 														       placeholder="Confirm Password">
 													</div>	
-													<button type="submit" name="submit" class="btn btn-o btn-primary">
+													<button name="submit" type="submit" class="btn btn-o btn-primary">
 														Submit
 													</button>
 												</form>
@@ -131,11 +132,11 @@
 		</div>						
 	</div>	
 		<!--  FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPT -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
