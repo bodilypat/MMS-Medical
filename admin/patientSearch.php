@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 	header('location:logout.php');
 	} else{
@@ -12,17 +12,17 @@
 	<head>
 		<title>Admin | Info Patients</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assing/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">
-			<?php include('include/header.php');?>
+			<?php include('../define/header.php');?>
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 						<!-- section: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -70,21 +70,21 @@
 											$qPat=mysqli_query($deal,"SELECT * 
 											                        FROM patients 
 																	WHERE PatientName LIKE '%$sdata%'|| PatientContno like '%$sdata%'");
-											$numRows=mysqli_num_rows($qPat);
-											if($numRows > 0){
+											$countRows=mysqli_num_rows($qPat);
+											if($countRows > 0){
 											$count=1;
-											while($resultpat=mysqli_fetch_array($qPat))
+											while($resultset=mysqli_fetch_array($qPat))
 											{
 										?>
 										<tr>
 											<td class="center"><?php echo $count;?>.</td>
-											<td class="hidden-xs"><?php echo $resultpat['PatientName'];?></td>
-											<td><?php echo $resultpat['PatientContno'];?></td>
-											<td><?php echo $resultpat['PatientGender'];?></td>
-											<td><?php echo $resultpat['CreationDate'];?></td>
-											<td><?php echo $resultpat['UpdationDate'];?></td>
+											<td class="hidden-xs"><?php echo $resultset['PatientName'];?></td>
+											<td><?php echo $resultset['PatientContno'];?></td>
+											<td><?php echo $resultset['PatientGender'];?></td>
+											<td><?php echo $resultset['CreationDate'];?></td>
+											<td><?php echo $resultset['UpdationDate'];?></td>
 											<td>
-												<a href="infoPatient.php?infoid=<?php echo $resultpat['ID'];?>">
+												<a href="infoPatient.php?pid=<?php echo $resultset['ID'];?>">
 													<i class="fa fa-eye"></i>
 												</a>
 											</td>
@@ -105,11 +105,11 @@
 		</div>
 	</div>
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>			
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>			
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPT -->		
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
