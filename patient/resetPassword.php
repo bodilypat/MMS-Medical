@@ -1,15 +1,16 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	include("include/config.php");
-	// Code for updating Password
+	include("../define/config.php");
+	/* Code for updating Password */
 	if(isset($_POST['change']))
 	{
 		$userName=$_SESSION['name'];
 		$userEmail=$_SESSION['email'];
 		$newPass=md5($_POST['password']);
-		$qUser=mysqli_query($deal,"UPDATE users SET password='$newPass' WHERE fullName='$userName' AND email='$userEmail'");
-		if ($query) {
+
+		$qUser=mysqli_query($deal,"UPDATE users SET password='$newPass' 
+		                           WHERE fullName='$userName' AND email='$userEmail'");
+		if ($qUser) {
 			echo "<script>alert('Password successfully updated.');</script>";
 			echo "<script>window.location.href ='userLogin.php'</script>";
 	}
@@ -21,17 +22,17 @@
 	<head>
 		<title>Password Reset</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 
 		<script type="text/javascript">
 			function valid()
 			{
-				if(document.passwordreset.password.value!= document.passwordreset.confirmpassword.value)
+				if(document.passwordreset.password.value!= document.passwordreset.cfpassword.value)
 				{
 					alert("Password and Confirm Password Field do not match  !!");
-					document.passwordreset.confirmpassword.focus();
+					document.passwordreset.cfpassword.focus();
 					return false;
 				}
 				return true;
@@ -54,14 +55,14 @@
 							</p>
 							<div class="form-group">
 								<span class="input-icon">
-									  <input id="password" name="password" type="password" class="form-control"  placeholder="Password" required>
-											<i class="fa fa-lock"></i> 
+									<input id="password" name="password" type="password" class="form-control"  placeholder="Password" required>
+										<i class="fa fa-lock"></i> 
 								</span>
 							</div>
 							<div class="form-group">
 								<span class="input-icon">
-									<input id="confirmpassword" name="confirmpassword" type="password" class="form-control"   placeholder="Password Again" required>
-											<i class="fa fa-lock"></i> 
+									<input id="cfpassword" name="cfpassword" type="password" class="form-control"   placeholder="Password Again" required>
+										<i class="fa fa-lock"></i> 
 								</span>
 							</div>
 							<div class="form-actions">
@@ -81,8 +82,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/login.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/login.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
