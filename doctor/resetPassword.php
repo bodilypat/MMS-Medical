@@ -1,17 +1,16 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	include("include/config.php");
-	// Code for updating Password
+	include("../define/config.php");
+	/*Code for updating Password  */
 		if(isset($_POST['change']))
 		{
-			$cno=$_SESSION['cnumber'];
+			$contactno=$_SESSION['cnumber'];
 			$email=$_SESSION['email'];
 			$npass=md5($_POST['password']);
-			$editDoc=mysqli_query($con,"update doctors set password='$npass' where contactno='$cno' and docEmail='$email'");
+			$editDoc=mysqli_query($deal,"UPDATE doctors SET password='$npass' WHERE contactno='$contactno' AND docEmail='$email'");
 		if ($query) {
 			echo "<script>alert('Password successfully updated.');</script>";
-			echo "<script>window.location.href ='index.php'</script>";
+			echo "<script>window.location.href ='../index.php'</script>";
 		}
 	}
 
@@ -24,16 +23,16 @@
 	<head>
 		<title>Password Reset</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 		<script type="text/javascript">
 			function valid()
 			{
-				if(document.passwordreset.password.value!= document.passwordreset.confirmpassword.value)
+				if(document.passwordreset.password.value!= document.passwordreset.cfpassword.value)
 				{
 					alert("Password and Confirm Password Field do not match  !!");
-					document.passwordreset.confirmpassword.focus();
+					document.passwordreset.cfpassword.focus();
 					return false;
 				}
 				return true;
@@ -45,7 +44,7 @@
 		<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 			<div class="logo margin-top-30"><a href="../index.php"><h2> MMS | Patient Reset Password</h2></a></div>
 				<div class="box-login">
-					<form class="form-login" name="passwordreset" method="post" onSubmit="return valid();">
+					<form name="passwordreset" class="form-login"  method="post" onSubmit="return valid();">
 						<fieldset>
 							<legend>Patient Reset Password</legend>
 							<p>Please set your new password.<br />
@@ -62,7 +61,7 @@
 							</div>
 							<div class="form-group">
 								<span class="input-icon">
-									<input id="confirmpassword" name="confirmpassword" type="password" class="form-control"   
+									<input id="cfpassword" name="cfpassword" type="password" class="form-control"   
 									       placeholder="Confirm Password" required>
 									<i class="fa fa-lock"></i> 
 								</span>
@@ -73,7 +72,7 @@
 								</button>
 							</div>
 							<div class="new-account">Already have an account? 
-								<a href="index.php">Log-in</a>
+								<a href="../index.php">Log-in</a>
 							</div>
 						</fieldset>
 					</form>
@@ -84,8 +83,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/login.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/login.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 			Main.init();
