@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
+	include('../define/config.php');
 	if(strlen($_SESSION['id']==0)) {
 	header('location:logout.php');
 	} else{
@@ -17,17 +17,17 @@
 	<head>
 		<title>Admin | Manage Doctors</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">		
-			<?php include('include/header.php');?>								
+			<?php include('../define/header.php');?>								
 			<div class="main-content" >
-				<div class="wrap-content container" id="container">
+				<div id="container" class="wrap-content container" >
 				<!-- section: PAGE TITLE -->
 					<section id="page-title">
 						<div class="row">
@@ -47,7 +47,7 @@
 								    <?php echo htmlentities($_SESSION['msg']);?>
 									<?php echo htmlentities($_SESSION['msg']="");?>
 								</p>	
-								<table class="table table-hover" id="doctor-table">
+								<table id="doctor-table" class="table table-hover" >
 									<thead>
 										<tr>
 											<th class="center">#</th>
@@ -61,21 +61,21 @@
 								<?php
 								$qDoc=mysqli_query($deal,"SELECT * FROM doctors");
 								$count=1;
-								while($recordset=mysqli_fetch_array($qDoc))
+								while($resultset=mysqli_fetch_array($qDoc))
 								{
 								?>
 										<tr>
 											<td class="center"><?php echo $count;?>.</td>
-											<td class="hidden-xs"><?php echo $recordset['specilization'];?></td>
-											<td><?php echo $recordset['doctorName'];?></td>
-											<td><?php echo $recordset['creationDate'];?></td>												
+											<td class="hidden-xs"><?php echo $resultset['specilization'];?></td>
+											<td><?php echo $resultset['doctorName'];?></td>
+											<td><?php echo $resultset['creationDate'];?></td>												
 											<td >
 												<div class="visible-md visible-lg hidden-sm hidden-xs">
-													<a  href="editDoctor.php?eid=<?php echo $recordset['id'];?>" 
+													<a  href="editDoctor.php?eid=<?php echo $resultset['id'];?>" 
 													    class="btn btn-transparent btn-xs" tooltip-placement="top" tooltip="Edit">
 													   <i class="fa fa-pencil"></i>
 													</a>													
-													<a href="manageDoctors.php?did=<?php echo $recordset['id']?>&del=delete" 
+													<a href="manageDoctors.php?did=<?php echo $resultset['id']?>&del=delete" 
 													   onClick="return confirm('Are you sure you want to delete?')"
 													   class="btn btn-transparent btn-xs tooltips" 
 													   tooltip-placement="top" tooltip="Remove">
@@ -95,11 +95,11 @@
 		</div>
 	</div>
 	<!-- FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>	
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>	
 	<!-- JAVASCRIPT -->
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
