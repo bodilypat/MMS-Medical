@@ -122,7 +122,7 @@
 													        value="<?php echo htmlentities($resultset['docEmail']);?>">
 												</div>	
 												<?php } ?>																												
-												<button type="submit" name="submit" class="btn btn-o btn-primary">
+												<button name="submit" type="submit"  class="btn btn-o btn-primary">
 													Update
 												</button>
 											</form>
