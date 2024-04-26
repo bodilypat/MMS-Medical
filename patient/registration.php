@@ -23,13 +23,13 @@ if(isset($_POST['submit']))
 	<head>
 		<title>User Registration</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 		<script type="text/javascript">
 			function valid()
 			{
-				if(document.registration.password.value!= document.registration.password_again.value)
+				if(document.registration.password.value!= document.registration.cfpassword.value)
 				{
 					alert("Password and Confirm Password Field do not match  !!");
 					document.registration.password_again.focus();
@@ -84,7 +84,7 @@ if(isset($_POST['submit']))
 							</div>
 							<div class="form-group">
 								<span class="input-icon">
-									<input id="confirmpassword" name="confirmpassword" type="password" class="form-control"   placeholder="Password Again" required>
+									<input id="cfpassword" name="cfpassword" type="password" class="form-control"   placeholder="Password Again" required>
 									<i class="fa fa-lock"></i> 
 								</span>
 							</div>
@@ -113,8 +113,8 @@ if(isset($_POST['submit']))
 			</div>
 		</div>
 	</div>	
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/login.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/login.js"></script>
 	<script>
 		jQuery(document).ready(function() {
 				Main.init();
