@@ -289,6 +289,10 @@
 				  </div>
 			</div>
     </footer>
+    <!-- Medical message -->
+    <div class="">
+          <div class="container">Medical Management System</div>
+    </div>
     <!-- custom javascript -->
     <script src="assign/js/scripts.js"></script>
 </body>
