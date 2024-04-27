@@ -289,5 +289,7 @@
 				  </div>
 			</div>
     </footer>
+    <!-- custom javascript -->
+    <script src="assign/js/scripts.js"></script>
 </body>
 </html>
