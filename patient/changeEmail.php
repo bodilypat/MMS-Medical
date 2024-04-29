@@ -7,7 +7,7 @@
     if(isset($_POST['submit']))    
     {
         $userEmail = $_POST['email'];
-        $qUser=mysqli_query($dbcon,"UPDATE users SET email='$userEmail' WHERE id='".$_SESSION['id']."'");
+        $qUser=mysqli_query($deal,"UPDATE users SET email='$userEmail' WHERE id='".$_SESSION['id']."'");
         if($qUser)
         {
             $msg="Your email updated Successfully";
