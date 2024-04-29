@@ -6,7 +6,7 @@
     {
         $userName = $_POST['username'];
         $userPass = $_POST['password'];
-        $qUser = mysqli_query($dbcon,"SELECT * FROM users WHERE email='$userName' AND password='$userPass' ");
+        $qUser = mysqli_query($deal,"SELECT * FROM users WHERE email='$userName' AND password='$userPass' ");
         $result = mysql_fetch_array($qUser);
         if($result > 0)
         {
@@ -17,7 +17,7 @@
             $userip = $_SERVER['REMOTE_ADDR'];
             $status=1;
             /* storing user login  */
-            $userL = mysqli_query($dbcon,"INSERT INTO userlog(userId,username,userip,status)
+            $userL = mysqli_query($deal,"INSERT INTO userlog(userId,username,userip,status)
                                           VALUES('$userid','$userName','$userip','$status') ");
             header("location:dashboard.php")
         }
@@ -26,7 +26,7 @@
             $_SESSION['login'] = $_POST['usernam'];
             $userip = $_SERVER['REMOTE_ADDR'];
             $status=0;
-            mysqli_query($dbcon,"INSERT INTO userlog(username,userip,status)
+            mysqli_query($deal,"INSERT INTO userlog(username,userip,status)
                                  VALUES('$userName','$userip','$status')");
             $_SESSION['errmsg'] = "Invalid username or password";
             header("location:userLong.php")
@@ -38,9 +38,9 @@
     <head>
         <title>User-Login</title>
         <!-- custom style -->
-        <link rel="stylesheet" href="assign/css/styles.css">
-        <link rel="stylesheet" href="assign/css/plugins.css">
-        <link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+        <link rel="stylesheet" href="../assign/css/styles.css">
+        <link rel="stylesheet" href="../assign/css/plugins.css">
+        <link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
     </head>
 <body>
     <div class="row">
@@ -89,8 +89,8 @@
           </div>
     </div>
     <!-- custom javascript -->
-    <script src="assign/js/main.js"></script>
-    <script src="assign/js/login.js"></script>
+    <script src="../assign/js/main.js"></script>
+    <script src="../assign/js/login.js"></script>
     <script>
             jquery(document).ready(function() {
                 Main.init();
