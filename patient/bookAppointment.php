@@ -14,7 +14,7 @@
         $uStatus=1;
         $docStatus=1;
 
-        $qAdd=mysqli_query($dbcon,"INSERT INTO appointment(doctorSpecial,doctorId, userId,consultFees, appoinDate, appointTime,userStatus,doctorstatus)
+        $qAdd=mysqli_query($deal,"INSERT INTO appointment(doctorSpecial,doctorId, userId,consultFees, appoinDate, appointTime,userStatus,doctorstatus)
                                     VALUES('$docSpecial','$docid','$userid','$docConsult','$appDate','$appTime',$uStataus','$docStatus')");
         if($qAdd)
         {
@@ -91,7 +91,7 @@
                                                                 <select name="doctorspecial" class="form-control" 
                                                                         onChange="getDoctor(this.value);" required="required">
                                                                     <option value="">Select Specialization</option>
-                                                                        <?php $qDS=mysqli_query($dbcon,"SELECT * FROM doctorSpecialized");
+                                                                        <?php $qDS=mysqli_query($deal,"SELECT * FROM doctorSpecialized");
                                                                             while($resultds=mysqli_fetch_array($qDS))
                                                                             {
                                                                         ?>
@@ -106,7 +106,7 @@
                                                                 <select name="doctor" class="form-control" 
                                                                         onChange="getfee(this.value);" required="required">
                                                                     <option value="">Select Doctor</option>
-                                                                        <?php $qDoc=mysqli_query($dbcon,"SELECT * FROM doctors");
+                                                                        <?php $qDoc=mysqli_query($deal,"SELECT * FROM doctors");
                                                                               while($resultdoc=mysqli_fetch_array($qDoc))
                                                                               {
                                                                         ?>
