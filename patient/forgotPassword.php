@@ -7,7 +7,7 @@
     {
         $userName = $_POST['fullname'];
         $userEmail = $_POST['email'];
-        $qUser = mysqli_query($dbcon,"SELECT id FROM users WHERE fullname='$name' AND email='$userEmail' ");
+        $qUser = mysqli_query($deal,"SELECT id FROM users WHERE fullname='$name' AND email='$userEmail' ");
         $result=mysqli_num_rows($qUser);
         if($result > 0)
         {
@@ -68,8 +68,8 @@
             </div>
       </div>
       <!-- custom javascript -->
-      <script src="assign/js/main.js"></script>
-      <script src="assign/js/login.js"></script>
+      <script src="../assign/js/main.js"></script>
+      <script src="../assign/js/login.js"></script>
       <script>
             jQuery(document).ready(function(){
                 Main.init();
