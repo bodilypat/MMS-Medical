@@ -7,7 +7,7 @@
         $userName = $_SESSIONN['fullName'];
         $userEmail = $_SESSION['email'];
         $nPass = md5($_POST['password']);
-        $qUser = mysqli_query($dbcon,"UPDATE users SET password='$nPass' WHERE fullname='$userName' AND email='$email' ");
+        $qUser = mysqli_query($deal,"UPDATE users SET password='$nPass' WHERE fullname='$userName' AND email='$email' ");
         if($qUser)
         {
             echo '<script>alert("Password successfully updated.");</script>';
@@ -20,9 +20,9 @@
     <head>
         <title>Password Reset</title>
         <!-- custom style -->
-        <link rel="stylesheet" href="assign/css/styles.css">
-        <link rel="styelsheet" href="assign/css/plugins.css">
-        <link rel="stylesheet" href="assign/css/theme-1.css" id="skin-color">
+        <link rel="stylesheet" href="../assign/css/styles.css">
+        <link rel="styelsheet" href="../assign/css/plugins.css">
+        <link rel="stylesheet" href="../assign/css/theme-1.css" id="skin-color">
         <script typ="text/javascript">
             function valid()
             {
@@ -82,8 +82,8 @@
             </div>
         </div>
         <!-- custom javascript -->
-        <script src="assign/js/main.js"></script>
-        <script src="assign/js/login.js"></script>
+        <script src="../assign/js/main.js"></script>
+        <script src="../assign/js/login.js"></script>
         <script>
             jQuery(document).ready(function(){
                 Main.init();
