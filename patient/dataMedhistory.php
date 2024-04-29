@@ -61,7 +61,7 @@
 								<h5 class="over-title margin-bottom-15">Users <span class="text-bold">Medical History</span></h5>
 								<?php
                                		$patid=$_GET['infoid'];
-                               		$qPat=mysqli_query($con,"SELECT * FROM patient WSHER ID='$patid'");
+                               		$qPat=mysqli_query($deal,"SELECT * FROM patient WSHER ID='$patid'");
 									$count=1;
 									while ($result=mysqli_fetch_array($qPat))
 									{
@@ -72,32 +72,32 @@
 											</tr>
     										<tr>
     											<th scope>Patient Name</th>
-    												<td><?php  echo $result['patientName'];?></td>
+    												<td><?php  echo $result['PatientName'];?></td>
     											<th scope>Patient Email</th>
-    												<td><?php  echo $result['patientEmail'];?></td>
+    												<td><?php  echo $result['PatientEmail'];?></td>
   											</tr>
   											<tr>
     											<th scope>Patient Mobile Number</th>
-    												<td><?php  echo $result['patientContno'];?></td>
+    												<td><?php  echo $result['PatientContno'];?></td>
     											<th>Patient Address</th>
-	    											<td><?php  echo $result['patientAddress'];?></td>
+	    											<td><?php  echo $result['PatientAdd'];?></td>
   											</tr>
     										<tr>
     											<th>Patient Gender</th>
-    												<td><?php  echo $result['patientGender'];?></td>
+    												<td><?php  echo $result['PatientGender'];?></td>
     											<th>Patient Age</th>
-    												<td><?php  echo $result['patientAge'];?></td>
+    												<td><?php  echo $result['PatientAge'];?></td>
   											</tr>
   											<tr>											
     											<th>Patient Medical History(if any)</th>
-    												<td><?php  echo $result['patientMedhis'];?></td>
+    												<td><?php  echo $result['PatientMedhis'];?></td>
      											<th>Patient Reg Date</th>
-    												<td><?php  echo $result['createDate'];?></td>
+    												<td><?php  echo $result['CreationDate'];?></td>
   											</tr>									
 										<?php }?>
 									</table>
 								<?php  
-									$qMdh=mysqli_query($dbdeal,"SELECT * FROM medicalhistory  WHERE PatientID='$patid'");
+									$qMdh=mysqli_query($deal,"SELECT * FROM medicalhistory  WHERE PatientID='$patid'");
  								?>
 									<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
   										<tr align="center">
@@ -118,12 +118,12 @@
   								?>
 										<tr>
   											<td><?php echo $count;?></td>
- 											<td><?php  echo $resultset['bloodPressure'];?></td>
+ 											<td><?php  echo $resultset['BloodPressure'];?></td>
  											<td><?php  echo $resultset['Weight'];?></td>
- 											<td><?php  echo $resultset['bloodSugar'];?></td> 
-  											<td><?php  echo $resultset['temperature'];?></td>
-  											<td><?php  echo $resultset['medicalPres'];?></td>
-  											<td><?php  echo $resultset['creationDate'];?></td> 
+ 											<td><?php  echo $resultset['BloodSugar'];?></td> 
+  											<td><?php  echo $resultset['Temperature'];?></td>
+  											<td><?php  echo $resultset['MedicalPres'];?></td>
+  											<td><?php  echo $resultset['CreationDate'];?></td> 
 										</tr>
 									<?php $count=$count+1;} ?>
 							</table>                          
@@ -137,8 +137,8 @@
 	<?php include('../define/footer.php');?>
 	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->
-	<script src="assign/js/main.js"></script>
-	<script src="assign/js/form-elements.js"></script>
+	<script src="../assign/js/main.js"></script>
+	<script src="../assign/js/form-elements.js"></script>
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
