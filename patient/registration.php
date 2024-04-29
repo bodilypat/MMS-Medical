@@ -20,9 +20,9 @@
 <html lang="en">
     <title>User Registration</title>
     <!-- custom style -->
-    <link rel="stylesheet" href="assign/css/styles.css">
-    <link rel="stylesheet" href="assign/css/plugins.css">
-    <link rel="stylesheet" href="assign/css/theme/theme-1.css">
+    <link rel="stylesheet" href="../assign/css/styles.css">
+    <link rel="stylesheet" href="../assign/css/plugins.css">
+    <link rel="stylesheet" href="../assign/css/theme/theme-1.css">
     <script type="text/javascript">
         function valid()
         {
