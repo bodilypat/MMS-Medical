@@ -2,7 +2,7 @@
     require_once('../define/config.php');
     if(!empty($_POST['EMAIL'])){
         $email=$_POST['email'];
-        $qUser = mysqli_query($dbcon,"SELECT email from users WHERE email='$email' ");
+        $qUser = mysqli_query($deal,"SELECT email from users WHERE email='$email' ");
         $cRows = mysqli_num_rows(qUser);
         if($cRows > 0)
         {
