@@ -2,7 +2,7 @@
     session_start();
     error_reporting(0);
     include('../define/config.php');
-    include('../define/checkLogin');
+    include('../define/checklogin');
     check_login();
 ?>
 <!DOCTYPE html>
