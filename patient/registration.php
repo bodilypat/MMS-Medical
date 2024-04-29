@@ -9,7 +9,7 @@
         $userEmail = $_POST['email'];
         $userPass = $_POST['password'];
 
-        $qUser=mysqli_query($dbcon,"INSERT INTO users(fullname, address,city, gender,email,password)
+        $qUser=mysqli_query($deal,"INSERT INTO users(fullname, address,city, gender,email,password)
                                     VALUES('$userName','$userAdd','$city','userGen','$userEmail','$userPass') ");
         if($qUser){
             echo "<script>alert('Successfully Registered. you can login now');</script>";
@@ -111,8 +111,8 @@
                 </div>
             </div>
         <!-- custom javascript -->
-        <script src="assign/js/main.js"></script>
-        <script src="assign/js/login.js"></script>
+        <script src="../assign/js/main.js"></script>
+        <script src="../assign/js/login.js"></script>
         <script>
             jQuery(document).ready(function(){
                 Main.init();
