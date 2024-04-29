@@ -1,8 +1,8 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('include/config.php');
-	include('include/checklogin.php');
+	include('../define/config.php');
+	include('../define/checklogin.php');
 	check_login();
 	if(isset($_POST['submit']))
 	{
@@ -33,15 +33,15 @@
 	<head>
 		<title>Users | Medical History</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assign/css/styles.css">
-		<link rel="stylesheet" href="assign/css/plugins.css">
-		<link rel="stylesheet" href="assign/css/themes/theme-1.css" id="skin_color" />
+		<link rel="stylesheet" href="../assign/css/styles.css">
+		<link rel="stylesheet" href="../assign/css/plugins.css">
+		<link rel="stylesheet" href="../assign/css/themes/theme-1.css" id="skin_color" />
 	</head>
 <body>
 	<div id="application">		
-		<?php include('include/sidebar.php');?>
+		<?php include('../define/sidebar.php');?>
 		<div class="application-content">
-			<?php include('include/header.php');?>
+			<?php include('../define/header.php');?>
 			<div class="main-content" >
 				<div id="container" class="wrap-content container" >
 						<!-- section: PAGE TITLE -->
@@ -72,32 +72,32 @@
 											</tr>
     										<tr>
     											<th scope>Patient Name</th>
-    												<td><?php  echo $result['PatientName'];?></td>
+    												<td><?php  echo $result['patientName'];?></td>
     											<th scope>Patient Email</th>
-    												<td><?php  echo $result['PatientEmail'];?></td>
+    												<td><?php  echo $result['patientEmail'];?></td>
   											</tr>
   											<tr>
     											<th scope>Patient Mobile Number</th>
-    												<td><?php  echo $result['PatientContno'];?></td>
+    												<td><?php  echo $result['patientContno'];?></td>
     											<th>Patient Address</th>
-	    											<td><?php  echo $result['PatientAdd'];?></td>
+	    											<td><?php  echo $result['patientAddress'];?></td>
   											</tr>
     										<tr>
     											<th>Patient Gender</th>
-    												<td><?php  echo $result['PatientGender'];?></td>
+    												<td><?php  echo $result['patientGender'];?></td>
     											<th>Patient Age</th>
-    												<td><?php  echo $result['PatientAge'];?></td>
+    												<td><?php  echo $result['patientAge'];?></td>
   											</tr>
   											<tr>											
     											<th>Patient Medical History(if any)</th>
-    												<td><?php  echo $result['PatientMedhis'];?></td>
+    												<td><?php  echo $result['patientMedhis'];?></td>
      											<th>Patient Reg Date</th>
-    												<td><?php  echo $result['CreationDate'];?></td>
+    												<td><?php  echo $result['createDate'];?></td>
   											</tr>									
 										<?php }?>
 									</table>
 								<?php  
-									$qMdh=mysqli_query($deal,"SELECT * FROM medicalhistory  WHERE PatientID='$patid'");
+									$qMdh=mysqli_query($dbdeal,"SELECT * FROM medicalhistory  WHERE PatientID='$patid'");
  								?>
 									<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
   										<tr align="center">
@@ -118,12 +118,12 @@
   								?>
 										<tr>
   											<td><?php echo $count;?></td>
- 											<td><?php  echo $resultset['BloodPressure'];?></td>
+ 											<td><?php  echo $resultset['bloodPressure'];?></td>
  											<td><?php  echo $resultset['Weight'];?></td>
- 											<td><?php  echo $resultset['BloodSugar'];?></td> 
-  											<td><?php  echo $resultset['Temperature'];?></td>
-  											<td><?php  echo $resultset['MedicalPres'];?></td>
-  											<td><?php  echo $resultset['CreationDate'];?></td> 
+ 											<td><?php  echo $resultset['bloodSugar'];?></td> 
+  											<td><?php  echo $resultset['temperature'];?></td>
+  											<td><?php  echo $resultset['medicalPres'];?></td>
+  											<td><?php  echo $resultset['creationDate'];?></td> 
 										</tr>
 									<?php $count=$count+1;} ?>
 							</table>                          
@@ -134,8 +134,8 @@
 		</div>
 	</div>
 			<!--  FOOTER -->
-	<?php include('include/footer.php');?>
-	<?php include('include/setting.php');?>
+	<?php include('../define/footer.php');?>
+	<?php include('../define/setting.php');?>
 	<!-- JAVASCRIPTS -->
 	<script src="assign/js/main.js"></script>
 	<script src="assign/js/form-elements.js"></script>
