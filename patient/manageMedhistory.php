@@ -51,7 +51,7 @@
                                         <tbody>
                                             <?php   
                                                 $userid=$_POST['id'];
-                                                $qPat=mysqli_query($dbcon,"SELECT patients.* 
+                                                $qPat=mysqli_query($deal,"SELECT patients.* 
                                                                            FROM patient JOIN users ON users.email=patientEmail 
                                                                            WHERE users.id='$userid' ");
                                                 $count=1;
