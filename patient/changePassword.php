@@ -7,11 +7,11 @@
     $currentTime = date('d-m-Y h:i:s A', time() );
     if(isset($_POST['submit']))
     {
-        $qUser=mysql_query($dbcon,"SELECT password users WHERE password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'" );
+        $qUser=mysql_query($deal,"SELECT password users WHERE password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'" );
         $result=mysqli_fetch_array($qUser);
         if($result>0)
         {
-            $eUser=mysqli_query($dbcon,"UPDATE users 
+            $eUser=mysqli_query($deal,"UPDATE users 
                                         set password='".md5($_POST['npass'])."' , updateDate='$currentTime' 
                                         WHERE  id='".$_SESSION['id']."'");
             $_SESSION['msg']="Password Changed Successfully !!";
@@ -25,9 +25,9 @@
     <head>
         <title>User | Change Password</title>
         <!-- custom style -->
-        <link rel="stylesheet" href="assign/css/styles.css">
-        <link rel="stylesheet" href="assign/css/plugins.css">
-        <link rel="stylesheet" href="assign/css/theme/theme-1.css" id="skin_color" />
+        <link rel="stylesheet" href="../assign/css/styles.css">
+        <link rel="stylesheet" href="../assign/css/plugins.css">
+        <link rel="stylesheet" href="../assign/css/theme/theme-1.css" id="skin_color" />
         <!-- check password -->
         <script>
             function valid()
