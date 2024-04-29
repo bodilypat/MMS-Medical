@@ -2,7 +2,7 @@
     include('../define/config.php');
     if(!empty($_POST['specialized']))
     {
-        $qDoc=mysqli_query($dbcon,"SELECT doctorName, id From doctors WHERE special='".$_POST['specialized']."'");?>
+        $qDoc=mysqli_query($deal,"SELECT doctorName, id From doctors WHERE special='".$_POST['specialized']."'");?>
         <option selected="selected">Select Doctor</option>
         <?php 
             while($result=mysqli_fetch_array($qDoc))
@@ -13,7 +13,7 @@
     }
     if(!empty($_POST['doctor']))
     {
-        $qDoc=mysqli_query($dbcon,"SELECT docFees FROM doctors WHERE id='".$_POST['doctor']."'");
+        $qDoc=mysqli_query($deal,"SELECT docFees FROM doctors WHERE id='".$_POST['doctor']."'");
         while($result=mysqli_fetch_array($qDoc))
         {
     ?>
