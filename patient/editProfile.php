@@ -10,7 +10,7 @@
         $uCity = $_POST['city'];
         $userGen = $_POST['gender'];
 
-        $qUser=mysqli_query($dbcon,"UPDATE users set fullname='$userName', address='$userAdd',' city='$uCity',' gender='$userGen',' 
+        $qUser=mysqli_query($deal,"UPDATE users set fullname='$userName', address='$userAdd',' city='$uCity',' gender='$userGen',' 
                                     WHERE id='".$_SESSION['id']."'");
         if($qUser)
         {
@@ -52,7 +52,7 @@
                                                  <div class="panel-heading"><h5 class="page-title">Edit Profile</div>
                                                  <div class="panel-body">
                                                     <?php
-                                                        $qUser=myqli_query($dbcon,"SELECT * FROM users WHERE id='".$_SESSION['id']."'");
+                                                        $qUser=myqli_query($deal,"SELECT * FROM users WHERE id='".$_SESSION['id']."'");
                                                         while($result=mysqli_fetch_array($qUser))
                                                         {
                                                     ?>
