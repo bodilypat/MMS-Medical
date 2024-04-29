@@ -8,7 +8,7 @@
     } else {
         if(isset($_GET['cencel']))
         {
-            mysqli_query($dbcon,"UPDATE appointment SET userStatus='0' WHERE id ='".$_GET['id']."'");
+            mysqli_query($deal,"UPDATE appointment SET userStatus='0' WHERE id ='".$_GET['id']."'");
             $_SESSION['msg']="Your appointment canceled !!";
         }
     }
@@ -59,7 +59,7 @@
                                                 </tr>
                                             </thead>
                                             <?php                                                 
-                                                    $qDoc=mysqli_query($dbcon,"SELECT doctors.doctorName as docname, appointment.*
+                                                    $qDoc=mysqli_query($deal,"SELECT doctors.doctorName as docname, appointment.*
                                                                                FROM appointment JOIN doctors ON doctor.id=appointment.doctorId
                                                                                WHERE appointment.userId='".$_SESSION['id']."'");
                                                     $count=1;
