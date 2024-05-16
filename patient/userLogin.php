@@ -1,12 +1,12 @@
 <?php
     session_start();
     error_reporting(0);
-    include('define/config.php');
+    include('../define/config.php');
     if(isset($_POST['submit']))
     {
         $userName = $_POST['username'];
         $userPass = $_POST['password'];
-        $qUser=mysqli_query($db_handle,"SELECT * FROM users WHERE email = '$userName' AND password='$userPass' ");
+        $qUser=mysqli_query($deal,"SELECT * FROM users WHERE email = '$userName' AND password='$userPass' ");
         $result = mysqli_query($qUser);
         if($result > 0){
             $_SESSION['login'] = $_POST['username'];
@@ -17,7 +17,7 @@
             $status=1;
 
             /* for storing log if user login  successfull */
-            $addLog = mysqli_query($db_handle,"INSERT INTO  userlog(id,username, userip, status)
+            $addLog = mysqli_query($deal,"INSERT INTO  userlog(id,username, userip, status)
                                                VALUES('$userID','$usernName','$userIP','$status')");
             header("location:dashboard.php");
         } else {
@@ -25,7 +25,7 @@
             $_SESSION['login']=$_POST['username'];
             $userIP=$_SERVER['REMOTE_ADDR'];
             $status=0;
-            mysqli_query($db_handle,"INSERT INTO userlog(username, userip, status)
+            mysqli_query($deal,"INSERT INTO userlog(username, userip, status)
                                      VALUES('$userName','$userIP','$status') ");
             $_SESSION("location:userLogin.php")
         }
