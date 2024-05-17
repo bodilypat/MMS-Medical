@@ -4,97 +4,78 @@
     include('../define/config.php');
     include('../define/checklogin.php');
     check_login();
-    if(isset($_POST['submit']))    
-    {
+    if(isset($_POST['submit'])){
         $userEmail = $_POST['email'];
-        $qUser=mysqli_query($deal,"UPDATE users SET email='$userEmail' WHERE id='".$_SESSION['id']."'");
-        if($qUser)
-        {
-            $msg="Your email updated Successfully";
+        $editUser = mysqli_query($deal,"UPDATE users SET email='$userEmail' WHERE id='".$_SESSION['id']. "'");
+        if($editUser){
+            $msg ="your email updated Successfully";
         }
     }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-     <head>
-            <title>User | Edit Profile</title>
-            <!-- custom style -->
-            <link rel="stylesheet" href="../assign/css/styles.css">
-            <link rel="stylesheet" href="../assign/css/plugins.css">
-            <link rel="Stylesheet" href="../assign/css/theme/theme-1" id="skin_color" />
-     </head>
-    <body>
-        <div class="application">
-            <div class="application-content">
-                 <div class="main-content">
-                      <div id="container" class="wrap-content container">
-                           <!-- section: page title -->
-                           <section id="page-title">
-                                <div class="row">
-                                    <div class="col-sm-8"><h1 class="mainTitle">User | Edit Profile</h1></div>
-                                    <ol class="breadcrumb">
-                                        <li><span>User</span></li>
-                                        <li class="active"><span>Edit Profile</span></li>
-                                    </ol>
-                                </div>
-                           </section>
-                           <!-- get email -->
-                           <div calss="container-fluid container-fullw bg-white">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                          <h5 style="color:green; font:size:8px;"><?php echo if(msg) { echo htmlentities($msg); }?></h5>
-                                          <div class="row margin-top-30">
-                                               <div class="col-lg-8 col-md-12">
-                                                     <div class="panel-heading"><h5 class="panel-title">Edit Profile</h5></div>
-                                                     <div class="panel-body">
-                                                           <form name="getEmail" id="updateEmail" method="post">
-                                                                <div class="form-group">
-                                                                    <label for="UserEmail">User Email</label>
-                                                                    <input name="email" id="email" type="email" class="form-control" 
-                                                                           onBlur="userAvailability()" placeholder="Get Email" required>
-                                                                           <span id="user-availability-status" style="font-size:12px;"></span>
-                                                                </div>
-                                                                <button name="submit" id="submit" type="submit" class="btn btn-o btn-primary">
-                                                                    updated
-                                                                </button>
-                                                           </form>
-                                                     </div>
-                                               </div>
-                                          </div>
+<!-- Change Email -->
+<body>
+    <div class="application">
+         <div class="application-content">
+               <div class="main-content">
+                    <div id="container" class="wrap-content container">
+                         <!-- section: page title -->       
+                         <section id="page-title">
+                               <div class="row">
+                                     <div class="col-sm-8"><h1 class="mainTitle">User | Edit Profile</h1></div>
+                                     <ol>
+                                          <li><span>User</span></li>
+                                          <li class="active"><span>Change Password</span></li>
+                                     </ol>
+                               </div>
+                        </section>
+                         <!-- container -->
+                        <div class="container-fluid container-fullw bg-white">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row margin-top-30">
+                                        <div class="col-lg-8 col-md-12">
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading"><h5 class="panel-title">Change Password</h5></div>
+                                                <div class="panel-body">
+                                                      <p style="color:red;">
+                                                           <?php echo entities($_SESSION['msg']); ?>
+                                                           <?php echo entities($_SESSION['msg']=""); ?>
+                                                      </p>
+                                                      <form role="form" name="changpwd" method="post" onSubmit="return valid(); ">
+                                                           <div class="form-group">
+                                                                <label for="Email">Current Password</label>
+                                                                <input type="password" name="cpass" class="form-control" placeholder="Current Password">
+                                                           </div>
+                                                           <div class="form-group">
+                                                                 <label for="Password">New Password</label>
+                                                                 <input type="password" name="npass" class="form-control" placeholder="New Password">
+                                                           </div>
+                                                           <div class="form-group">
+                                                                 <label for="ConfirmPassword">Confirm Password</label>
+                                                                 <input type="password" name="cfpass" class="form-control" placeholder="Confirm Password">
+                                                            </div>
+                                                            <button type="submit" name="submit" class="btn btn-o btn-primary">
+                                                                  Submit
+                                                            </button>                                                           
+                                                      </form>
+                                                </div>
+                                            </div>   
+                                        </div>
                                     </div>
                                 </div>
-                           </div>
-                      </div>
-                 </div>
-            </div>
-            <!-- FOOTER -->
-            <?php include('../define/footer.php');?>
-            <?php include('../define/setting.php');?>
-        </div>
-        <<!-- custom javascript -->
-        <script src="../assign/js/main.js"></script>
-        <script src="../assign/js/form-elements.js"></script>
-        <script>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+         </div>      
+    </div>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/form-elements.js"></script>
+    <script>
             jQuery(document).ready(function(){
                 Main.init();
-                FormElement.init();
+                FormElements.init();
             });
-        </script>
-        <script>
-            function userAvailability(){
-                $("#loaderIcon").show();
-                jQuery.ajax({
-                    url: "checkAvailability.php",
-                    data: 'email='+$('#email').val(),
-                    $type: "POST",
-                    success:function(data)
-                    {
-                        $("user-availability-status").html(data);
-                        $("#loaderIcon").hide();
-                    },
-                    error:function(){}
-                });
-            }
-        </script>
-    </body>
-</html>
+    </script>
+</body>
+
