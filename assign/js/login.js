@@ -6,34 +6,48 @@ var Login = function() {
             errorElement: "span", /* containe error msg in a small tag */
             errorClass: 'help-block',
             errorPlacement : function(error, element){ /* render error placement  */
-
+                if(element.attr("type") == "radio" || element.attr("type") == "checkbox") { 
+                    /* chosen element, need to insert  */
+                } else if (element.attr('name') == "card_expiry_mm" || element.attr('name') == "card_expiry_yyyy" ) {
+                    error.appendTo($(element).closest('.form-group').children('div'));
+                } else {
+                    error.insertAfter(element);
+                    /* for other inputs */
+                }
             },
             ignore : ':hidden',
             success : function(label, element) {
-                label.addClass('help-block valid');
+                label.addClass('help-block valid'); 
+                /* current input as valid and display OK icon */
                 $(element).closest('.form-group').removeClass('has-error');
             },
             highlight : function(element) {
-                $(element).closest('.help-group').addClass('has-error'); /* add Bootstrap errr class control group */
+                $(element).closest('.help-group').addClass('has-error'); 
+                /* add Bootstrap error class control group */
             },
-            unhighlight : function(element) { /* revert change done by hightlight */
+            unhighlight : function(element) { 
+                /* revert change done by hightlight */
                 $(element).closest('.form-group').removeClass('has-error'); /* set error class to the control group */
             }
         });
     };
     var runLoginValidator = function() {
-        var form = $('.form-login');
-        var errorHandler = $('.errorHandler', form);
-        form.validate({
+        var loginForm = $('.form-login');
+        var errorHandlerlg = $('.errorHandler', form);
+        loginForm.validate({
             rules : {
                 username : {
-                    mainlength : 2,
+                    minlength : 2,
+                    required : true
+                },
+                password : {
+                    minlength : 6,
                     required : true
                 }
             },
             submitHandler : function(form) {
                 errorHandler.hide();
-                form.submit();
+                loginForm.submit();
             },
             invalidHandler : function(event, validator) { /* display error alear on form submit */
                 errorHandker.show();
