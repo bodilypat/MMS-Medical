@@ -1,39 +1,42 @@
 var Login = function() {
-    "user strict";
+    "use strict";
 
-    var runSetValidation = function(){
-        $.validation.setDefault({
-            errorElement: "span", /* containe error msg in a small tag */
-            errorClass: 'help-block',
-            errorPlacement : function(error, element){ /* render error placement  */
-                if(element.attr("type") == "radio" || element.attr("type") == "checkbox") { 
-                    /* chosen element, need to insert  */
-                } else if (element.attr('name') == "card_expiry_mm" || element.attr('name') == "card_expiry_yyyy" ) {
+    var runSetDefaultValidation = function() {
+        $.validator.setDefault({
+            errorElement : "span",
+            errorClass : 'help-block',
+            errorPlacement : function(error, element) {
+                if(element.attr('type') == 'radio' || element.attr('type') == "checkbox"){
+                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                } else if(element.attr('name') == 'card_expiry_mm' || element.attr('name') == 'card_expiry_yyyy'){
                     error.appendTo($(element).closest('.form-group').children('div'));
                 } else {
                     error.insertAfter(element);
-                    /* for other inputs */
+                    /* for other inputs, just perform default behavior */
                 }
             },
             ignore : ':hidden',
-            success : function(label, element) {
-                label.addClass('help-block valid'); 
-                /* current input as valid and display OK icon */
+            success : function(label, element){
+                label.addClass('help-block valid');
+                /* mark the current input as valid and display OK icon */
                 $(element).closest('.form-group').removeClass('has-error');
             },
-            highlight : function(element) {
-                $(element).closest('.help-group').addClass('has-error'); 
-                /* add Bootstrap error class control group */
+            highlight : function(element){
+                $(element).closest('.help-block').removeClass('valid');
+                /* display OK icon */
+                $(element).closest('.form-group').addClass('has-error');
+                /* add the Bootstrap error class to the control group */
             },
-            unhighlight : function(element) { 
-                /* revert change done by hightlight */
-                $(element).closest('.form-group').removeClass('has-error'); /* set error class to the control group */
+            unhightlight : function(element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                /* set error class of the control group */
             }
         });
     };
-    var runLoginValidator = function() {
+    /* function login Validator */
+    var runLoginValidator =  function() {
         var loginForm = $('.form-login');
-        var errorHandlerlg = $('.errorHandler', form);
+        var errorHandlerlg = $('.errorHandler', loginform);
         loginForm.validate({
             rules : {
                 username : {
@@ -45,15 +48,16 @@ var Login = function() {
                     required : true
                 }
             },
-            submitHandler : function(form) {
-                errorHandler.hide();
+            submitHandler : function(Form){
+                errorHandlerlg.hide();
                 loginForm.submit();
             },
-            invalidHandler : function(event, validator) { /* display error alear on form submit */
-                errorHandker.show();
+            invalidHandler : function(event, validator) {
+                errorHandlerlg.show();
             }
         });
     };
+    /* function forgot validate */
     var runForgotValidator = function() {
         var forgotForm = $('.form-forgot');
         var errorHandlerfg = $('.errorHandler', forgotForm);
@@ -67,61 +71,63 @@ var Login = function() {
                 errorHandlerfg.hide();
                 forgotForm.submit();
             },
-            invalidHandler : function(event, validator) { /* display error alert on form submit */
+            invalidHandler : function(event, validator) {
                 errorHandlerfg.show();
             }
         });
     };
+    /* function register validate */
     var runRegisterValidator = function() {
         var registForm = $('.form-register');
-        var errorHandlerrg = $('.errorHandler', registForm);
+        var errorHandlerrg = $('.errorhandler', registForm);
         registForm.validate({
             rules : {
                 fullname : {
                     minlength : 2,
-                    required : true
-                },
-                address: {
-                    minlength : 2,
-                    required : true
-                },
-                city : {
-                    minlength : 2,
                     required : true,
                 },
-                gendor: {
+                address : {
+                    minlength : 2,
                     required : true
+                },
+                city: {
+                    minlength :2,
+                    required : true
+                },
+                gender : {
+                    requried : true,
                 },
                 email : {
-                    required : true
+                    requried :  true,
                 },
                 password : {
-                    mainlength : 6,
+                    minlength : 6,
                     required : true
                 },
-                conforimPassword : {
-                    required : true,
+                confirmPassword : {
+                    requried : true,
                     minlength : 5,
-                    equalTo : "#password"
+                    equalTo : '#password'
                 },
-                agree: {
+                agree : {
                     minlength : 1,
-                    requried : true
+                    required : true
                 }
             },
-            submitHandler : function(form) {
+            submitHandler : function(form){
                 errorHandlerrg.hide();
                 registForm.submit();
             },
-            invalidHandler : function(event, validator) { /* display error alert on form submit */
-                errorHandlerrg.show();
+            invalidHandler : function(event, validator) {
+                errorHandlerrg3.show();
             }
         });
     };
-    return { /* main function to initiate template pages */
+    return { 
+        /* main function to intiate template pages */
         init : function() {
-            runSetValidation();
-            runLoginValidator();
+            runSetDefaultValidation();
+            runLoginValidatior();
             runForgotValidator();
             runRegisterValidator();
         }
