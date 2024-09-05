@@ -13,7 +13,7 @@
             $patGender = $_POST['gender'];
             $patAddress = $_POST['patientaddress']
             $patAge = $_POST['patientage'];
-            $patMDH = $_POST['medicalpress'];
+            $patMDH = $_POST['medhistory'];
 
             $addPat = mysqli_query($deal,"INSERT INTO patients(docid, patientName, patientContno, patientEmail, patientGender, patientAdd, patientAge, patientMedhis)
                                           VALUES('$docID','$patName','$patContactno','$patEmail','$patGender','$patAge','$patMDH' ");
@@ -107,7 +107,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="MedicalHistory">Medical History</label>
-                                                    <textarea type="text" name="medicalpress" class="form-control" placeholder="Patient Medical History(if any)" required="true"></textarea>
+                                                    <textarea type="text" name="medicalhistory" class="form-control" placeholder="Patient Medical History(if any)" required="true"></textarea>
                                                 </div>
                                                 <button type="submit" name="submit" id="submit" class="btn-btn-o btn-primary">Add</button>
                                             </form>
