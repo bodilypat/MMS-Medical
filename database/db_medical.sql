@@ -1,3 +1,11 @@
+CREATE TABLE admin(
+    id INT AUTO_INCREMENT PRIMARY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    updationDate VARCHAR(255) NOT NULL
+    created_at TIMESTAMP CURRENT_TIMESTAMP
+); 
+
 CREATE TABLE doctors(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -65,3 +73,9 @@ CREATE TABLE billing (
     FOREIGN KEY (patent_id) REFERENCES patients(id),
     FOREIGN KEY (appointment_id) REFERENCES medical_appointments(id)
 );
+
+
+
+
+
+
