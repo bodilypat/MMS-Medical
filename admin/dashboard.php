@@ -12,7 +12,7 @@
 <html lang="en">
     <head>
         <title>Admin | Dashboard</title>
-        <!-- custom css -->
+        <!-- Custom css -->
         <link rel="stylesheet" href="../assets/css/styles.css">
         <link rel="stylesheet" href="../assets/css/plugins.css">
         <link rel="stylesheet" href="../assets/css/theme-1.css">
@@ -20,9 +20,11 @@
 <body>
 <!-- section app -->
     <div id="app">
-        <?php include('layouts/sidebar.php');?>
+        <!-- Outline: Navbar -->
+        <?php include('../layouts/sidebar.php');?>
         <div class="app-content">
-            <?php include('layouts/header.php');?>
+            <!-- Outline : Header -->
+            <?php include('../layouts/header.php');?>
             <div class="main-content">
                 <div class="wrapper-content container" id="container">
                      <!-- PAGE TITLE -->
@@ -181,11 +183,11 @@
                 </div>
             </div>
         </div>
-        <?php include('layouts/footer.php');?>
-        <?php include('layouts/setting.php');?>
+        <?php include('../layouts/footer.php');?>
+        <?php include('../layouts/setting.php');?>
     </div>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/form-elements.js"></script>
+    <script src="../asset/js/main.js"></script>
+    <script src="../asset/js/form-elements.js"></script>
     <script>
         jQuery(document).ready(function(){
             Main.init();
