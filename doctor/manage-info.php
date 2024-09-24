@@ -1,1 +1,0 @@
-manage information doctor
