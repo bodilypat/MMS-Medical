@@ -16,9 +16,10 @@
     </head>
 <body>
     <div id="app">
-        <!-- Outline : layout -->
+        <!-- Outline : Navbar -->
         <?php include('../layouts/sidebar.php');?>
         <div class="app-content">
+            <!-- Outline : Header -->
             <?php include('../layouts/header.php');?>
             <div class="main-content">
                 <div id="container" class="wrap-content container">
