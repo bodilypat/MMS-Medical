@@ -12,7 +12,9 @@ CREATE TABLE patients(
     name VARCHAR(100) NOT NULL,
     dob DATE,
     gender ENUM('male','Female','Other') NOT NULL,
-    medical_history TEXT,
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    address TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -20,6 +22,7 @@ CREATE TABLE doctors(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     specialization VARCHAR(100) NOT NULL,
+    phone VARCHAR(15),
     email VARCHAR NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
