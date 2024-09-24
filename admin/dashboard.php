@@ -13,9 +13,9 @@
     <head>
         <title>Admin | Dashboard</title>
         <!-- Custom css -->
-        <link rel="stylesheet" href="../assets/css/styles.css">
-        <link rel="stylesheet" href="../assets/css/plugins.css">
-        <link rel="stylesheet" href="../assets/css/theme-1.css">
+        <link rel="stylesheet" href="../asset/css/styles.css">
+        <link rel="stylesheet" href="../asset/css/plugins.css">
+        <link rel="stylesheet" href="../asset/css/theme-1.css">
     </head>
 <body>
 <!-- section app -->
