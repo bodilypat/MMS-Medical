@@ -77,6 +77,16 @@ include('../config/dbconnect.php');
             </div>
          </div>
     </div>
+    <!-- Outline : Footer -->
+    <?php include('../layouts/footer.php');?>
+    <?php include('../layouts/setting.php');?>
+    <!-- Custom JS -->
+    <script src="../asset/js/main.js"></script>
+    <script src="../asset/js/form-element.js"></script>
+    <script>
+        jQuery.init();
+        Form-elements.init();
+    </script>
 </body>
 </html>
-<form action="add-patient.php" method="POST"></div
+<?php } ?>
