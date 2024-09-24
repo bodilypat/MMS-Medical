@@ -1,10 +1,20 @@
-CREATE TABLE admin(
+CREATE TABLE users(
     id INT AUTO_INCREMENT PRIMARY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
+    role ENUM('admin','doctor','staff') NOT NULL,
     updationDate VARCHAR(255) NOT NULL
     created_at TIMESTAMP CURRENT_TIMESTAMP
 ); 
+
+CREATE TABLE patients(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    dob DATE,
+    gender ENUM('male','Female','Other') NOT NULL,
+    medical_history TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE doctors(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -13,6 +23,7 @@ CREATE TABLE doctors(
     email VARCHAR NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE medical_records (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,12 +38,20 @@ CREATE TABLE medical_records (
     FOREIGN KEY (doctor_id) REFERENCES doctors(id),
 );
 
+CREATE TABLE patients(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT NULL,
+    gender ENUM('male','Female','Other') NOT NULL,
+    medical_history TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE appointments(
     id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT NOT NULL,
     doctor_id INT NOT NULL,
     appointment_date DATETIME NOT NULL,
-    reason TEXT,
     status ENUM('Scheduled','completed','Cancelled') DEFAULT 'Scheduled',
     created_at TIMESTAMP CURRENT_TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES patients(id),
@@ -53,14 +72,6 @@ CREATE TABLE prescriptions(
     FOREIGN KEY (doctor_id) REFERENCES doctors(id)
 );
 
-CREATE TABLE patients(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    age INT NULL,
-    gender ENUM('male','Female','Other') NOT NULL,
-    medical_history TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 CREATE TABLE billing (
     id INT AUTO_INCREMENT PRIMARY key,
