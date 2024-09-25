@@ -1,43 +1,51 @@
 <?php
 session_start();
-error_report(0);
-include('../config/dbconnect.php');
+
+if(!isset($_SESSION['user_id'])) {
+        header('Location:login.php');
+        exit();
+    }
+
+    include('../config/dbconnect.php');
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
     
-            $patname = $_POST['name'];
-            $patdob = $_POST['dob'];
-            $patgender = $_POST['gender'];
-            $patcontact = $_POST['phone'];
-            $patemail = $_POST['email'];
-            $pataddress = $_POST['address']
+            $name = $_POST['name'];
+            $dob = $_POST['dob'];
+            $gender = $_POST['gender'];
+            $phone = $_POST['phone'];
+            $mail = $_POST['email'];
+            $address = $_POST['address']
 
             $aPat = mysqli_query($deal,"INSERT INTO patients(name, dob, gender, phone, email, address)
-                                        VALUES('$patname','$patdob','$patgender','$patcontact','$patemail', $pataddress')");
+                                        VALUES('$name','$dob','$gender','$phone','$email', $address')");
             if($aPat)
             {
                 echo "<script>alert('patient info added successfully');</script>";
-                header('localhost:add-patient.php');
+                header('localhost:manage-patients.php');
         }
+    
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Doctor | add Patient</title>
+        <title>Patient | Add Patient</title>
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../asset/css/styles.css">
     </head>
 <body>
     <div class="app">
-        <!-- outline: navbar -->
+        <!-- Outline: navbar -->
+         <?php include('../layouts/navbar.php');?>
          <div class="app-content">
+            <!-- Outline : header -->
             <?php include('../layouts/header.php');?>
             <div class="main-content">
                  <div id="container" class="wrap-content container">
                       <section id="page-title">
                             <div class="row">
-                                 <div class="col-sm-8"><h1 class="mainTitle"> Patient | add Patient</h1></div>
+                                 <div class="col-sm-8"><h1 class="mainTitle"> Patient | Add Patient</h1></div>
                             </div>
                       </section>
                       <div class="container bg-white">
