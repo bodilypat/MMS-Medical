@@ -1,144 +1,100 @@
 <?php
     session_start();
-    error_reporting(0);
-    include('../define/config.php');
-    if(strlen($_SESSION['id'])) {
-        header('location: logout.php');
+    include('../config/')
+    if(strlen($_SESSION['id']==0)){
+        header('Location:login.php');
     } else {
-        $docID = intval($_SESSION['editid']){
-            $docSpecial = $_POST['doctorSpecialized'];
-            $docName = $_POST['doctorname'];
-            $docAddress = $_POST['clinicaddress'];
-            $docFees = $_POST['consultfees'];
-            $docContactno = $_POST['contactno'];
-            $docEmail = $_POST['email'];
 
-            $editDoc = mysqli_query($deal,"UPDATE doctors SET specialized = '$docSpecial', 
-                                                              doctorName = '$docName', 
-                                                              address = '$docAddress',
-                                                              doctorFees = '$docFees',
-                                                              contactno = '$docContactno',
-                                                              doctorEmail = '$docEmail'
-                                           WHERE id= '$docID' ");
-            if($editDoc) {
-                $msg = "Doctor Details Updated Successfully";
-            }
+        $did = intval($_GET['id']) /* get doct id */
+        if(isset($_POST['submit']))
+        {
+            $docname = $_POST['name'];
+            $specailty = $_POST['specialty'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+
+            $eDoc = mysqli_query($deal,"UPDATE doctors SET name='$docname', specialty='$specialty', phone='$phone', email='$email' 
+                                        WHERE id='$did' ");
+            header('Location:manage-doctors.php');
         }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Edit Doctor Management | Admin</title>
-        <!-- custom style -->
-        <link rel="stylesheet" href="../assign/css/styles.css">
-        <link rel="stylesheet" href="../assign/css/plugin.css">
-        <link rel="stylesheet" href="../assign/css/theme-1.css" id="skin_color" />
+        <title>Admin | Edit Doctor</title>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../asset/css/styles.css">
     </head>
+</html>
 <body>
     <div id="app">
-        <?php include('../define/sidebar.php');?>
+        <!-- Outline : Navber -->
+        <?php include('../layouts/sidebar.php');?>
         <div class="app-content">
-            <?php include('../define/header.php');?>
+            <!-- Outline : Header -->
+            <?php include('../layouts/header.php');?>
             <div class="main-content">
-                 <div class="wrap-content container" id="container">
-                      <!-- page title -->
-                       <selection id="page-title">
-                            <div class="row">
-                                 <div class="col-sm-8"><h1 class="mainTitle"> Edit Doctor Management | Admin</h1></div>
-                                 <ol class="breadcrumb">
-                                      <li><span>Admin</span></li>
-                                      <li><span>Edit Doctor Management</span></li>
-                                 </ol>
-                            </div>
-                       </section>
-                       <div class="container-fluid container-fullw bg-white">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5 style="corlor:green; font-size: 18px; "><?php if($msg) { echo htmlentities($msg);}?></h5>
-                                    <div class="row margin-top-30">
-                                        <div class="col-lg-8 col-md-12">
-                                            <div class="panel panel-white">
-                                                <div class="panel-heading"><h5 class="panel-title">Edit Doctor Info</h5></div>                                            
-                                                <div class="panel-body">
-                                                    <?php $qDoc = mysqli_query($deal,"SELECT * FROM doctors WHERE id='$docID'");
-                                                          while($result=mysqli_fetch_array($qDoc)){
-                                                    ?>
-                                                    <h4><?php echo htmlentities($result['doctorName']);?>'s Profile</h4>
-                                                    <p><b>Profile Reg. Date : </b><?php echo htmlentities($result['creationDate']);?></p>
-                                                        <?php if($result['updationDate']) { ?> 
-                                                        <p></b>Profile Last Updation Date: </b><?php echo htmlentities($result['updationDate']);?></p>
+                <div class="wrap-content container" id="container">
+                     <!-- PAGE TITLE -->
+                    <section id="pate-title">
+                        <div class="row">
+                            <div class="col-sm-8"><h1 class="mainTitle">Admin | Edit Doctor</h1></div>
+                            <ol>
+                                 <li><span>Admin</span></li>
+                                 <li class="active"><span>Edit Doctor</span></li>
+                            </ol>
+                        </div>
+                    </select>
+                    <!-- BODY -->
+                    <div class="container-fluid container-full bg-white">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 style="color: green; font-size:18px; "><?php if($msg) { echo htmlentities($msg);} ?></h5>
+                                <div class="row margin-top-30">
+                                    <div class="col-lg-8 col-md-12">
+                                        <div class="panel panel-white">
+                                            <div class="panel-heading"><h5 class="panel-title">Edit Doctor</h5></div>
+                                            <div class="panel-body">
+                                                <?php
+                                                    $qDoc = mysqli_query($deal,"SELECT * FROM doctors WHERE id='$did'");
+                                                    while($result=mysqli_fetch_array($qDoc))
+                                                    {
+                                                ?>
+                                                <form name="addDoctor" method="post" >
+                                                    <div class="form-group">
+                                                        <label for="Name">Name</label>
+                                                        <input type="text" name="name" id="name" class="form-control"
+                                                               value="<?php echo $result['name'];?>" required >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Specialty">Specialty</label>
+                                                        <input type="text" name="specialty" id="specialty" class="form-control"
+                                                               value="<?php echo $result['specialty'];?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Phone">Phone</label>
+                                                        <input type="text" name="phone" id="phone" class="form-control"
+                                                               value="<?php echo $result['phone'];?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Email">Email</label>
+                                                        <input type="text" name="email" id="email" class="form-control"
+                                                               value="<?php echo $result['email'];?>" required>
+                                                    </div>
                                                     <?php } ?>
-                                                    <form role ="form" name="adddoc" method="post" onSubmit="return valid();">
-                                                        <div class="form-group">
-                                                            <label for="DoctorSpecial">Doctor Specialization</label>
-                                                            <select name="doctorSpecial" class="form-control" required="required">
-                                                                <option value="<?php echo htmlentities($result['specialized']);?>">
-                                                                               <?php echo htmlentities($result['specialized']);?>
-                                                                </option>
-                                                                <?php $qDS = mysqli_query($deal,"SELECT * FROM doctorSpecialization");
-                                                                    while($datads = mysqli_fetch_array($qDs)){
-                                                                ?>
-                                                                <option value="<?php echo htmlentities($datads['specialized']);?>">
-                                                                               <?php eccho htmlentities($datads['specialized']);?>
-                                                                </option>
-                                                                <?php } ?>              
-                                                            </section>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="DoctorName">Doctor Name</label>
-                                                            <input type="text" name="doctorname" class="form-control"
-                                                                   value="<?php echo htmlentities($result['doctorName']);?>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="ClinicAddress">Clinic Address</label>
-                                                            <textarea name="clinicaddress" class="form-control" 
-                                                                      value="<?php echo htmlentities($result['address']);?>">
-                                                            </textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="ConsultFees">Consultancy Fees</label>
-                                                            <input type="text" name="consultfees" class="form-control" required="required" 
-                                                                   value="<?php echo htmlentities($result['doctorFees']);?>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="Custact Number">Contact Number</label>
-                                                            <input type="text" name="contactno" class="form-control" required="required" 
-                                                                   value="<?php echo htmlentities($result['contactno']);?>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="DoctorEmail">Doctor Email</label>
-                                                            <input type="text" name="doctorEmail" class="form-control" readonly="readonly" 
-                                                                   value="<?php echo htmlentities($result['doctorEmail']);?>">
-                                                        </div>
-                                                        <?php  } ?>
-                                                        <button type="submit" name="submit" class="btn btn-o btn-primary">Update</button>
-                                                    </form>                                                    
-                                              </div>
-                                         </div>
+                                                    <button type="submit" name="submit" class="btn btn-o btn-primary">Update</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="panel panel-white"></div>
-                            </div>
-                       </div>
-                 </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- FOOTER -->
-        <?php include('../define/footer.php');?>
-        <?php include('../define/setting.php');?>
     </div>
-    <!-- custom javascript -->
-    <script src="../assign/js/main.js"></script>
-    <script src="../assign/js/formElements.js"></script>
-    <script>
-        jQuery(document).ready(function(){
-            Main.init();
-            FormElements.init();
-        });
-    </script>
 </body>
-</html>
-<?php    } ?>
+<?php
+    } ?>
