@@ -64,7 +64,7 @@
                                          <td>
                                             <a href="edit-doctor.php?editid=<?php echo $result['id'];?>"><i class="fa fa-edit"></i></a>||
                                             <a href="delete-doctor.php?delid=<?php echo $result['id'];?>"><i class="fa fa-minus"></i></a>||
-                                            <a href="view-doctors.php?viewid=<?php echo $result['id'];?>"><i cllass="fa fa-eye"></i></a>
+                                            <a href="view-doctors.php?viewid=<?php echo $result['id'];?>"><i class="fa fa-eye"></i></a>
                                          </td>
                                     </tr>
                                     <?php $count=$count+1; }  ?>
