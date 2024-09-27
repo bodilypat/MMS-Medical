@@ -1,8 +1,9 @@
 <?php
     session_start();
     error_reporting(0);
-    include('../config/dbconnect.php');
-    if(strlen($_SESSION['id'])){
+    include('../includes/dbconnect.php');
+    
+    if(strlen($_SESSION['id'] == 0)){
         header('location:logout.php');
     } else {
 ?>
@@ -34,6 +35,7 @@
                     </section>
                     <div class="container-fluid container-full bg-white">
                         <div class="row">
+
                             <div class="col-sm-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -41,9 +43,9 @@
                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
                                             <i class="fa fa-smail-o fa-stack-1x fa-inverse"></i>
                                         </span>
-                                        <h2>medical records</h2>
+                                        <h2>Doctor </h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-medical-record.php"></a>
+                                            <a href="manage_doctor.php"></a>
                                         </p>
                                     </div>
                                 </div>
@@ -63,20 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa fa-stack-2x">
-                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smail-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2 class="StepTitle">Prescription</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage-prescription.php"></a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="col-md-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -84,27 +73,14 @@
                                              <i class="fa fa-square fa-stack-2x text-primary"></i>
                                              <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
                                         </span>
-                                        <h2>Doctors</h2>
+                                        <h2>Patients</h2>
                                         <p class="links cl-effect-1">
                                             <a href="manage-patients.php"></a>
                                         </p>        
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                         <span class="fa fa-stack-2x">
-                                              <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                              <i class="fa fa-smail-o fa-stacck-1x fa-inverse"></i>                                              
-                                         </span>
-                                         <h2>Patients</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage-doctors.php"></p>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
