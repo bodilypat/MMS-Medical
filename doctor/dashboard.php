@@ -73,6 +73,20 @@
                                              <i class="fa fa-square fa-stack-2x text-primary"></i>
                                              <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
                                         </span>
+                                        <h2>Prescriptions</h2>
+                                        <p class="links cl-effect-1">
+                                            <a href="manage-prescripts.php"></a>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack-2x">
+                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
+                                        </span>
                                         <h2>Patients</h2>
                                         <p class="links cl-effect-1">
                                             <a href="manage-patients.php"></a>
