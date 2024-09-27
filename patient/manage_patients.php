@@ -1,4 +1,0 @@
-manage patient
-  edit 
-  delete 
-  
