@@ -1,0 +1,98 @@
+includes/
+    dbconnect.php
+    function.php
+
+public/
+
+        admin/ 
+        users /
+                index.php 
+                login.php 
+                register.php 
+                logout.php 
+        
+        dashboard
+
+                doctor/ 
+                        index.php 
+                        add_doctor.php 
+                        edit_doctor.php 
+                        delete_doctor.php 
+                        view_doctor.php 
+
+                patient /
+                        index.php 
+                        add_patient.php 
+                        edit_patient.php 
+                        delete_patient.php 
+                        view_patient.php 
+                        
+                appointment/ 
+                        index.php 
+                        add_appointment.php 
+                        edit_appointment.php 
+                        delete_appointment.php 
+                        view_appointment.php 
+
+                prescription/ 
+                        index.php 
+                        add_prescription.php 
+                        edit_prescription.php 
+                        delete_prescription.php 
+                        view_prescription.php 
+
+                medical_history/ 
+                        index.php 
+                        add_medical_history.php 
+                        edit_medical_history.php 
+                        delete_medical_history.php 
+                        view_medical_history.php 
+
+                billing /
+                        index.php 
+                        add_invoice.php 
+                        edit_invoice.php 
+                        delete_invoice.php 
+                        view_invoice.php 
+
+doctor/
+        doctors management 
+        doctor management authentication
+                login.php 
+                register.php
+                logout.php
+
+                dashboard/  
+
+                        panel-container
+
+                                doctor/ 
+                                        edit_profile.php;
+
+                                appointments/
+                                        manage_appointment.php
+
+                                patient/
+                                        manage_patients.php
+patient/
+        patients management/
+        patient authentication
+                login.php
+                register.php 
+                logout.php 
+                
+                dashboard/
+                        panel-container /
+                                patients/
+                                        manage_patients.php
+
+                                prescription/
+                                        manage_prescriptions.php
+                                        
+                                doctor/
+                                        manage_doctors.php
+        
+
+    
+
+    
