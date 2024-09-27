@@ -2,9 +2,29 @@ includes/
     dbconnect.php
     function.php
 
+asset/
+        css/
+                styles.css
+        images/
+                bg.jpg;
+        js/
+                main.js
+                form-elements.js
+database/
+        dbmedical.sql
+
+layouts/
+        sidebar.php
+        header.php
+        footer.php
+        setting.php
+
 public/
 
+        index.php
+
         admin/ 
+
         users /
                 index.php 
                 login.php 
@@ -66,13 +86,16 @@ doctor/
 
                         panel-container
 
-                                doctor/ 
+                                doctors/ 
                                         edit_profile.php;
 
                                 appointments/
                                         manage_appointment.php
 
-                                patient/
+                                prescriptions/
+                                        manage_prescription.php
+                                        
+                                patients/
                                         manage_patients.php
 patient/
         patients management/
@@ -86,11 +109,11 @@ patient/
                                 patients/
                                         manage_patients.php
 
-                                prescription/
-                                        manage_prescriptions.php
-                                        
-                                doctor/
-                                        manage_doctors.php
+                                appointments/
+                                        view_appointment.php
+
+                                prescriptions/
+                                        view_prescriptions.php
         
 
     
