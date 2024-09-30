@@ -17,16 +17,16 @@
 <body>
     <div id="app">
         <!-- Outline  -->
-        <?php include('../layouts/sidebar.php');?>
+        <?php include('../outlines/sidebar.php');?>
         <div class="app-content">
-            <?php include('../layouts/header');?>
+            <?php include('../outlines/header');?>
             <!-- END: outline -->
             <div class="main-content">
                 <div id="container" class="wrap-content container">
                     <!-- page title -->
                     <section id="page-title">
                         <div class="row">
-                            <div class="col-sm-8"><h1 class="mainTitle">Doctor | Dashboard<h1></h1></div>
+                            <div class="col-sm-8"><h1 class="mainTitle">Patient | Dashboard<h1></h1></div>
                             <ol class="breadcrumb">
                                  <li><span>Patients</span></li>
                                  <li>Dashboard</li>
@@ -58,9 +58,9 @@
                                             <i class="fa fa-square fa-stack-2x text primary"></i>
                                             <i class="fa fa-smail-o fa-stack-1x inverse"></i>
                                         </span>
-                                        <h2 class="StepTitle">Prescriptions</h2>
+                                        <h2 class="StepTitle">Appointments</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-prescriptions.php"></a>
+                                            <a href="manage_appointments.php"></a>
                                         </p>
                                     </div>
                                 </div>
@@ -73,9 +73,9 @@
                                              <i class="fa fa-square fa-stack-2x text-primary"></i>
                                              <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
                                         </span>
-                                        <h2>Doctors</h2>
+                                        <h2>Prescriptions</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-doctors.php"></a>
+                                            <a href="manage_Prescriptions.php"></a>
                                         </p>        
                                     </div>
                                 </div>
@@ -87,9 +87,9 @@
             </div>
         </div>
         <!-- Outline: Footer -->
-        <?php include('../layouts/footer.php');?>
+        <?php include('../outline/footer.php');?>
         <!--  Outline: Setting -->
-        <?php include('../layout/setting.php');?>
+        <?php include('../outline/setting.php');?>
     </div>
     <!-- Custom JS -->
     <script src="../asset/js/main.js"></script>
