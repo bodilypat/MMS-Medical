@@ -1,6 +1,8 @@
 <?php
     session_start();
 
+    /*  Function manage Auth */
+
     function registerUser($name, $mail, $password){
         global $pdo;
 
@@ -34,7 +36,7 @@
         header("Location: login.php");
         exit();
     }
-
+    /* Function manage Doctor */
     function addDoctor($name, $email, $specialization, $phone) {
         global $pdo;
         $stmt = $pdo->prepare("INSERT INTO doctors(name, email, specialization, phone) VALUES(?,?,?,?)");
@@ -60,12 +62,27 @@
         return $stmt->execute([$name, $email,$specialization, $phone, $id])
     }
 
+    function listDoctors() {
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM doctors");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchDoctors(){
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM doctors
+                             WHERE name LIKE ? OR speicalialty LIKE ?");;
+        $stmt->execute(['%' . $keyword . '%', '%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     function deleteDoctor($id){
         global $pdo;
         $stmt = $pdo->prepare("DELETE FROM doctors WHERE id = ? ");
         return $stmt->execute([id]);
     }
 
+    /* Function manage Paitent */
     function addPatient($name, $email, $date_of_birth, $gender, $phone, $address) {
         global $pdo;
         $stmt = $pdo->prepare("INSERT INTO patients(name, email, date_of_birth, gender, phone, address) VALUES(?, ?, ?, ?,?) ");
@@ -90,15 +107,29 @@
         return $stmt->execute([$name, $email, $date_of_birth, $gender, $phone, $address, $id]);
     }
 
+    function listPatients(){
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM patients");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchPatient($keyword){
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM patients WHERE name LIKE ? ");
+        $stmt->execute(['%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function deletePatient($id){
         global $pdo;
         $stmt = $stmt->prepare("DELETE FROM patients WHERE id = ? ");
         return $stmt->execute([$id])
     }
 
-    function addAppointment($patient_name, $doctor_name, $appointment_date){
+    /* Function mange Appontment */
+    function addAppointment($patient_id, $doctor_id, $appointment_date){
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO appointments(patient_name, doctor_name, appointment_date) VALUES(?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO appointments(patient_id, doctor_id, appointment_date) VALUES(?, ?, ?)");
         return $stmt->execute([$patient_name, $doctor_name, $appointment_date]);
     }
 
@@ -115,32 +146,39 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function updateAppointment($id, $patient_name, $doctor_name, $addpointment_date){
+    function updateAppointment($appointment_id, $patient_id, $doctor_id, $addpointment_date){
         global $pdo;
-        $stm = $pdo->prepare("UPDATE appointments SET patient_name = ? , doctor_name = ?, appointment_date = ?  WHERE id = ?");
-        return $stmt->execute([$patient_name, $doctor_name, $appointment_date, $id]);
+        $stm = $pdo->prepare("UPDATE appointments SET patient_id = ? , doctor_id = ?, appointment_date = ?  WHERE id = ?");
+        return $stmt->execute([$patient_id, $doctor_id, $appointment_date, $appointment_id]);
     }
 
-    function searchAppointments($keyword){
+    function listAppointments(){
         global $pdo;
-        $stmt = $pdo->prepare("SELECT  *
-                               FROM appointments 
-                               WHERE patient_id (SELECT id FROM  patients WHERE name LIKE ?)
-                               OR doctor_id IN (SELECT id FROM doctors WHERE name LIKE ?)");
-        $stmt->execute(['%' . $keyword . '%', '%' . $keyword . '%']);
-        return $stmt->fetall(PDO::FETCH_ASSOC);
+        $stmt = $pdo->query("SELECT * FROM appointments");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function deleteAppointment($id){
+    function searchAppointment($keyword){
+        global $pdo;
+        $stmt = $pdo->prepare("
+                SELECT * FROM appointments 
+                WHERE patient_id IN(SELECT id FROM patients WHERE name LIKE ?)
+                OR doctor_id IN(SELECT id FROM doctors WHERE name LIKE ?) ");
+        $stmt->execute(['%' . $keyword . '%' , '%' $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function deleteAppointment($appointment_id){
         global $pdo;
         $stmt = $pdo->prepare("DELETE FROM appointments WHERE id = ? ");
-        return $stmt->execute([$id]);
+        return $stmt->execute([$appintment_id]);
     }
 
-    function addPrescription ($patient_name, $doctor_name, $medication, $dosage, $instruction){
+    /* Function Manage Prescription */
+    function addPrescription ($patient_id, $doctor_id, $medication, $dosage, $instructions){
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO prescriptions(patient_name, doctor_name, medication, dosage, instruction) VALUES(?, ?, ?, ?, ?)");
-        return $stmt->execute([$patient_name, $doctor_name, $medication, $dosage, $instruction]);
+        $stmt = $pdo->prepare("INSERT INTO prescriptions(patient_name, doctor_name, medication, dosage, instructions) VALUES(?, ?, ?, ?, ?)");
+        return $stmt->execute([$patient_id, $doctor_id, $medication, $dosage, $instructions]);
     }
 
     function getPrescriptions() {
@@ -156,10 +194,10 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updatePrescription($id, $patient_name, $doct_name, $medication, $dosage, $instruction){
+    function updatePrescription($id, $medication, $dosage, $instruction){
         global $pdo;
-        $stmt = $pdo->prepare("UPDATE prescriptions SET patient_name = ?, doctor_name = ?, medical = ?, dasaage = ?, instruction = ? WHERE id = ? ");
-        return $stmt->execute([$patient_name, $doctor_name, $medication, $dosage, $instruction, $id]);
+        $stmt = $pdo->prepare("UPDATE prescriptions SET  medication = ?, dasage = ?, instructions = ? WHERE id = ? ");
+        return $stmt->execute([$medication, $dosage, $instructions, $id]);
     }
 
     function searchPrescriptions($keyword){
@@ -172,16 +210,34 @@
         return $stmt->fetall(PDO::FETCH_ASSOC);
     }
 
+    function listPrescriptions(){
+        global $pdo;
+        $stmt = $pdo->query("SELECT * FROM Prescriptions");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchPrescription($keyword){
+        global $pdo;
+        $stmt = $pdo->prepare("
+                SELECT * FROM prescriptions
+                WHERE medication LIKE ?
+                OR patient_id IN (SELECT ID FROM patient WHERE nam like ?)" );
+        $stmt->execute(['%' . $keyword . '%', '%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function deletePrescription($id) {
         global $pdo;
         $stmt = $pdo->prepare("DELETE FROM prescriptions WHERE in = ? ");
         return $stmt->execute([$id]);
     }
 
-    function addMedicalHistory($patient_name, $date_of_visit, $symtoms, $diagnosis, $treatment){
+    /* Function manage Medical_history */
+
+    function addMedicalHistory($patient_id, $date_of_visit, $symtoms, $diagnosis, $treatment){
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO medical_history(patient_name, date_of_visit, symptoms, diagnosis, treatment) VALUES(?, ?, ?, ?, ?) ");
-        return $stmt->execute([$patient_name, $date_of_visit, $symptoms, $diagnosis, $treatment]);
+        $stmt = $pdo->prepare("INSERT INTO medical_history(patient_id, date_of_visit, symptoms, diagnosis, treatment) VALUES(?, ?, ?, ?, ?) ");
+        return $stmt->execute([$patient_id, $date_of_visit, $symptoms, $diagnosis, $treatment]);
     }
 
     function getMedicalHistories() {
@@ -197,10 +253,24 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function updateMedicalHistory($id, $patient_name, $date_of_visit, $symptoms, $diagnosis, $treatment){
+    function updateMedicalHistory($id, $date_of_visit, $symptoms, $diagnosis, $treatment){
         global $pdo;
-        $stmt = $pdo->prepare("UPDATE medical_history SET patient_name = ?, date_of_visit = ?, symptoms = ?, diagnosis = ?, treatment = ? WHERE id = ? ");
-        return $stmt->execute([$patient_name, $date_of_visit, $symptoms, $diagnosis, $treatment, $id]);
+        $stmt = $pdo->prepare("UPDATE medical_history SET  date_of_visit = ?, symptoms = ?, diagnosis = ?, treatment = ? WHERE id = ? ");
+        return $stmt->execute([$date_of_visit, $symptoms, $diagnosis, $treatment, $id]);
+    }
+
+    function listMedicalHistories($patient_id){
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM medical_history WHERE patient_id = ? ");
+        $stmt->execute([$patient-id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchMedicalHistory($keyword){
+        global $pdo;
+        $stmt = $pdo->perpare("SELECT * FROM medical_history WHERE condition LIKE ? ");
+        $stmt->execute(['%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSCO);
     }
 
     function deleteMedicalHistory($id){
@@ -209,28 +279,54 @@
         return $stmt->execute([$id]);
     }
 
-    function addInvoice($client_name, $invoice_date, $due_date,$total_amount){
+    /* Function Manage Invoice */
+
+    function addbilling($patient_id, $appointment_id, $amount, $status){
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO invoices(client_name, invice_date, due_date, total_amount) VALUES(?,?,?,?,) ");
-        return $stmt->execute([$client_name, $invoice_date, $due_date, $total_amount]);
+        $stmt = $pdo->prepare("INSERT INTO billing(patient_id,appointment_id, amount, date_billed, status, notes) VALUES(?,?,?, new(), ?,?) ");
+        return $stmt->execute([$patient_id, $appointment_id, $amount, $status, $notes]);
     }
 
-    function getInvoices(){
+    function getbillings(){
         global $pdo;
-        $stmt = $pdo->query("SELECT * FROM invoices");
+        $stmt = $pdo->query("SELECT * FROM billing");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updateInvoice($id, $client_name, $invoice_date, $due_date, $total_amount, $status){
+    function getBilling($billing_id){
         global $pdo;
-        $stmt = $pdo->prepare("UPDATE invoices SET client_name = ?, invoice = ?, due_date = ?, total_amount = ?, status = ? WHERE id= ? ");
-        return $stmt->execute([$client_name, $invoice_date, $due_date, $total_amount, $status, $id]);
+        $stmt = $pdo->prepare("SELECT * FROM billing WHERE id= ? ");
+        $stmt->execute([$billing_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function deletingInvoice($id) {
+    function updateBilling($billng_id, $amount, $status, $notes){
         global $pdo;
-        $stmt = $pdo->prepare("DELETE FROM invoices WHERE id = ? ");
-        return $stmt->execute(['$id']);
+        $stmt = $pdo->prepare("UPDATE invoices SET amount = ?, status = ?,  WHERE billing_id= ? ");
+        return $stmt->execute([$amount, $status, $notes,$billing_id]);
+    }
+
+    function deleteBilling($billing_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("DELETE FROM billing WHERE billint_id = ? ");
+        return $stmt->execute([$billing_id]);
+    }
+
+    function listBillings($patient_id){
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM billing WHERE patient_id = ?");
+        $stmt->execute([$patient_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchBilling($keyword){
+        global $pdo;
+        $stmt = $pdo->prepare("
+                    SELECT * FROM billing 
+                    WHERE status LIKE ?
+                    OR patient_id IN(SELECT id FROM patients WHERE name like ? )");
+        $stmt->execute(['%' . $keyword . '%' , '%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getDoctorAppointment($doctor_id)
@@ -250,7 +346,5 @@
         $stmt = $pdo->prepare("SELECT * FROM doctors WHERE id = ? ");
         $stmt->execute([$doctor_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    
+    }  
 ?>
