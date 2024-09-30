@@ -1,31 +1,27 @@
 <?php
 
-    include '../includes/dbconnect.php';
+    include '../includes/funtions.php';
 
-    if(isset($_GET['id'])){
-        $patient_id = $_GET['id'];
-        
-        $stmt = $pdo->prepare("SELECT * FROM patients WHERE id = ? ");
-        $stmt->execute([$patient_id]);
-
-        $patient = $stmt->fetch();
+    if(!isset($_GET['id'])){
+        header("Location: view_patients.php");
+        exit();
+    }
+    $patients = getPatient($_GET['id']);
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $name = $_POST['name'];
             $email = $_POST['email'];
             $date_of_birth = $_POST['date_of_birth'];
             $gender = $_POST['gender'];
+            $address = $_POST['address'];
             $medical_history = $_POST['medical_history'];
 
-            $edit_stmt = $pdo->prepare("UPDATE patients SET name = ?, email = ?, date_of_birth = ?, gender = ?, gender = ?, medical_history = ? WHERE id = ? ");
-            if($edit_stmt->execute([$name, $email, $date_of_birth, $gender, $medical_history, $patient_id])){
-                echo "Patient updated successfully!";
+            if (updatePatient($name, $email, $date_of_birth, $gender, $phone, $address, $medical_history)){
                 header("Location:view_patients.php");
                 exit();
-            }
-        }
-    } else {
-        die("Patient ID not provided.");
+            } else {
+                $error = "Failed to update patient. ";
+            }       
     }
 ?>
 
@@ -38,10 +34,10 @@
     <body>
         <div id="app">
             <!-- Outline : sidebar -->
-            <?php include('../layouts/sidebar.php');?>
+            <?php include('../outline/sidebar.php');?>
             <div class="app-content">
                 <!-- Outline : Header -->
-                <?php include('../layouts/header.php');?>
+                <?php include('../outline/header.php');?>
                 <div class="main-content">
                       <!-- PAGE TITLE -->
                      <section id="page-title"></section>
@@ -73,6 +69,14 @@
                                                         </select>                                                        
                                                     </div>
                                                     <div class="form-group">
+                                                        <lable for="Phone">Phone</label>
+                                                        <input type="text" name="phone" value="<?php echo htmlspecialchars($patient['address']);?>" requried >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Address">Address</label>
+                                                        <textarea name="address" value="<?php echo htmlspecialchars($patient['address']);?>" required>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="Medical_History">Medical History</label>
                                                         <textarea name="medical_history"><?php echo htmlspecialchars($patient['medical_history']);?></textarea>
                                                     </div>
@@ -86,8 +90,8 @@
                 </div>
             </div>
             <!-- Outline: Footer -->
-            <?php include('../layouts/footer');?>
-            <?php include('../layouts/setting');?>
+            <?php include('../outline/footer');?>
+            <?php include('../outline/setting');?>
         </div>
         <!-- Custom js -->
         <script src="../asset/js/main.js"></script>
