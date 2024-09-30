@@ -1,21 +1,23 @@
 <?php
 
-    required '../includes/dbconnect.php';
+    required '../includes/functions.php';
+
     if($_SERVER["REQUEST_METHOD"] == 'POST'){
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $phone = $_POST['phone'];
         $date_of_birth = $_POST['date_of_birth'];
         $gender = $_POST['gender'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
         $medical_history = $_POST['medical_history'];
 
-        $stmt = $pdo->prepare("INSERT INTO patients(name, email, phone, date_of_birth, gender, medical_history) VALUES(?, ?, ?, ?, ?) ");
-        if($stmt-execute([$name, $email, $phone, $date_of_birth, $gender, $medical_history])){
-            echo "Patient registered successfull! ";
+        if (addPatient($name, $email, $date_of_birth, $gender, $phone ,$address, $medical_history)){
+            header("Location: view_patients.php");
+            exit();
         } else {
-            echo "Error Cound not register patient.;"
+            $error = "Failed to add patient.";
         }
-    }
+   }
 ?>
 
 <!DOCTYPE html>
@@ -28,10 +30,10 @@
     <body>
         <div class="app">
             <!-- Outline : sidebar -->
-            <?php include('../layouts/sidebar.php');?>
+            <?php include('../outlines/sidebar.php');?>
             <div class="app-content">
                 <!-- Outline: header -->
-                <?php include('../layouts/header.php');?>
+                <?php include('../outlines/header.php');?>
                 <div class="main-content">
                     <section id="page-title">
                         <div class="row">
@@ -60,10 +62,6 @@
                                                 <input type="date" name="date_of_birth" class="form-control" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="Phone">Phone</label>
-                                                <input type="text" name="phone" class="form-control" required>
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="Gender">Gender</label>
                                                 <select name="gender" required>
                                                     <option value="Male">Male</option>
@@ -72,9 +70,19 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
+                                                <label for="Phone">Phone</label>
+                                                <input type="text" name="phone" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Address">Address</label>
+                                                <textarea type="text" name="Address" class="form-control" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
                                                 <label for="Medical_History">Medical History</label>
                                                 <textarea type="text" name="medical_history" class="form-control" required>
                                             </div>
+                                            <button type="submit">Add Patient</button>
                                         </form>
                                     </div>
                                 </div>
@@ -84,9 +92,9 @@
                 </div>
             </div>
             <!-- Outline : Footer -->
-            <?php include('../layouts/footer.php');?>
+            <?php include('../outline/footer.php');?>
             <!-- Outlien : setting -->
-            <?php include('../layouts/setting.php');?>
+            <?php include('../outline/setting.php');?>
         </div>
         <!-- Custom JS -->
         <script src="../asset/js/main.js"></script>
