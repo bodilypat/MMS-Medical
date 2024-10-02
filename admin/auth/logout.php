@@ -1,4 +1,7 @@
 <?php
-    require '../include/dbconnect.php';
-    logout();
+
+    sessiont_start();
+    session_destroy();
+    header("Location:login.php")
+    exit();
 ?>
