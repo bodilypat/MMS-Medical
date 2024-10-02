@@ -3,39 +3,100 @@
 
     /*  Function manage Auth */
 
-    function registerUser($name, $mail, $password){
+    function register($username, $email, $password, $role){
         global $pdo;
 
+        /* hash the password */
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("INSERT INTO users(name,email,password) VALUES(?,?,?,?)");
-        return $stmt->execute($name, $email, $hashedPassword);
+
+        /* Prepare the SQL statement */
+        $stmt = $pdo->prepare("INSERT INTO users(username,email,password,role) VALUES(?,?,?,?)");
+
+        /* Execute and check for success */
+        if ($stmt->execute($username, $email, $hashedPassword,$role)){
+            return "User registered successfully!";
+        } else {
+            return "Error: Could not register user";
+        }
     }
     
-    function loginUser($email, $password){
+    function login($username, $password){
         global $pdo;
 
-        $stmt = $pdo->prepare("SELECT * FROM user WHERE email= ?");
-        $stm->execute([$email]);
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $stm->execute([$username]);
         $user= $stmt->fetch();
 
         if($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
-            return true;
+            $_SESSION['role'] = $user['role'];
+            return "login successfull! Welcome," . htmlspecialchars($username) . "!";
+
+        } else{
+        /* Invalid credential */
+            return "Invalid username or password";
         }
-        return false;
+    }
+
+    function requestPasswordReset($email) {
+        global $pdo;
+
+        /* check email exists */
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? ");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user) {
+            /* Generaate a unique reset token */
+            $token = bin2hex(random_bytes(16));
+            $expiry = new DateTime('+1 hour');
+
+            /* save the token and expiry tme in the database */
+            $stmt = $pdo->prepare("UPDATE users SET reset_token  = ? , Token_expiry = ? WHERE email = ? ");
+            $stmt->execute([$token, $expiry->format('Y-m-d H:i:s'), $mail]);
+
+            /* Send email with the reset link */
+
+            $resetLink = "http://mdhcare.com/reset_password.php?token=$token";
+            mail($email,"Password Reset Request"," Click the following link to reset your password: $resetLink");
+
+            return "An email has been set to your address with a reset link.";
+        } else {
+            return "No user found that email address.";
+        }
+    }
+
+    function resetPassword($token, $newPassword){
+        global $pdo;
+
+        /* validate to token */
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE reset_token = ? and token_expiry > NOW()");
+        $stmt->execute([$token]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user){
+            /* Update the password and clearr the reset toke */
+            $hashedPassword = password_hash($newPassword,PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("UPDATE users SET password = ?, reset_token = NULL, token_expiry = NULL WHERE id = ?");
+            $stmt->execute([$hashedPassword, $user['id']]);
+
+            return "Your password has been reset successfully!";
+        } else {
+            return "Invalid or expired token.";
+        }
     }
 
     function isloggedIn(){
         return isset($_SESSION['user_id']);
     }
 
-    function login() {
+    function logout() {
         session_start();
         session_destroy();
         header("Location: login.php");
         exit();
     }
+
     /* Function manage Doctor */
     function addDoctor($name, $email, $specialization, $phone) {
         global $pdo;
