@@ -191,7 +191,7 @@
     function addAppointment($patient_id, $doctor_id, $appointment_date){
         global $pdo;
         $stmt = $pdo->prepare("INSERT INTO appointments(patient_id, doctor_id, appointment_date) VALUES(?, ?, ?)");
-        return $stmt->execute([$patient_name, $doctor_name, $appointment_date]);
+        return $stmt->execute([$patient_id, $doctor_id, $appointment_date]);
     }
 
     function getAppointments() {
@@ -202,9 +202,16 @@
 
     function getAppointment($id) {
         global $pdo;
-        $stm = $pdo->prepare("SELECT * FROM appointments WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $sql = $pdo->prepare("SELECT a.id, a.appointment_date , p.name AS patient_name , a.status 
+                              FROM appointments  a 
+                              JOIN patients p ON a.patient_id = p.id 
+                              WHERE a.doctor_id = ? ");
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam('doctor_id' => $doctor_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function updateAppointment($appointment_id, $patient_id, $doctor_id, $addpointment_date){
