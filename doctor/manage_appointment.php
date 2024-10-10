@@ -40,6 +40,12 @@
                        <td><?php echo htmlspecialchars($appointment['doctor_name']); ?></td>
                        <td><?php echo htmlspecialchars(date('Y-m-d H:i', strtotime($appointment['appointment_date']))); ?></td>
                        <td><?php echo htmlspecialchars(ucfirst($appointment['status'])); ?></td>
+                       <td>
+                            <a href="edit_prescription.php?id=<?php echo $prescription['id']; ?>">Edit</a>
+                            <a href="delete_prescription.php?id=<?php echo $prescription['id']; ?>" 
+                               onClick=" Confirm('Are you sure you want to delete this prescription?');">Delete</a>
+                            <a href="view_prescriptions.php?id=<?php echo $prescription['id']; ?>">View</a>
+                       </td>
                  </tr>
                  <?php endforeach; ?>
             </tbody>
