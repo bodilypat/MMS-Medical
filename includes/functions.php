@@ -417,4 +417,14 @@
         $stmt->execute([$doctor_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }  
+
+    function num_rows($tablename){
+        global $pdo;
+        $sql = "SELECT * FROM(*) FROM " . $tablename;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
 ?>
