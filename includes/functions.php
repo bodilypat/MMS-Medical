@@ -48,19 +48,21 @@
 
         if($user) {
             /* Generaate a unique reset token */
-            $token = bin2hex(random_bytes(16));
-            $expiry = new DateTime('+1 hour');
+            $token = bin2hex(random_bytes(50));
+            $expires = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-            /* save the token and expiry tme in the database */
-            $stmt = $pdo->prepare("UPDATE users SET reset_token  = ? , Token_expiry = ? WHERE email = ? ");
-            $stmt->execute([$token, $expiry->format('Y-m-d H:i:s'), $mail]);
+            /* update user record with the token and expiration time */
+            $stmt = $pdo->prepare("UPDATE users SET reset_token  = ? , reset_expires = ? WHERE email = ? ");
+            $stmt->execute([$token, $expires->format('Y-m-d H:i:s'), $email]);
 
             /* Send email with the reset link */
 
-            $resetLink = "http://mdhcare.com/reset_password.php?token=$token";
-            mail($email,"Password Reset Request"," Click the following link to reset your password: $resetLink");
+            $resetLink = "http://mdhcare.com/reset_password.php?token=" . $token;
+            $subject = "Password Reset Request";
+            $message ="Click the link to reset your password: " . $resetLink;
+            mail($email, $subject, $message);
 
-            return "An email has been set to your address with a reset link.";
+            return "Password reset link has been sent to your email..";
         } else {
             return "No user found that email address.";
         }
