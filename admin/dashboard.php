@@ -115,7 +115,7 @@
                                              <a href="manage_patients.php">                                                
                                                     <?php
                                                           $patients = getPatients();
-                                                          $countPat = mysqli_num_rows($patients);
+                                                          $countPat = num_rows($patients);
                                                     ?>
                                                     Total Patients : <?php echo htmlentities($countPat); ?>
                                                  </a>
@@ -138,7 +138,7 @@
                                              <a href="manage_medical_records.php">                                                
                                                     <?php
                                                           $medical_records = getMedical_records();
-                                                          $countMdr = mysqli_num_rows($medical_records);
+                                                          $countMdr = num_rows($medical_records);
                                                     ?>
                                                     Total Medical_record : <?php echo htmlentities($countMdr); ?>
                                                  </a>
@@ -160,7 +160,7 @@
                                              <a href="manage_prescription.php">                                                
                                                     <?php
                                                           $prescriptions = getPrescriptions();
-                                                          $countPre = mysqli_num_rows($prescriptions);
+                                                          $countPre = num_rows($prescriptions);
                                                     ?>
                                                     Total Prescription : <?php echo htmlentities($countPre); ?>
                                                  </a>
@@ -183,7 +183,7 @@
                                              <a href="manage_billing.php">                                                
                                                     <?php
                                                           $billings = getbillings();
-                                                          $countBill = mysqli_num_rows($billings);
+                                                          $countBill = num_rows($billings);
                                                     ?>
                                                     Total Billing : <?php echo htmlentities($countBill); ?>
                                                  </a>
