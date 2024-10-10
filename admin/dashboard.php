@@ -1,7 +1,7 @@
 <?php
     session_start();
     error_report(0);
-    include('../config/dbconnect.php');
+    include('../includes/functions.php');
 
     if(strlen($_SESSION['id'] ==0))
     {
@@ -21,10 +21,10 @@
 <!-- section app -->
     <div id="app">
         <!-- Outline: Navbar -->
-        <?php include('../layouts/sidebar.php');?>
+        <?php include('../outlines/sidebar.php');?>
         <div class="app-content">
             <!-- Outline : Header -->
-            <?php include('../layouts/header.php');?>
+            <?php include('../outlines/header.php');?>
             <div class="main-content">
                 <div class="wrapper-content container" id="container">
                      <!-- PAGE TITLE -->
@@ -51,9 +51,9 @@
                                         </span>
                                         <h2 class="StepTitle">Manage Doctors</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="Manage-doctors.php">
+                                            <a href="manage_doctors.php">
                                                 <?php
-                                                    $qDoc = mysqli_query($deal,"SELECT * FROM doctors");
+                                                    $qDoc = getDoctors();
                                                     $numRows = mysqli_num_rows($qDoc)
                                                     {
                                                 ?>
@@ -75,9 +75,9 @@
                                         </span>
                                         <h2 class="StepTitle">Manage Appointments</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-appointments.php">
+                                            <a href="manage_appointments.php">
                                                 <?php
-                                                    $qApp = mysqli_query($deal,"SELECT * FROM appointments");
+                                                    $qApp = getAppointments();
                                                     $numRows = mysqli_num_rows($qApp)
                                                     {
                                                 ?>
@@ -96,22 +96,22 @@
                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
                                             <i class="fa fa-smail-o fa-stack-1 fa-inverse"></i>
                                         </span>
-                                        <h2 class="StepTitle">Manage Patients</h2>
+                                        <h2 class="StepTitle">Manage Medical Records</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-patients.php">
+                                            <a href="manage_medical_records.php">
                                                 <?php 
-                                                    $qPat = mysqli_query($deal,"SELECT * FROM patients");
-                                                    $numRows = mysqli_num_rows($qPat)
+                                                    $qMdh = getMedicalRecords();
+                                                    $numRows = mysqli_num_rows($qMdh)
                                                     {
                                                 ?>
-                                                    Total Patients = <?php echo htmlentities($numRows);
+                                                    Total Medical Records = <?php echo htmlentities($numRows);
                                                     } ?>
                                             </a>
                                         </p>
                                     </div>
                                 </div>
                             </div>                            
-                            <!-- Prescription panel -->
+                            <!-- Midical Records panel -->
                             <div class="col-sm-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -119,15 +119,15 @@
                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
                                             <i class="fa fa-smaile-o fa-stack-1x fa-inverse"></i>
                                         </span>
-                                        <h2 class="StepTitle">Manage Medical Records</h2>
+                                        <h2 class="StepTitle">Manage Prescriptions</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-medical-records.php">
+                                            <a href="manage_prescriptions.php">
                                                 <?php
-                                                    $qMd = mysqli_query($deal,"SELECT * FROM medical_records");
-                                                    $numRows = mysqli_num_rows($qMd)
+                                                    $qPre = getPrescriptions();
+                                                    $numRows = mysqli_num_rows($qPre)
                                                     {
                                                 ?>
-                                                    Total Medical-records = <?php echo htmlentities($numRows)
+                                                    Total Prescriptions = <?php echo htmlentities($numRows)
                                                     } ?>
                                             </a>
                                         </p>
@@ -142,15 +142,15 @@
                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
                                             <i class="fa fa-smail-0 fa-stack-1x fa-inverse"></i>
                                         </span>
-                                        <h2 class="StepTitle">Manage Prescriptions</h2>
+                                        <h2 class="StepTitle">Manage prescriptions</h2>
                                         <p class="links effect-1">
-                                            <a href="manage-prescriptions.php">
+                                            <a href="manage_patients.php">
                                                 <?php 
-                                                    $qPre = mysqli_query($deal,"SELECT * FROM prescriptions");
-                                                    $numRows = mysqli_num_rows($qPre)
+                                                    $qPre = getPatients();
+                                                    $numRows = mysqli_num_rows($qPat)
                                                     {
                                                 ?>
-                                                    Total Prescriptions = <?php echo htmlentities($qPre);
+                                                    Total Patients = <?php echo htmlentities($qPat);
                                                     } ?>
                                             </a>
                                         </p>
@@ -166,9 +166,9 @@
                                     </span>
                                     <h2 class="StepTitle">Manage Billings</h2>
                                     <p class="links effect-1">
-                                        <a href="manage-billings.php">
+                                        <a href="manage_billings.php">
                                             <?php
-                                                $qBil = mysqli_query($deal,"SELECT * FROM billings");
+                                                $qBil = getBills();
                                                 $numRows = mysqli_num_rows($qBil)
                                                 {
                                             ?>
@@ -183,8 +183,8 @@
                 </div>
             </div>
         </div>
-        <?php include('../layouts/footer.php');?>
-        <?php include('../layouts/setting.php');?>
+        <?php include('../outlines/footer.php');?>
+        <?php include('../outlines/setting.php');?>
     </div>
     <script src="../asset/js/main.js"></script>
     <script src="../asset/js/form-elements.js"></script>
