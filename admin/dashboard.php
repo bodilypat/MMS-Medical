@@ -1,201 +1,215 @@
+
 <?php
     session_start();
-    error_report(0);
+    error_reporting(0);
     include('../includes/functions.php');
-
-    if(strlen($_SESSION['id'] ==0))
-    {
+    if(strlen($_SESSION['id']==0)){
         header('location:logout.php');
     } else {
+
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"></html>
     <head>
         <title>Admin | Dashboard</title>
-        <!-- Custom css -->
-        <link rel="stylesheet" href="../asset/css/styles.css">
-        <link rel="stylesheet" href="../asset/css/plugins.css">
-        <link rel="stylesheet" href="../asset/css/theme-1.css">
+        <!-- custom stype -->
+        <link rel="stylesheet" href="../assign/css/styles.css">
+        <link rel="stylesheet" href="../assign/css/plugins.css">
     </head>
 <body>
-<!-- section app -->
     <div id="app">
-        <!-- Outline: Navbar -->
         <?php include('../outlines/sidebar.php');?>
         <div class="app-content">
-            <!-- Outline : Header -->
             <?php include('../outlines/header.php');?>
             <div class="main-content">
-                <div class="wrapper-content container" id="container">
-                     <!-- PAGE TITLE -->
+                <div class="wrap-content container" id="container">
                     <section id="page-title">
-                        <div class="row">
-                              <div class="col-sm-8"><h1 class="mainTitle">Admin | Dashboard</div>
-                              <ol class="breadcrumb">
-                                   <li><span>Admin</span></li>
-                                   <li class="active"><span>Dashboard</span></li>
-                              </ol>
-                        </div>
+                        <!-- page title -->
+                         <div class="row"><h1 class="mainTitle">Admin | dashboard</h1></div>
+                         <ol>
+                              <li class="breadcrumb"><span>Admin</span></li>
+                              <li class="active"><span>Dashboard</span></li>
+                         </ol>
                     </section>
-                    <!-- END PAGE TITLE -->
-                    <div class="container-fluid container-full bg-white">
+                    <!-- page content -->
+                     <div class="container-fluid container-full bg-white">
                         <div class="row">
-
-                            <!-- Doctor panel -->
+                            <!-- User Panal -->
                             <div class="col-sm-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
                                         <span class="fa-stack fa-2x">
-                                            <i class="fa fa-quare fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smaile-0 fa-stack-1x fa-inverse"></i>
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                            <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i>
+                                            <h2 class="StepTitle">Manage Users</h2>
+                                            <p class="link cl-effect-1">
+                                                <a href="manage_users.php">
+                                                    <?php $users = getUsers();
+                                                        $countUser = num_rows($users);
+                                                        {
+                                                    ?>
+                                                        Total Users : <?php echo htmlentities($countUser); } ?>
+                                                </a>
+                                            </p>
                                         </span>
-                                        <h2 class="StepTitle">Manage Doctors</h2>
-                                        <p class="links cl-effect-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Doctor Panel -->
+                            <div class="col-sm-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack fa-2x">
+                                            <i class="fa fa-square fa-stack-2x text-primaryy"></i>
+                                            <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2 class="StepTitle">Doctors</h2>
+                                        <p class="cl-effect-1">
                                             <a href="manage_doctors.php">
-                                                <?php
-                                                    $qDoc = getDoctors();
-                                                    $numRows = mysqli_num_rows($qDoc)
-                                                    {
-                                                ?>
-                                                        Total Doctors : <?php echo htmlentities($numRows); 
-                                                    } ?>
-                                            </a>                                                     
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Appointment panel -->
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa-stack fa-2x">
-                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smail-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2 class="StepTitle">Manage Appointments</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_appointments.php">
-                                                <?php
-                                                    $qApp = getAppointments();
-                                                    $numRows = mysqli_num_rows($qApp)
-                                                    {
-                                                ?>
-                                                    Total Appointments = <?php echo htmlentities($numRows);
-                                                    }  ?>
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Patient panel  -->
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa-stack fa-2x">
-                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smail-o fa-stack-1 fa-inverse"></i>
-                                        </span>
-                                        <h2 class="StepTitle">Manage Medical Records</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_medical_records.php">
-                                                <?php 
-                                                    $qMdh = getMedicalRecords();
-                                                    $numRows = mysqli_num_rows($qMdh)
-                                                    {
-                                                ?>
-                                                    Total Medical Records = <?php echo htmlentities($numRows);
-                                                    } ?>
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>                            
-                            <!-- Midical Records panel -->
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa-stack fa-2x">
-                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smaile-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2 class="StepTitle">Manage Prescriptions</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_prescriptions.php">
-                                                <?php
-                                                    $qPre = getPrescriptions();
-                                                    $numRows = mysqli_num_rows($qPre)
-                                                    {
-                                                ?>
-                                                    Total Prescriptions = <?php echo htmlentities($numRows)
-                                                    } ?>
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Prescription panel -->
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span>
-                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smail-0 fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2 class="StepTitle">Manage prescriptions</h2>
-                                        <p class="links effect-1">
-                                            <a href="manage_patients.php">
-                                                <?php 
-                                                    $qPre = getPatients();
-                                                    $numRows = mysqli_num_rows($qPat)
-                                                    {
-                                                ?>
-                                                    Total Patients = <?php echo htmlentities($qPat);
-                                                    } ?>
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Billings panal -->
-                            <div class="panel panel-white no-radius text-center">
-                                <div class="panel-body">
-                                    <span>
-                                        <i class="fa fa-squire fa-stack-2x text-center"></i>
-                                        <i class="fa fa-smail-o fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                    <h2 class="StepTitle">Manage Billings</h2>
-                                    <p class="links effect-1">
-                                        <a href="manage_billings.php">
-                                            <?php
-                                                $qBil = getBills();
-                                                $numRows = mysqli_num_rows($qBil)
+                                                <?php  $doctors = getDoctors();
+                                                $countDoc = num_rows($doctors);
                                                 {
                                             ?>
-                                                Totol Billings = <?php echo htmlentities($qBil);
-                                                } ?>
-                                        </a>
-                                    </p>
+                                                Total Doctors : <?php echo htmlentities($countDoc); } ?>                                                
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appointment Panel -->
+                            <div class="col-sm-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                            <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2 class="StepTitle">Appointment</h2>
+                                        <p class="link cl-effect-1">
+                                            <a href="manage_appointments.php">                                                
+                                                <?php
+                                                    $Appointments = getAppointments();
+                                                    $countApp = num_rows($Appointments);
+                                                    {
+                                                ?>
+                                                    Total Appointment : <?php echo htmlentities($countApp); } ?>
+                                                </a>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Patient Panel -->
+                            <div class="col-sm-4">
+                                <div class="panel panel-white no radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="ti-files fa-1x text-primary"></i>
+                                            <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2 class="StepTitle">Patients</h2>
+                                        <p class="link cl-effect-1">
+                                             <a href="manage_patients.php">                                                
+                                                    <?php
+                                                          $patients = getPatients();
+                                                          $countPat = mysqli_num_rows($patients);
+                                                    ?>
+                                                    Total Patients : <?php echo htmlentities($countPat); ?>
+                                                 </a>
+                                             </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Medical Record panel -->
+                            <div class="col-sm-4">
+                                <div class="panel panel-white no radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="ti-files fa-1x text-primary"></i>
+                                            <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2 class="StepTitle">Medical Records</h2>
+                                        <p class="link cl-effect-1">
+                                             <a href="manage_medical_records.php">                                                
+                                                    <?php
+                                                          $medical_records = getMedical_records();
+                                                          $countMdr = mysqli_num_rows($medical_records);
+                                                    ?>
+                                                    Total Medical_record : <?php echo htmlentities($countMdr); ?>
+                                                 </a>
+                                             </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Prescription Panel -->
+                            <div class="col-sm-4">
+                                <div class="panel panel-white no radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="ti-files fa-1x text-primary"></i>
+                                            <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2 class="StepTitle">Prescriptions</h2>
+                                        <p class="link cl-effect-1">
+                                             <a href="manage_prescription.php">                                                
+                                                    <?php
+                                                          $prescriptions = getPrescriptions();
+                                                          $countPre = mysqli_num_rows($prescriptions);
+                                                    ?>
+                                                    Total Prescription : <?php echo htmlentities($countPre); ?>
+                                                 </a>
+                                             </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                            <!-- Billings panel -->
+                            <div class="col-sm-4">
+                                <div class="panel panel-white no radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="ti-files fa-1x text-primary"></i>
+                                            <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2 class="StepTitle">Billings</h2>
+                                        <p class="link cl-effect-1">
+                                             <a href="manage_billing.php">                                                
+                                                    <?php
+                                                          $billings = getbillings();
+                                                          $countBill = mysqli_num_rows($billings);
+                                                    ?>
+                                                    Total Billing : <?php echo htmlentities($countBill); ?>
+                                                 </a>
+                                             </a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
+        <!-- FOOTER -->
         <?php include('../outlines/footer.php');?>
         <?php include('../outlines/setting.php');?>
     </div>
-    <script src="../asset/js/main.js"></script>
-    <script src="../asset/js/form-elements.js"></script>
+    <!-- custom javascript -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/formElements.js"></script>
     <script>
         jQuery(document).ready(function(){
             Main.init();
-            Form-elements.init();
+            FormElements.init();
         });
     </script>
 </body>
 </html>
-<?php
-    }
-?>
+<?php } ?>
