@@ -1,10 +1,10 @@
 <?php
     session_start();
     error_reporting(0);
-    include('../includes/dbconnect.php');
+    include('../includes/functions.php');
     
     if(strlen($_SESSION['id'] == 0)){
-        header('location:logout.php');
+        header('Location:logout.php');
     } else {
 ?>
 <!DOCTYPE html>
@@ -17,9 +17,9 @@
 <body>
     <div id="app">
         <!-- Outline  -->
-        <?php include('../layouts/sidebar.php');?>
+        <?php include('../outline/sidebar.php');?>
         <div class="app-content">
-            <?php include('../layouts/header');?>
+            <?php include('../outlines/header');?>
             <!-- END: outline -->
             <div class="main-content">
                 <div id="container" class="wrap-content container">
@@ -35,7 +35,8 @@
                     </section>
                     <div class="container-fluid container-full bg-white">
                         <div class="row">
-
+                            
+                        <!-- Manage Doctor -->
                             <div class="col-sm-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -43,7 +44,7 @@
                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
                                             <i class="fa fa-smail-o fa-stack-1x fa-inverse"></i>
                                         </span>
-                                        <h2>Doctor </h2>
+                                        <h2>Doctors</h2>
                                         <p class="links cl-effect-1">
                                             <a href="manage_doctor.php"></a>
                                         </p>
@@ -51,6 +52,7 @@
                                 </div>
                             </div>
 
+                            <!-- Manage Appointment  -->
                             <div class="col-sm-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -58,14 +60,15 @@
                                             <i class="fa fa-square fa-stack-2x text primary"></i>
                                             <i class="fa fa-smail-o fa-stack-1x inverse"></i>
                                         </span>
-                                        <h2 class="StepTitle">Appointment</h2>
+                                        <h2 class="StepTitle">Appointments</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-appointment.php"></a>
+                                            <a href="manage_appointment.php"></a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Manage Prescription -->
                             <div class="col-md-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -75,11 +78,13 @@
                                         </span>
                                         <h2>Prescriptions</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-prescripts.php"></a>
+                                            <a href="manage_prescripts.php"></a>
                                         </p>        
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Manage Patients -->
                             <div class="col-md-4">
                                 <div class="panel panel-white no-radius text-center">
                                     <div class="panel-body">
@@ -89,25 +94,24 @@
                                         </span>
                                         <h2>Patients</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage-patients.php"></a>
+                                            <a href="manage_patients.php"></a>
                                         </p>        
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Outline: Footer -->
-        <?php include('../layouts/footer.php');?>
+        <?php include('../outlines/footer.php');?>
         <!--  Outline: Setting -->
-        <?php include('../layout/setting.php');?>
+        <?php include('../outlines/setting.php');?>
     </div>
     <!-- Custom JS -->
-    <script src="../asset/js/main.js"></script>
-    <script src="../asset/js/form-element.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/form-element.js"></script>
     <script>
         jQuery(document).ready(function(){
             Main.init();
