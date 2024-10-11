@@ -25,7 +25,7 @@ CREATE TABLE patients(
 CREATE TABLE doctors(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    specialization VARCHAR(100) NOT NULL,
+    specialty VARCHAR(100) NOT NULL,
     phone VARCHAR(15),
     email VARCHAR NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -60,6 +60,7 @@ CREATE TABLE appointments(
     doctor_id INT NOT NULL,
     appointment_date DATETIME NOT NULL,
     status ENUM('Scheduled','completed','Cancelled') DEFAULT 'Scheduled',
+    notes TEXT,
     created_at TIMESTAMP CURRENT_TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES patients(id),
     FOREIGN key (doctor_id) REFERENCES doctors(id)
