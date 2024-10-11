@@ -1,13 +1,18 @@
-<?php 
+<?php
 
-    require '../includes/functions.php';
+    include ('../includes/functions.php');
 
     if(isset($_GET['id'])){
-        deleteAppointment($_GET['id']);
-        header("Location:view_appointments.php");
-        exit();
+        $delStmt = deleteAppointment($_GET['id']);
+
+        if($delStmt){            
+            header("Location:manage_appointments.php");
+            exit();
+        } else {
+            echo "Error deleting appointment."
+        }
     } else {
-        header("Location:view_appointments.php");
+        header("Location:manage_appointments.php");
         exit();
     }
 ?>
