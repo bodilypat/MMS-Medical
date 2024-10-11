@@ -1,12 +1,18 @@
-<?php 
-    require '../include/functions.php';
+<?php
 
-    if(isset($_GET['id'])) {
-        deleteDoctor($_GET['id']);
-        header("Location:view_doctors.php");
-        exit();
+    include('../includes/functions.php');
+    
+    if(!isset($_GET['id'])) {
+        $delStmt = deleteDoctor($_GET['id']);
+        
+        if($delStmt){
+            header("Location:manage_doctors.php") ;
+            exit();
+        } else {
+            echo "Error deleting doctors.";
+        }
     } else {
-        header('Location:view_doctors.php');
+        header('Location:manage_doctors.php');
         exit();
     }
 ?>
