@@ -1,23 +1,28 @@
 <?php
-    require '../includes/functions.php';
 
-    if($_SERVER['REQUEST_METHOD'] =='POST') {
+    include('../includes/functions.php');
 
-        $patient_name = $_POST['patient_name'];
-        $doctor_name = $_POST['doctor_name'];
+    if ($_SERVER['REQUEST_METHOD'] =='POST') {
+        $patient_id = $_POST['patient_id'];
+        $doctor_id = $_POST['doctor_id'];
         $appointment_date = $_POST['appointment_date'];
+        $notes = $_POST['notes'];
 
-        if(addAppointment($patient_name, $doctor_name, $appointment_date)){
-            header("Location: view_appointments.php");
+        if(addAppointment($patient_id, $doctor_id, $appointment_date, $notes)) {
+            header("Location:manage_appointments.php");
             exit();
         } else {
             $error = "Failed to add appointment.";
         }
     }
+
+    $patients = getPatients();
+    $doctors = getDoctors();
+
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Add Appointment</title>
@@ -25,12 +30,41 @@
     <body>
         <h2>Add Appointment</h2>
         <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form method="POST" name="form-appointment">
-            <input type="texy" name="patient_name" placeholder="Patient name" required>
-            <input type="text" name="doctor_name" placeholder="Doctor name" required>
-            <input type="detetime-local" name="appoint_date" required>
-            <button type="submit">Add Appointments</button>
+        <form method="post" name="form-appointment">
+
+            <!-- select patient -->
+            <div class="form-group">
+                <label for="PatientName">Patient Name</label>
+                <select name="patient_id" class="form-control" required>
+                    <?php foreach($patients as $patient): ?>
+                         <option value="<?php echo $patient['id'];?>"><?php echo $patient['name'];?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- select doctor -->
+            <div class="form-group">
+                <label for="DoctorName">Doctor Name</label>
+                <select name="doctor_id" class="form-control" required>
+                    <?php foreach($doctors as $doctor): ?>
+                        <option value="<?php echo $doctor['id'];?>"><?php echo $doctor['name'];?></option>
+                    <?php endforeach; ?>
+                </section>
+            </div>
+
+            <!-- appointment date -->
+            <div class="form-group">
+                <label for="AppointmentDate">Appointment date</label>
+                <input type="datetime-local" name="appointment_date" required>
+            </div>
+
+            <!-- notes -->
+            <div class="form-group">
+                <label for="Notes">Notes</label>
+                <textarea name="notes" class="form-control"></textarea>
+            </div>
+            <button type="submit" name="add" value="add appointmnet">Add Appointments</button>
         </form>
-        <a href="view_appointments.php">View Appointments</a>
+        <a href="manage_appointments.php">View Appointments</a>
     </body>
 </html>
