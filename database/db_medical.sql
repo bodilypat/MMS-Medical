@@ -84,13 +84,13 @@ CREATE TABLE prescriptions(
 CREATE TABLE billing (
     id INT AUTO_INCREMENT PRIMARY key,
     patient_id INT, NOT NULL,
-    appointment_id INT NOT NULL,
+    medical_records_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     billing_date DATETIME CURRENT_TIMESTAMP,
     status ENUM('Paid','Pending', 'cancelled') DEFAULT 'Pending',
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (patent_id) REFERENCES patients(id),
-    FOREIGN KEY (appointment_id) REFERENCES medical_appointments(id)
+    FOREIGN KEY (medical_records_id) REFERENCES medical_records(id)
 );
 
 
