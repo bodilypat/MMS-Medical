@@ -5,10 +5,10 @@
     if(isset($_GET['id'])){
 
         deletePrescription($_GET['id']);
-        header("Location:view_prescriptions.php");
+        header("Location:manage_prescriptions.php");
         exit();
     } else {
-        header("Location: view_prescriptions.php");
+        header("Location: manage_prescriptions.php");
         exit();
     }
 ?>
