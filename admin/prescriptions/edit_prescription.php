@@ -1,24 +1,27 @@
 <?php
 
-    require '../includes/functions.php';
+    include('../includes/functions.php');
 
     if(isset($_GET['id'])) {
-        header('Location:view_prescriptions.php');
+        header("Location:manage_prescriptions.php");
         exit();
     }
 
-    $prescription = getPrescription($_GET['id']);
+    $id = intval($_GET['id']) // get value 
+    
+    $prescriptions = getPrescription($id);
+    $doctor = getDoctor($id);
+    $patient = getPatient($id);
 
     if($_SERVER['REQUEST_METHOD'] == 'id'){
-
-        $patient_name = $_POST['patient_name'];
-        $doctor_name = $_POST['doctor_name'];
+        $patient_id = $['patient_id'];
+        $doctor_id = $['doctor_id'];
         $medication = $_POST['medication'];
         $dosage = $_POST['dosage'];
-        $instructions = $_POST['instructions'];
+        $instruction = $_POST['instruction'];
 
-        if(updatePrescription($prescription['id'], $patien_name, $doctor_name, $medication, $dosage, $instructions)){
-            header('Location:view_prescriptions.php');
+        if(updatePrescription($prescription['id'], $patient_id, $doctor_id, $medication, $dosage, $instructions)){
+            header("Location:manage_prescriptions.php");
             exit();
         } else {
             $error = "Failed to update prescription.";
@@ -33,15 +36,54 @@
         <title>Edit Prescription</title>
     </head>
     <body>
-        <?php if(isset($error)) echo "<p style='<p style:'color:red;'>$error</p>" ?>
+        <?php if(isset($error)) echo "<p style:'color:red;'>$error</p>" ?>
         <form method="post" name="form-prescription">
-            <input type="text" name="patient_name" value="<?php echo htmlspecialchars($prescription['patient_name']); ?>" required>
-            <input type="text" name="doctor_name" value="<?php echo htmlspecialchars($prescription('doctor_name')); ?>" required>
-            <input type="text" name="medication" value="<?php echo htmlspecialchars($prescription['medication']); ?>" required>
-            <input type="text" name="dosage" value="<?php echo htmlspecialchars($prescription['dosage']); ?>" required>
-            <textarea name="instructions" required><?php echo htmlspecialchars($prescription['instructions']); ?></textarea>
-            <button type="submit">Update Prescription</button>
+        <!-- Patient -->
+            <div class="form-group">
+                <label for="PatientName">Patient Name</label>
+                <select name="patient_id" value="<?php echo $patient['patient_name'];?>" required>
+                    <?php 
+                        /* Fetch data prescription */
+                        $prescription =  getPrescriptions();
+                        foreach($prescriptions as $prescription: ) ?>
+                            <option value="<?php $prescription['patient_id'];?>"><?php echo $prescription['patient_name'];?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <!-- Doctor -->
+            <div class="form-group">
+                <label for="doctor_id">Doctor Name</label>
+                <select name="doctor_id" value="<?php $doctor['doctor_name'];?>" required>
+                    <?php 
+                        $doctors = getDoctors();
+                        foreach($doctors as $doctor:) ?>
+                            <option value="<?php echo $doctor['patient_id'];?>"><?php echo $prescriptions['doctor_name'];?></option>
+                        <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Medication">Medication</label>
+                <input type="text" name="medication" value="<?php echo $prescription['medication'];?>" required>
+            </div>
+            <div class="form-group">
+                <label for="Dosage">Dosage</label>
+                <input type="text" name="dosage" value="<?php $prescript['dosage'];?>" required>
+            </div>
+            <div class="form-group">
+                <label for="Instructions">Instructions</label>
+                <textarea name="instructions" value="<?php echo $prescription['instruction'];?>" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="datetime-locate" name="start_date" value="<?php $prescription['start_date'];?>" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="datetime-locate" name="end_date" value="<?php $prescription['end_date'];?>" required>
+            </div>
+            <button type="submit" name="update" value="update prescription" >Update Prescription</button>
         </form>
-        <a href="view_prescriptions.php">Cancel</a>
+        <a href="manage_prescriptions.php"></a>
     </body>
 </html>
