@@ -144,10 +144,10 @@
     function deleteDoctor($id){
         $pdo = dbconnect();
         $stmt = $pdo->prepare("DELETE FROM doctors WHERE id = ? ");
-        return $stmt->execute([id]);
+        return $stmt->execute([$id]);
     }
 
-    /* Function manage Paitent */
+    /* Function manage Patients */
     function addPatient($name, $email, $date_of_birth, $gender, $phone, $address) {
         $pdo = dbconnect();
         $stmt = $pdo->prepare("INSERT INTO patients(name, email, date_of_birth, gender, phone, address) VALUES(?, ?, ?, ?,?) ");
@@ -191,25 +191,38 @@
         return $stmt->execute([$id])
     }
 
-    /* Function mange Appontment */
-    function addAppointment($patient_id, $doctor_id, $appointment_date){
+    /* Function mange Appontments */
+    function addAppointment($patient_id, $doctor_id, $appointment_date, $status, $notes){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("INSERT INTO appointments(patient_id, doctor_id, appointment_date) VALUES(?, ?, ?)");
-        return $stmt->execute([$patient_id, $doctor_id, $appointment_date]);
+        $stmt = $pdo->prepare("INSERT INTO appointments(patient_id, doctor_id, appointment_date,status, notes ) VALUES(?, ?, ?, ?, ?)");
+        return $stmt->execute([$patient_id, $doctor_id, $appointment_date, $status, $notes]);
+    }
+
+    function getAppointmentById($id) {
+        $pdo = dbconnect();
+        $sql = $pdo->query("SELECT appointments.id,
+                                    patients.name as patient_name,
+                                    doctors.name as doctor_name,
+                             FROM appointments 
+                             JOIN patients ON appointments.patient_id = patients.id
+                             JOIN doctors  ON appointments.doctor_id = doctors.id
+                             WHERE id = ? ");
+        $stmt->execute($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getAppointments() {
         $pdo = dbconnect();
-        $stmt = $pdo->query("SELECT * FROM appointments");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    function getAppointment($id) {
-        $pdo = dbconnect();
-        $sql = $pdo->prepare("SELECT a.id, a.appointment_date , p.name AS patient_name , a.status 
-                              FROM appointments  a 
-                              JOIN patients p ON a.patient_id = p.id 
-                              WHERE a.doctor_id = ? ");
+        $sql = $pdo->query("SELECT appointments.id,
+                                   patients.name as patient_name,
+                                   doctors.name as patient_name,
+                                   appointments.appointment_date,
+                                   appointments.status,
+                                   appointments.notes
+                              FROM appointments 
+                              JOIN patients  ON appointments.patient_id = patients.id 
+                              JOIN doctors ON apointments.doctors_id = doctors.id
+                              ORDER BY appointments.appointment_date ASC");
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam('doctor_id' => $doctor_id, PDO::PARAM_INT);
@@ -218,24 +231,17 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updateAppointment($appointment_id, $patient_id, $doctor_id, $addpointment_date){
+    function updateAppointment($appointment_id, $patient_id, $doctor_id, $appointment_date, $status, $notes){
         $pdo = dbconnect();
-        $stm = $pdo->prepare("UPDATE appointments SET patient_id = ? , doctor_id = ?, appointment_date = ?  WHERE id = ?");
-        return $stmt->execute([$patient_id, $doctor_id, $appointment_date, $appointment_id]);
-    }
-
-    function getAppointments(){
-        $pdo = dbconnect();
-        $stmt = $pdo->query("SELECT * FROM appointments");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stm = $pdo->prepare("UPDATE appointments SET patient_id = ? , doctor_id = ?, appointment_date = ? , status = ?, notes = ? WHERE id = ?");
+        return $stmt->execute([$patient_id, $doctor_id, $appointment_date, $status, $notes, $appointment_id]);
     }
 
     function searchAppointment($keyword){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("
-                SELECT * FROM appointments 
-                WHERE patient_id IN(SELECT id FROM patients WHERE name LIKE ?)
-                OR doctor_id IN(SELECT id FROM doctors WHERE name LIKE ?) ");
+        $stmt = $pdo->prepare(" SELECT * FROM appointments 
+                                WHERE patient_id IN(SELECT id FROM patients WHERE name LIKE ?)
+                                OR doctor_id IN(SELECT id FROM doctors WHERE name LIKE ?) ");
         $stmt->execute(['%' . $keyword . '%' , '%' $keyword . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -247,29 +253,55 @@
     }
 
     /* Function Manage Prescription */
-    function addPrescription ($patient_id, $doctor_id, $medication, $dosage, $instructions){
+    function addPrescription ($patient_id, $medic_id, $instructions, $instructions, $dosage, $start_date, $end_date){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("INSERT INTO prescriptions(patient_name, doctor_name, medication, dosage, instructions) VALUES(?, ?, ?, ?, ?)");
-        return $stmt->execute([$patient_id, $doctor_id, $medication, $dosage, $instructions]);
+        $stmt = $pdo->prepare("INSERT INTO prescriptions(patient_id, medical_record_id, medication, instructions,dosage, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$patient_id, $doctor_id, $medication, $dosage, $instructions, $start_date, $end_date]);
     }
 
     function getPrescriptions() {
         $pdo = dbconnect();
-        $stmt = $pdo->query("SELECT * FROM prescriptions");
+        $stmt = $pdo->query("SELECT prescriptions.id, patients.name as patient_name, 
+                                    medical_records.name as medical_record_name, 
+                                    prescriptions.dosage, 
+                                    prescriptions.start_date,
+                                    prescriptions.end_date
+                             FROM prescriptions 
+                             JOIN patients ON prescriptions.patient_id = patients.id 
+                             JOIN doctors  ON prescriptions.doctors_id = doctors.id 
+                             ORDER BY id ");
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getPrescription($id){
         $pdo = dbconenct();
-        $stmt = $pdo->query("SELECT * FROM prescriptions WHERE id = ? ");
+        $stmt = $pdo->query("SELECT prescriptions.id ,
+                                    patients.name as patient_name,
+                                    medical_records.name  as doctor_name,
+                                    prescriptions.instructions,
+                                    prescriptions.dosage,
+                                    prescriptions.start_date,
+                                    prescription.end_date,                                    
+                             FROM prescriptions 
+                             JOIN patient ON prescriptions.patient_id = patients.id 
+                             JOIN doctors ON prescript.doctor_id = doctors.id 
+                             WHERE id = ? ");
         $stmt->execute([$id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updatePrescription($id, $medication, $dosage, $instruction){
+    function updatePrescription($id, $patient_id, $medical_record_id, $medication, $instruction, $instruction, $start_date, $end_date){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("UPDATE prescriptions SET  medication = ?, dasage = ?, instructions = ? WHERE id = ? ");
-        return $stmt->execute([$medication, $dosage, $instructions, $id]);
+        $stmt = $pdo->prepare("UPDATE prescriptions SET  patient_id = ?, 
+                                                         medical_record = ?,
+                                                         medication = ?, 
+                                                         instructions = ?,
+                                                         dasage = ?, 
+                                                         start_date = ?, 
+                                                         end_date = ? 
+                                                    WHERE id = ? ");
+        return $stmt->execute([$patient_id, $mecation_record_id, $medication, $instructions, $dosage, $start_date, $end_date, $id]);
     }
 
     function searchPrescriptions($keyword){
@@ -290,128 +322,241 @@
 
     function searchPrescription($keyword){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("
-                SELECT * FROM prescriptions
-                WHERE medication LIKE ?
-                OR patient_id IN (SELECT ID FROM patient WHERE nam like ?)" );
+        $stmt = $pdo->prepare("SELECT * FROM prescriptions
+                               WHERE medication LIKE ?
+                               OR patient_id IN (SELECT ID FROM patient WHERE nam like ?)" );
         $stmt->execute(['%' . $keyword . '%', '%' . $keyword . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function deletePrescription($id) {
         global $pdo;
-        $stmt = $pdo->prepare("DELETE FROM prescriptions WHERE in = ? ");
+        $stmt = $pdo->prepare("DELETE FROM prescriptions WHERE id = ? ");
         return $stmt->execute([$id]);
     }
 
-    /* Function manage Medical_history */
+    /* Function manage Medical_recrods */
 
-    function addMedicalHistory($patient_id, $date_of_visit, $symtoms, $diagnosis, $treatment){
+    function addMedicalRecord($patient_id, $doctor_id, $record_date, $symtoms, $diagnosis, $treatment){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("INSERT INTO medical_history(patient_id, date_of_visit, symptoms, diagnosis, treatment) VALUES(?, ?, ?, ?, ?) ");
-        return $stmt->execute([$patient_id, $date_of_visit, $symptoms, $diagnosis, $treatment]);
+        $stmt = $pdo->prepare("INSERT INTO medical_history(patient_id, doctors_id, record_date, symptoms, diagnosis, treatment) VALUES(?, ?, ?, ?, ?, ?) ");
+        return $stmt->execute([$patient_id, $doctor_id, $record_date, $symptoms, $diagnosis, $treatment]);
     }
 
-    function getMedicalHistories() {
+    function getMedicalRecords() {
         $pdo = dbconnect();
-        $stmt = $pdo->query("SELECT * FROM medical_history");
+        $stmt = $pdo->query("SELECT medical_records.id , 
+                                    patients.name as patient_name,
+                                    doctors.name as doctor_name,
+                                    medical_records.record_date,
+                                    medical_records.symptoms,
+                                    medical_records.diagnosis,
+                                    medical_records.treatment
+                             FROM medical_records 
+                             JOIN patients  ON medical_records.patient_id = patients.id 
+                             JOIN doctors  ON medical_records.doctor_id = doctors.id 
+                             ORDER BY record_date ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getMedicalHistory($id) {
+    function getMedicalRecordById($id) {
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("SELECT * FROM medical_history WHERE id = ? ");
+        $stmt = $pdo->prepare("SELECT medical_records.id,
+                                      patients.name as patient_name,
+                                      doctors.name as doctor_name,
+                                      medical_records.record_date,
+                                      medical_records.symptoms, 
+                                      medical_records.diagnosis,
+                                      medical_records.treatment
+                               FROM medical_records 
+                               JOIN patients  ON medical_records.patient_id = patients.id 
+                               JOIN doctors d ON medical_records.doctor_id = doctors.id 
+                               WHERE id = ? ");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function updateMedicalHistory($id, $date_of_visit, $symptoms, $diagnosis, $treatment){
+    function updateMedicalRecord($id, $patient_id, $doctor_id,$record_date, $symptoms, $diagnosis, $treatment){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("UPDATE medical_history SET  date_of_visit = ?, symptoms = ?, diagnosis = ?, treatment = ? WHERE id = ? ");
-        return $stmt->execute([$date_of_visit, $symptoms, $diagnosis, $treatment, $id]);
+        $stmt = $pdo->prepare("UPDATE medical_history SET  patient_id = ?, doctor_id = ?, record_date = ?, symptoms = ?, diagnosis = ?, treatment = ? 
+                               WHERE id = ? ");
+        return $stmt->execute([$patient_id,$doctor_id, $record_date,  $symptoms, $diagnosis, $treatment, $id]);
     }
 
-    function listMedicalHistories($patient_id){
+    function listMedicalRecords($patient_id){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("SELECT * FROM medical_history WHERE patient_id = ? ");
+        $stmt = $pdo->prepare("SELECT * FROM medical_records WHERE patient_id = ? ");
         $stmt->execute([$patient-id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function searchMedicalHistory($keyword){
+    function searchMedicalRecord($keyword){
         $pdo = dbconnect();
-        $stmt = $pdo->perpare("SELECT * FROM medical_history WHERE condition LIKE ? ");
+        $stmt = $pdo->perpare("SELECT * FROM medical_records WHERE condition LIKE ? ");
         $stmt->execute(['%' . $keyword . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSCO);
     }
 
-    function deleteMedicalHistory($id){
+    function deleteMedicalRecord($id){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("DELETE FROM medical_history WHERE id = ?");
+        $stmt = $pdo->prepare("DELETE FROM medical_records WHERE id = ?");
         return $stmt->execute([$id]);
     }
 
-    /* Function Manage Invoice */
+    /* Function Manage Billings */
 
-    function addbilling($patient_id, $appointment_id, $amount, $status){
+    function addbilling($patient_id, $service_id, $date_of_service, $amount, $status){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("INSERT INTO billing(patient_id,appointment_id, amount, date_billed, status, notes) VALUES(?,?,?, new(), ?,?) ");
-        return $stmt->execute([$patient_id, $appointment_id, $amount, $status, $notes]);
+        $stmt = $pdo->prepare("INSERT INTO billing(patient_id, service_id, date_of_service, amount, status) VALUES(?, ?, ?, ?, ? ) ");
+        return $stmt->execute([$patient_id, $service_id, $date_of_service, $date_of_service, $amount, $status]);
     }
 
-    function getbillings(){
+    function getBillings(){
         $pdo = dbconnect();
-        $stmt = $pdo->query("SELECT * FROM billing");
+        $stmt = $pdo->query("SELECT billings.id, 
+                                    patients.name as patient_name, 
+                                    services.description as service_description,
+                                    billings.date_of_service,
+                                    billings.amount,
+                                    billings.status
+                             FROM billings 
+                             JOIN patients ON billings.patient_id = patients.id 
+                             JOIN services ON billings.service_id = services.id
+                             ORDER BY billings.billing_date ASC ");
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getBilling($billing_id){
-        $pdo dbconnect();
-        $stmt = $pdo->prepare("SELECT * FROM billing WHERE id= ? ");
-        $stmt->execute([$billing_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    function getBillingById($id)
+    {
+        $pdo = dbconnect();
+        $stmt = $pdo->prepare("SELECT billings.id , 
+                                      patients.name as patient_name,
+                                      services.description as service_description,
+                                      bilings.date_of_service,
+                                      billings.amount,
+                                      billings.status
+                               FROM billings 
+                               JOIN patients  ON billings.patient_id = patients.id 
+                               JOIN services  ON billings.service_id = services.id
+                               WHERE id = ? ");
+        $stmt->execute([$id]);
+        return 4stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updateBilling($billng_id, $amount, $status, $notes){
+    function updateBilling($id,$patient_id,$service_id, $date_of_service, $amount, $status){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("UPDATE invoices SET amount = ?, status = ?,  WHERE billing_id= ? ");
-        return $stmt->execute([$amount, $status, $notes,$billing_id]);
+        $stmt = $pdo->prepare("UPDATE billings SET patient_id = ?, service_id = ?, date_of_service = ?, amount = ?, status = ? WHERE id= ? ");
+        return $stmt->execute([$patient_id, $service_id,$date_of_service,$amount, $status, $id]);
     }
 
-    function deleteBilling($billing_id) {
+    function deleteBilling($id) {
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("DELETE FROM billing WHERE billint_id = ? ");
-        return $stmt->execute([$billing_id]);
+        $stmt = $pdo->prepare("DELETE FROM billings WHERE id = ? ");
+        return $stmt->execute([$id]);
     }
 
-    function listBillings($patient_id){
+    function listBillingByPatient($patient_id){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("SELECT * FROM billing WHERE patient_id = ?");
+        $stmt = $pdo->prepare("SELECT * FROM billings WHERE patient_id = ?");
         $stmt->execute([$patient_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function searchBilling($keyword){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("
-                    SELECT * FROM billing 
-                    WHERE status LIKE ?
-                    OR patient_id IN(SELECT id FROM patients WHERE name like ? )");
+        $stmt = $pdo->prepare(" SELECT * FROM billings WHERE status LIKE ?
+                                OR patient_id IN ('SELECT id FROM patients WHERE name like ? ')");
         $stmt->execute(['%' . $keyword . '%' , '%' . $keyword . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getDoctorAppointment($doctor_id)
-    {
+    /* Function manage Payemnt */
+    function addPayment($billing_id, $payment_date, $amount, $method){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("SELECT a.id , p.name , a.appointment_date, a.status
-                               FROM appointments a
-                               JOIN patients p ON a.patient_id = p.id
-                               WHERE a.doctor_id = ? 
-                               ORDER BY a.appointment_date ASC");
-        $stmt->execute([$doctor_id]);
+
+        $stmt = $pdo->prepare("INSERT INTO payments(billing_date, payment_date, amount, method) VALUES(?,?,?,?) ");
+        $stmt->execute([$billing_id, $payment_date, $amount, $method]);
+        return $stmt;
+    }
+
+    function getPayments() {
+        $pdo = dbconnect();
+        $stmt = $pdo->query("SELECT payments.id , 
+                                    billings.date_of_service as billing_date_of_service,
+                                    payments.payment_date,
+                                    payments.amount,
+                                    payments.method
+                            FROM payments 
+                            JOIN billings ON payments.billing_id = billings.id 
+                            ORDER BY payments.payment_date ");
+    }
+
+    function getPaymentById(){
+        $pdo = dbconnect();
+
+        $sql = $pdo->query("SELECT payments.id ,
+                                    billigs.date_of_service as billing_date_of_service,
+                                    payments.payment_date,
+                                    payments.amount,
+                                    payments.method
+                            FROM payments 
+                            JOIN billings ON payments.billing_id = billings.id ");
+        $stmt->execute($sql);
+        return $stmt;
+    }
+
+    function updatePaymemt($id, $billling_id, $payment_date, $amount, $method){
+        $pdo = dbconnect();
+
+        $stmt= $pdo->prepare("UPDATE payments SET billing_id = ?, payment_date = ?, amount =?, method =? WHERE id = ? ");
+        return $stmt->execute([$billing_id, $payment_date, $amount, $method, $id]);
+    }
+
+    function deletePayment($id){
+        $pdo = dbconnect();
+
+        $stmt = $pdo->prepare("DELETE FROM payments WHERE id = ? ");
+        return $stmt->execute([$id]);
+    }
+
+    /* Function manage service */
+    function addService(){
+        $pdo = dbconnect();
+
+        $stmt = $pdo->prepare("INSERT INTO services(description, cost) VALUES(?,?) ");
+        return $stmt->execute([$description, $cost]);
+    }
+
+    function getServices(){
+        $pdo = dbconnect();
+
+        $stmt = $pod->query("SELECT * FROM services ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    function getServiceById($id){
+        $pdo = dbconnect();
+
+        $stmt = $pdo->query("SELECT * FROM services WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function updateService($id,$description, $cost){
+        $pdo = dbconnect();
+
+        $stmt = $pdo->prepare("UPDATE services SET description = ?, cost = ? WHERE id = ? ");
+        return $stmt->execute([$description, $cost, $id]);
+    }
+
+    function deleteService($id){
+        $pdo = dbconnect();
+
+        $stmt = $pdo->prepare("DELETE FROM services WHERE id = ? ");
+        return $stmt->execute([$id]);
+    }
+
 
     function getDoctorProfile($doctor_id)
     {
