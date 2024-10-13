@@ -1,7 +1,7 @@
 <?php
 
     include ('../include/functions.php');
-    $appointments = getAppointment();
+    $appointments = getAppointments();
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +19,8 @@
                  <th>Patient Name</th>
                  <th>Doctor Name</th>
                  <th>Appointment Date</th>
+                 <th>Status</th>
+                 <th>Notes</th>
                  <th>Actions</th>
             </tr>
             </thead>
@@ -29,6 +31,7 @@
                      <td><?php echo htmlspecialchars($appointment['patient_name']);?></td>
                      <td><?php echo htmlspecialchars($appointment['doctor_name']);?></td>
                      <td><?php echo htmlspecialchars($appointment['appointment_date']);?></td>
+                     <td><?php echo htmlspecialchars($appointment['status']);?></td>
                      <td><?php echo htmlspecialchars($appointment['notes']); ?></td>
                      <td>
                         <a href="edit_appointment.php?id=<?php $appointment['id'];?>">Edit</a> ||
