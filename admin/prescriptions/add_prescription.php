@@ -6,13 +6,13 @@
 
         $patient_id = $_POST['patient_id'];
         $doctor_id = $_POST['doctor_id'];
+        $instructions = $_POST['instructions'];
         $medication = $_POST['medication'];
         $dosage = $_POST['dosaage'];
-        $instructions = $_POST['instruction'];
         $start_date = $_POST['start_date'];
         $end_date = $_POST['end_date'];
 
-        if(addPrescriptiion($patient_id, $doctor_id, $medication, $dosage, $instructions, $start_date, $end_date)){
+        if(addPrescriptiion($patient_id, $doctor_id, $instructions, $medication, $dosage, $start_date, $end_date)){
             header("Location : manage_prescriptions.php");
             exit();
         } else {
@@ -28,7 +28,7 @@
         <title>Add Prescription</h2>
         <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
         <form method="post" name="form-prescription">
-            <!-- select patients -->
+            <!-- Patient Name -->
             <div class="form-group">
                 <label for="PatientName">Patient Name</label>
                 <select name="patient_id" form="form-control" placeholder="Patient Name" required>
@@ -40,7 +40,7 @@
                     <?php endforeach; ?>
                 </select>
             </div>
-            <!-- select doctor -->
+            <!-- Doctor name -->
             <div class="form-group">
                 <label for="DoctorName">Doctor Name</label>
                 <select name="doctor_id" class="form-control" placeholder="Doctor Name" required>
@@ -54,17 +54,20 @@
             </div>
 
             <div class="form-group">
+                <label for="Instructions">Instructions</label>
+                <textarea name="instructions" placeholder="Instruction" required></textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="medication">Medication</label>
                 <input type="text" name="medication" class="form-control" placeholder="Medication" required>
             </div>
+            
             <div class="form-group">
                 <label for="dosage">Dosage</label>
                 <input type="text" name="dosage" class="form-control" placeholder = "Dosage" required>
             </div>
-            <div class="form-group">
-                <label for="Instruction">Instruction</label>
-                <textarea name="instruction" placeholder="Instruction" required></textarea>
-            </div>
+            
             <div class="form-group">
                 <label for="StartDate">Start Date</label>
                 <input type="datetime-locate" name="start_date" class="form-control" placeholder="Start Date" required>
