@@ -10,8 +10,6 @@
     $id = intval($_GET['id']) // get value 
     
     $prescriptions = getPrescription($id);
-    $doctor = getDoctor($id);
-    $patient = getPatient($id);
 
     if($_SERVER['REQUEST_METHOD'] == 'id'){
         $patient_id = $['patient_id'];
@@ -20,7 +18,7 @@
         $dosage = $_POST['dosage'];
         $instruction = $_POST['instruction'];
 
-        if(updatePrescription($prescription['id'], $patient_id, $doctor_id, $medication, $dosage, $instructions)){
+        if(updatePrescription($id, $patient_id, $doctor_id, $instructions, $medication, $dosage,$start_date, $end_date )){
             header("Location:manage_prescriptions.php");
             exit();
         } else {
@@ -38,28 +36,36 @@
     <body>
         <?php if(isset($error)) echo "<p style:'color:red;'>$error</p>" ?>
         <form method="post" name="form-prescription">
-        <!-- Patient -->
+
+            <!-- Prescription Patient id -->
             <div class="form-group">
                 <label for="PatientName">Patient Name</label>
-                <select name="patient_id" value="<?php echo $patient['patient_name'];?>" required>
+                <select name="patient_id" value="<?php echo $patient['patient_id'];?>" required>
                     <?php 
-                        /* Fetch data prescription */
-                        $prescription =  getPrescriptions();
-                        foreach($prescriptions as $prescription: ) ?>
-                            <option value="<?php $prescription['patient_id'];?>"><?php echo $prescription['patient_name'];?></option>
+                        /* Fetch patient name */
+                        $patients =  getPatients();
+                        foreach($patients as $patient: ) ?>
+                            <option value="<?php $patient['patient_id'];?>"><?php echo $patient['patient_name'];?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
-            <!-- Doctor -->
+
+            <!-- Prescription doctor id-->
             <div class="form-group">
                 <label for="doctor_id">Doctor Name</label>
-                <select name="doctor_id" value="<?php $doctor['doctor_name'];?>" required>
+                <select name="doctor_id" value="<?php $prescription['doctor_id'];?>" required>
                     <?php 
+                        /* Fetch doctor name */
                         $doctors = getDoctors();
                         foreach($doctors as $doctor:) ?>
-                            <option value="<?php echo $doctor['patient_id'];?>"><?php echo $prescriptions['doctor_name'];?></option>
+                            <option value="<?php echo $doctor['doctor_id'];?>"><?php echo $doctors['doctor_name'];?></option>
                         <?php endforeach; ?>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Instructions">Instructions</label>
+                <textarea name="instructions" value="<?php echo $prescription['instruction'];?>" required></textarea>
             </div>
 
             <div class="form-group">
@@ -70,10 +76,7 @@
                 <label for="Dosage">Dosage</label>
                 <input type="text" name="dosage" value="<?php $prescript['dosage'];?>" required>
             </div>
-            <div class="form-group">
-                <label for="Instructions">Instructions</label>
-                <textarea name="instructions" value="<?php echo $prescription['instruction'];?>" required></textarea>
-            </div>
+            
             <div class="form-group">
                 <label for="start_date">Start Date</label>
                 <input type="datetime-locate" name="start_date" value="<?php $prescription['start_date'];?>" required>
