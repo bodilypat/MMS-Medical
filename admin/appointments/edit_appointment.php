@@ -32,23 +32,22 @@
     </head>
     <body>
         <h2>Edit Appointment</title>
-        <title>Edit Appointment</title>
         <?php if(isset($error)) echo "<p style='color:red;'>$error" ?>
         <form method="post" name="form-appointment">
             <input type="hidden" name="id" value="<?php $appointment['id'] ?>">
 
-            <!-- select patient -->
+            <!-- Fetch  patient name -->
             <div class="form-group">
                 <label for="PatientName">Patient Name</label>
                 <select name="patient_id" class="form-control"  value="<?php $appointments['patient_id']; ?>" required>
                     <?php 
-                        $patients = getPatient();
+                        $patients = getPatients();
                         foreach ($patients as $patient) : ?>
-                            <option value="<?php echo $patient['id'];?>"><?php echo $patients['name'];?></option>
+                            <option value="<?php echo $patient['id'];?>"><?php echo htmlspecialchars($patients['name']);?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
-            <!-- select doctors -->
+            <!-- Fetch doctor name -->
             <div class="form-group">
                 <select name="doctor_id" value="<?php $appointment['doctor_id']; ?>" required>
                     <?php
@@ -67,7 +66,7 @@
                 <select name="status"  class="form-control" require>
                       <option value="Scheduled" <?php $appointment['status'] == 'Scheduled' ? 'selected' : ''?>>Scheduled</option>
                       <option value="Completed" <?php $appointment['status'] == 'Completed' ? 'selected' : ''?>>Completed</option>
-                      <option value="Status" <?php $appointment['status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                      <option value="Cancelled" <?php $appointment['status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
                 </select>
             </div>
             <div class="form-group">
