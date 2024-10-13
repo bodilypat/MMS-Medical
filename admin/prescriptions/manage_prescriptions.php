@@ -17,19 +17,21 @@
                  <th>ID</th>
                  <th>Patient Name</th>
                  <th>Doctor Name</th>
+                 <th>Instructions</th>
                  <th>Medications</th>
                  <th>Dosage</th>
-                 <th>Instructions</th>
+                 <th>Start Date</th>
+                 <th>End Date</th>
                  <th>Actions</th>
             </tr>
-            <?php foreach($prescription as $prescription): ?>
+            <?php foreach($prescriptions as $prescription): ?>
             <tr>
                  <td><?php echo $prescription['id'];?></td>
                  <td><?php echo $prescription['patient_name'];?></td>
                  <td><?php echo $prescription['doctor_name'];?></td>
+                 <td><?php echo $prescription['instruction'];?></td>
                  <td><?php echo $prescription['medication'];?></td>
                  <td><?php echo $prescription['dosage'];?></td>
-                 <td><?php echo $prescription['instruction'];?></td>
                  <td><?php echo $prescription['start_date'];?></td>
                  <td><?php echo $prescription['end_date'];?></td>
                  <td>
