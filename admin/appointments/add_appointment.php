@@ -8,16 +8,13 @@
         $appointment_date = $_POST['appointment_date'];
         $notes = $_POST['notes'];
 
-        if(addAppointment($patient_id, $doctor_id, $appointment_date, $notes)) {
+        if(addAppointment($patient_id, $doctor_id, $appointment_date, $staus, $notes)) {
             header("Location:manage_appointments.php");
             exit();
         } else {
             $error = "Failed to add appointment.";
         }
     }
-
-    $patients = getPatients();
-    $doctors = getDoctors();
 
 ?>
 
@@ -32,7 +29,7 @@
         <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
         <form method="post" name="form-appointment">
 
-            <!-- select patient -->
+            <!-- select patient name-->
             <div class="form-group">
                 <label for="PatientName">Patient Name</label>
                 <select name="patient_id" class="form-control" required>
@@ -42,7 +39,7 @@
                 </select>
             </div>
 
-            <!-- select doctor -->
+            <!-- Fetch doctor name-->
             <div class="form-group">
                 <label for="DoctorName">Doctor Name</label>
                 <select name="doctor_id" class="form-control" required>
