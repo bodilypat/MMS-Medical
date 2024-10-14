@@ -42,6 +42,17 @@ admin/
                         edit_billing.php 
                         delete_billing.php 
                         manage_billings.php
+        payments/
+                        add_payment.php
+                        edit_payment.php
+                        delete_payment.php
+                        manage_payments.php
+        services/
+                        add_service.php
+                        edit_service.php
+                        delete_service.php
+                        manage_services.php
+                
 
 asset/
         css/
