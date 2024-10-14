@@ -1,8 +1,6 @@
 admin/
-
         index.php
         dashboard
-
         auth /
                 login.php 
                 register.php 
@@ -48,26 +46,26 @@ admin/
 assets/
         css/
                 styles.css
+
         images/
                 bg.jpg;
+
         js/
                 main.js
                 form-elements.js
+
 database/
-        dbmedical.sql
+        db_medical.sql
 
 includes/
         dbconnect.php
         functions.php
-
 
 outlines/
         sidebar.php
         header.php
         footer.php
         setting.php
-
-        
 
 doctors/
         doctor authentication
@@ -84,6 +82,7 @@ doctors/
                 manage_medical_records.php
                                         
                 manage_prescriptions.php
+                
 patients/
         patient authentication
                 login.php
