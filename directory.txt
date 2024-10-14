@@ -43,7 +43,7 @@ admin/
                         delete_billing.php 
                         manage_billings.php
 
-assets/
+asset/
         css/
                 styles.css
 
@@ -82,7 +82,7 @@ doctors/
                 manage_medical_records.php
                                         
                 manage_prescriptions.php
-                
+
 patients/
         patient authentication
                 login.php
