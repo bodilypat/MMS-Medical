@@ -2,7 +2,7 @@
 function dbconnect(){
     /* dbconnect.php */
     $host = 'localhost';
-    $db = 'db_inventory';
+    $db = 'dbmedical';
     $user = 'root';
     $pass = '';
     $charset = 'utf8mb4';
