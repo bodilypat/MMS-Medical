@@ -40,6 +40,13 @@
         }
     }
 
+    function sendMail($email, $reset_link) {
+        $subject = "Password Reset Request";
+        $message = "Click the following link to reset your password: " . $reset_link;
+        $headers = "From: no-reply@pacha.sbodily@gmail.com";
+
+        mail($email, $subject, $message, $headers);
+    }
     function requestPasswordReset($email) {
         $pdo = dbconnect();
 
@@ -124,7 +131,7 @@
     function updateDoctor($id, $name, $email, $specialization, $phone){
         $pdo = dbconnect();
         $stmt = $pdo->prepare("UPDATE doctors SET name = ? , email = ?, specialization = ?, phone = ?  WHERE id = ? ");
-        return $stmt->execute([$name, $email,$specialization, $phone, $id])
+        return $stmt->execute([$name, $email,$specialization, $phone, $id]);
     }
 
     function listDoctors() {
@@ -188,7 +195,7 @@
     function deletePatient($id){
         $pdo = dbconnect();
         $stmt = $stmt->prepare("DELETE FROM patients WHERE id = ? ");
-        return $stmt->execute([$id])
+        return $stmt->execute([$id]);
     }
 
     /* Function mange Appontments */
@@ -213,7 +220,7 @@
 
     function getAppointments() {
         $pdo = dbconnect();
-        $sql = $pdo->query("SELECT appointments.id,
+        $sql = $pdo->prepare("SELECT appointments.id,
                                    patients.name as patient_name,
                                    doctors.name as patient_name,
                                    appointments.appointment_date,
@@ -223,11 +230,7 @@
                               JOIN patients  ON appointments.patient_id = patients.id 
                               JOIN doctors ON apointments.doctors_id = doctors.id
                               ORDER BY appointments.appointment_date ASC");
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam('doctor_id' => $doctor_id, PDO::PARAM_INT);
         $stmt->execute();
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -237,12 +240,23 @@
         return $stmt->execute([$patient_id, $doctor_id, $appointment_date, $status, $notes, $appointment_id]);
     }
 
-    function searchAppointment($keyword){
+    function searchAppointment($patient_name = null, $appointment_date = null ){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare(" SELECT * FROM appointments 
-                                WHERE patient_id IN(SELECT id FROM patients WHERE name LIKE ?)
-                                OR doctor_id IN(SELECT id FROM doctors WHERE name LIKE ?) ");
-        $stmt->execute(['%' . $keyword . '%' , '%' $keyword . '%']);
+        $stmt = "SELECT a.*, p.name AS $patient_name FROM appointements a 
+                 JOIN patients p ON a.patient_id = p.id
+                 WHERE 1=1";
+        $params = [];
+
+        if(!empty($patient_name)) {
+            $query .= "AND p.name LIKE ?";
+            $params[] = "$patient_name%";
+        }
+        if(!empty($appointment_date)) {
+            $query .= "AND DATE(a.appointment_date) = ? ";
+            $params[] = $appointment_date;
+        }
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
