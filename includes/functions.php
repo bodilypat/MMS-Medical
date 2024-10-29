@@ -163,8 +163,9 @@
 
     function getPatients(){
         $pdo = dbconnect();
-        $stmt = $pdo->query("SELECT * FROM patients");
-        return $stmt->execute(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare("SELECT * FROM patients ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getPatient($id) {
@@ -267,9 +268,9 @@
     }
 
     /* Function Manage Prescription */
-    function addPrescription ($patient_id, $medic_id, $instructions, $instructions, $dosage, $start_date, $end_date){
+    function addPrescription ($patient_id, $medical_record_id, $instructions,$medication, $dosage, $start_date, $end_date){
         $pdo = dbconnect();
-        $stmt = $pdo->prepare("INSERT INTO prescriptions(patient_id, medical_record_id, medication, instructions,dosage, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO prescriptions(patient_id, medical_record_id, instruction, medication,dosage, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?)");
         return $stmt->execute([$patient_id, $doctor_id, $medication, $dosage, $instructions, $start_date, $end_date]);
     }
 
@@ -305,7 +306,7 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updatePrescription($id, $patient_id, $medical_record_id, $medication, $instruction, $instruction, $start_date, $end_date){
+    function updatePrescription($id, $patient_id, $medical_record_id, $medication, $instruction, $dasage, $start_date, $end_date){
         $pdo = dbconnect();
         $stmt = $pdo->prepare("UPDATE prescriptions SET  patient_id = ?, 
                                                          medical_record = ?,
@@ -455,7 +456,7 @@
                                JOIN services  ON billings.service_id = services.id
                                WHERE id = ? ");
         $stmt->execute([$id]);
-        return 4stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function updateBilling($id,$patient_id,$service_id, $date_of_service, $amount, $status){
