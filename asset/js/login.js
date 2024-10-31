@@ -1,85 +1,83 @@
 var Login = function() {
     "use strict";
 
-    var runSetDefaultValidation = function() {
-        $.validator.setDefaults({
-            errorElement : "span", // contain the error msg in a small tag
-            errorElement : 'help-block',
+    var runSetDefaultValidation =  function() {
+        $.validator.setDefault({
+            errorElement : 'span',
+            errorClass : 'help-block',
             errorPlacement : function(error, element) {
-                // rendor error placement for each input type
-                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") {
-                    // for chosen elements, need to insert the error after the chosen container
-                    insertAfter($(element).closest('.form-group').children('div').children().last());                    
-                } else if (element.attr("name") == "card_expiry_mm" || element.attr("name") == "card_expiry_yyyy") {
+                if(element.attr('type') == 'radio' || element.attr('type') == 'checkbox') {
+                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                } else if(element.attr('name') == 'card_expiry_mm' || element.attr('name') == 'card_expiry_yyyy') {
                     error.appendTo($(element).closest('.form-group').children('div'));
                 } else {
                     error.insertAfter(element);
-                    // for other inputs, just perform default behavior
+                    /* for other inputs, just perform default behavior */
                 }
             },
-            ignore : 'hidden',
-            success : function('help-block valid') {
-            // mark the current inputj as valid and display OK icon
+            ignor : ':hidden',
+            success : function(label, element){
+                label.addClass('help-block valid');
+                /* mark the current input as valid and display Ok icon */
                 $(element).closest('.form-group').removeClass('has-error');
             },
             highlight : function(element) {
-                $(element).closest('.help-block').removeClass('valid');
-                // display OK icon
                 $(element).closest('.form-group').addClass('has-error');
-                //add the bootstrap error class to the control group
+                /* add the bootstrap error class to the control group */
+            },
+            unhighlight : function(element) {
+                $(element).closest('.form-group').removeClass('has-error');
+                /* set error class of the control group */
             }
         });
     };
+    /* function login validator */
     var runLoginValidator = function() {
-        var fromLg = $('.form-login');
-        var errorHandlerLg = $('.errorHandler', formLg);
-        formLg.validate({
-            rules : {
+        var loginForm = $('.form-login');
+        var errorHandler = $('.errorHandler', loginForm);
+        loginForm.validate({
+            rule : {
                 username : {
-                    minlenght : 2,
+                    minlength : 2,
                     required : true
-                },
-                password : {
-                    minlenght :6,
-                    requried : true
                 }
             },
-            submitHandler: function(formLg) {
-                errorHandlerLg.hide();
-                formLg.submit();
+            submitHandler : function(Form) {
+                errorHandlerlg.hide();
+                loginForm.submit();
             },
-            invalidHander : function(event, validator) {
-                // display error alert on form submit
-                errorHandlerLg.show();
+            invalidHandler : function(event, validator){
+                errorhHandlerlg.show();
             }
         });
     };
+    /* function forgot validate */
     var runForgotValidator = function() {
-        var formFg = $('.form-forgot');
-        var errorHandlerfg = $('.errorHander', formFg);
-        formFg.validate({
+        var forgotForm = $('.form-forgot');
+        var errorHandlerfg = $('.errorHandler', forgotForm);
+        forgotForm.validate({
             rules : {
                 email : {
                     required : true
                 }
             },
-            submitHanlder : function(formFg) {
+            submitHandler : function(form) {
                 errorHandlerfg.hide();
-                formFg.submit();
+                forgotForm.submit();
             },
             invalidHandler : function(event, validator) {
-                // display error alert on form submit
-                errorHandlerfg.show();
+                errorHandlerfg.show
             }
         });
     };
-    var runRegisterValidator = function() {
-        var formRg = $('.form-register');
-        var errorHandlerrg = $('.errorHandler', formRg);
-        formRg.validate({
+    /* function registor validator */
+    var runRegisterValdiator = function(){
+        var registForm = $('.form-registeer');
+        var errorHandler = $('.errorHandler', registForm);
+        registForm.validate({
             rules : {
-                full_name : {
-                    minlength : 2,
+                fullname : {
+                    minlenght : 2,
                     required : true
                 },
                 address : {
@@ -87,41 +85,45 @@ var Login = function() {
                     required : true
                 },
                 city : {
-                    minlength : 2,
+                    minlenght : 2,
                     required : true
                 },
                 gender : {
-                    required : true
+                    required : true,
                 },
                 email : {
-                    required : true
+                    required : true,
                 },
                 password : {
                     minlenght : 6,
                     required : true
                 },
-                confirm_password : {
+                confirmPassword : {
+                    required : true,
+                    minlenght : 5,
+                    equalTo : '#password'
+                },
+                agree : {
                     minlenght : 1,
                     required : true
                 }
             },
-            submitHandler = function(form) {
+            submitHandler : function(form) {
                 errorHandlerrg.hide();
-                formRg.submit();
+                registForm.submit();
             },
-            invalidHandler : function(event, validator) {
-                // display error alert on form submit
-                errorHandlerrg.show();
+            invalidHandler : function(event, validator){
+                errorHandler.show();
             }
         });
     };
     return {
-        // main function in initiate template pages
-        init : function() {
-            runSetDefaultValidation();
+        /* main function to intiate template pages */
+        init : function (){
+            runSetDefaultValidate();
             runLoginValidator();
             runForgotValidator();
-            runRegisterValidator(;)
+            runRegistorValidator();
         }
     }
 }();
