@@ -1,126 +1,118 @@
 var Login = function() {
     "use strict";
-
-    var runSetDefaultValidation =  function() {
-        $.validator.setDefault({
-            errorElement : 'span',
-            errorClass : 'help-block',
+    var runValidation = function() {
+        $.validation.setDefault({
+            errorElement: "span",
+            errorClass: "help-block",
             errorPlacement : function(error, element) {
-                if(element.attr('type') == 'radio' || element.attr('type') == 'checkbox') {
+                if(element.attr('type') == "radio" || element.attr('type') == "checkbox"){
                     error.insertAfter($(element).closest('.form-group').children('div').children().last());
                 } else if(element.attr('name') == 'card_expiry_mm' || element.attr('name') == 'card_expiry_yyyy') {
                     error.appendTo($(element).closest('.form-group').children('div'));
                 } else {
                     error.insertAfter(element);
-                    /* for other inputs, just perform default behavior */
                 }
             },
-            ignor : ':hidden',
-            success : function(label, element){
+            ignore: ':hidden',
+            success: function(label, element) {
                 label.addClass('help-block valid');
-                /* mark the current input as valid and display Ok icon */
                 $(element).closest('.form-group').removeClass('has-error');
             },
-            highlight : function(element) {
-                $(element).closest('.form-group').addClass('has-error');
-                /* add the bootstrap error class to the control group */
+            hightlight: function(element) {
+                $(element).closest('.form-group').removeClass('valid');
+                $(element).closest('.form-group').add('has-error');
             },
-            unhighlight : function(element) {
-                $(element).closest('.form-group').removeClass('has-error');
-                /* set error class of the control group */
+            unhightlight : function(element){
+                $(element).closest('form-group').removeClass('has-error');
             }
         });
     };
-    /* function login validator */
     var runLoginValidator = function() {
-        var loginForm = $('.form-login');
-        var errorHandler = $('.errorHandler', loginForm);
-        loginForm.validate({
-            rule : {
+        var formlg = $('.form-login');
+        var errorHandlerlg = $('.errorHandler', form);
+        formlg.validate({
+            rule: {
                 username : {
-                    minlength : 2,
-                    required : true
-                }
-            },
-            submitHandler : function(Form) {
-                errorHandlerlg.hide();
-                loginForm.submit();
-            },
-            invalidHandler : function(event, validator){
-                errorhHandlerlg.show();
-            }
-        });
-    };
-    /* function forgot validate */
-    var runForgotValidator = function() {
-        var forgotForm = $('.form-forgot');
-        var errorHandlerfg = $('.errorHandler', forgotForm);
-        forgotForm.validate({
-            rules : {
-                email : {
-                    required : true
-                }
-            },
-            submitHandler : function(form) {
-                errorHandlerfg.hide();
-                forgotForm.submit();
-            },
-            invalidHandler : function(event, validator) {
-                errorHandlerfg.show
-            }
-        });
-    };
-    /* function registor validator */
-    var runRegisterValdiator = function(){
-        var registForm = $('.form-registeer');
-        var errorHandler = $('.errorHandler', registForm);
-        registForm.validate({
-            rules : {
-                fullname : {
-                    minlenght : 2,
-                    required : true
-                },
-                address : {
-                    minlenght : 2,
-                    required : true
-                },
-                city : {
-                    minlenght : 2,
-                    required : true
-                },
-                gender : {
-                    required : true,
-                },
-                email : {
-                    required : true,
+                    mainlength : 2,
+                    required : ture 
                 },
                 password : {
-                    minlenght : 6,
-                    required : true
-                },
-                confirmPassword : {
-                    required : true,
-                    minlenght : 5,
-                    equalTo : '#password'
-                },
-                agree : {
-                    minlenght : 1,
-                    required : true
+                    minlength: 6,
+                    required: true
                 }
             },
             submitHandler : function(form) {
-                errorHandlerrg.hide();
-                registForm.submit();
+                errorHandlerlg.hide();
+                formlg.submit();
             },
-            invalidHandler : function(event, validator){
+            invalidHandler: function(event, validator){
                 errorHandler.show();
+            }
+        })
+    };
+    var runForgotValidator = function() {
+        var formfg = $('.form-forgot');
+        var errorHandlerfg = $('.errorHandler', formfg);
+        formfg.validate({
+            rule: {
+                email : {
+                    required: true
+                }
+            },
+            submitHandler: function(form) {
+                errorHandlerfg.hide();
+                formfg.submit();
+            },
+            invalidHandler: function(event, validator) {
+                errorHandlerfg.show();
+            }
+        });
+    };
+    var registValidator = function() {
+        var formrg = $('.form-register');
+        var errorHandlerrg = $('.errorHandler', formrg);
+        formrg.validate({
+            rules : {
+                fullName: {
+                    minlenght: 2,
+                    required : ture
+                },
+                address : {
+                    minlength: 2,
+                    required: true
+                },
+                city : {
+                    minlength: 2,
+                    required: true,
+                },
+                gender: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                password: {
+                    minlength: 6,
+                    required: true
+                },
+                confirm_password: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#password"
+                }
+            },
+            submitHandler: function(form){
+                errorHandlerrg.hide();
+                formrg.submit();
+            },
+            invalidHandler: function(even, validator) {
+                errorHandlerrg.show();
             }
         });
     };
     return {
-        /* main function to intiate template pages */
-        init : function (){
-            runSetDefaultValidate();
+        init: function() {
+            runValidation();
             runLoginValidator();
             runForgotValidator();
             runRegistorValidator();
