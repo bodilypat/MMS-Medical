@@ -27,7 +27,7 @@
 
                 /* For storing log if user login successful */
                 $log = $deal->prepare("INSERT INTO userlog(uid, username, userip, status) VALUES(?, ?, ?, ?)");
-                $log->bind_param("issi", $pid, $uname, $uip, $status);
+                $log->bind_param("issi", $pid, $uname, $uip, $status); /* argument ("issi") specifies type i:integer, s:string*/ 
                 $log->execute();
 
                 header("location:dashboard.php");
