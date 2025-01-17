@@ -1,101 +1,72 @@
 <?php
+    /* Start the session or resume the existing session */
     session_start();
-    error_reporting(0);
-    include('../includes/functions.php');
-    
-    if(strlen($_SESSION['id'] == 0)){
+
+
+    /* enable error reporting for development purpose display for production */
+    ini_set('display_errors', 1);
+
+    /* Include the configuration file, connection database */
+    include('../include/dbconnect.php');
+
+    /* Check if session ID is not set or invalid */
+    if(!isset($_SESSIN['id']) || $_SESSION['id'] == 0) {
+
+        /* if the session is not valid, redirect to logout page and stop further execution */
         header('Location:logout.php');
+        exit; /* Ensure no further cide is excuted after the redirect */
     } else {
+        /* protected content for authenticated users */
 ?>
+        
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Doctor | Dashboard</title>
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="../asset/css/styles.css">
+        <link rel="stylesheet" href="../assets/css/styles.css">
+        <link rel="stylesheet" href="../assets/css/plugin.css">
+        <link rel="stylesheet" href="../assets/css/theme-1.css" id="skin_color">
     </head>
-<body>
-    <div id="app">
-        <!-- Outline  -->
-        <?php include('../outline/sidebar.php');?>
-        <div class="app-content">
-            <?php include('../outlines/header');?>
-            <!-- END: outline -->
-            <div class="main-content">
-                <div id="container" class="wrap-content container">
-                    <!-- page title -->
-                    <section id="page-title">
-                        <div class="row">
-                            <div class="col-sm-8"><h1 class="mainTitle">Doctor | Dashboard<h1></h1></div>
-                            <ol class="breadcrumb">
-                                 <li><span>Doctor</span></li>
-                                 <li>Dashboard</li>
-                            </ol>
-                        </div>
-                    </section>
-                    <div class="container-fluid container-full bg-white">
-                        <div class="row">
-                            
-                        <!-- Manage Doctor -->
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa-stack fa-2x">
-                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-smail-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2>Doctors</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_doctor.php"></a>
-                                        </p>
+    <body>
+        <div id="app">
+            <?php include('../outline/sidebar.php'); ?>
+            <div class="app-content">
+                <?php include('../outline/header.php'); ?>
+                    <!-- navbar -->
+                <div class="main-content">
+                    <div class="wrap-content container" id="container">
+                        <!-- title -->
+                        <section id="page-title">
+                            <div class="row">
+                                <div class="col-sm-8"><h1 class="main-title">Doctors | Dashboard</h1></div>
+                                <ol class="borad">
+                                    <li><span>Doctor</span></li>
+                                    <li class="active"><span>Dashboard</span></li>
+                                </ol>
+                            </div>
+                        </section>
+                        <div class="container-bg">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="panel-style">
+                                        <div class="panel-body">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square"></i>
+                                                <i class="fa fa-smale">></i>
+                                            </span>
+                                            <h2 class="step-title" >Profile</h2>
+                                            <p class="anchor-effect"><a href="editProfile.php">Update Profile</a></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Manage Appointment  -->
-                            <div class="col-sm-4">
-                                <div class="panel panel-white no-radius text-center">
+                                <div class="col-sm-4">
                                     <div class="panel-body">
-                                        <span class="fa-stack fa-2x">
-                                            <i class="fa fa-square fa-stack-2x text primary"></i>
-                                            <i class="fa fa-smail-o fa-stack-1x inverse"></i>
+                                        <span class="fa-stack">
+                                            <i class="fa square"></i>
+                                            <i class="fa smaile"></i>
                                         </span>
-                                        <h2 class="StepTitle">Appointments</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_appointment.php"></a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Manage Prescription -->
-                            <div class="col-md-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa fa-stack-2x">
-                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2>Prescriptions</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_prescripts.php"></a>
-                                        </p>        
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Manage Patients -->
-                            <div class="col-md-4">
-                                <div class="panel panel-white no-radius text-center">
-                                    <div class="panel-body">
-                                        <span class="fa fa-stack-2x">
-                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
-                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h2>Patients</h2>
-                                        <p class="links cl-effect-1">
-                                            <a href="manage_patients.php"></a>
-                                        </p>        
+                                        <h2 class="step-title">Appointments</h2>
+                                        <p class="anchor-effect"><a href="appointmentHistory.php">View Appointment</p>
                                     </div>
                                 </div>
                             </div>
@@ -103,23 +74,19 @@
                     </div>
                 </div>
             </div>
+            <!-- Footer app-->
+            <?php include('../outline/footer.php'); ?>
+            <?php include('../outline/setting.php'); ?>
         </div>
-        <!-- Outline: Footer -->
-        <?php include('../outlines/footer.php');?>
-        <!--  Outline: Setting -->
-        <?php include('../outlines/setting.php');?>
-    </div>
-    <!-- Custom JS -->
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/form-element.js"></script>
-    <script>
-        jQuery(document).ready(function(){
-            Main.init();
-            Form-elements.init();
-        });
-    </script>
-</body>
+        <!-- JavaScript -->
+        <script src="../assets/js/main.js"></script>
+        <script src="../assets/js/login.js"></script>
+        <script>
+            jQuery(document).ready(function() {
+                Main.init();
+                FormElements.init();
+            });
+        </script>
+    </body>
 </html>
-<?php
-    }
-?>
+<?php  } ?>
