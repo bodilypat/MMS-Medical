@@ -47,10 +47,9 @@ doctor-flow/
         sends notifications
 
         doctors-dashboard/  
-                view_appointments.php
-                view_patient.php
-                updates_prescriptions.php
-                send_notification.php
+                appointment management
+                Patient information and medical records
+                Access to scheduling and communication
 patient-flow/
         patient longins
         patient Books an appointment
@@ -58,10 +57,8 @@ patient-flow/
         patient Views Prescriptions.
 
         patients-dashboard/
-                profile_patients.php
-                Books_appointment.php
-                receives_notification.php
-                prescriptions.php
+                Personal detals, medical records, and upcimming appointments
+                Manage personal information, view medical history, and communicate with doctors
 asset/
         css/
                 styles.css
