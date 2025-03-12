@@ -1,4 +1,4 @@
-admin/
+admin-flow/
         index.php
         dashboard
         auth /
@@ -52,8 +52,29 @@ admin/
                         edit_service.php
                         delete_service.php
                         manage_services.php
-                
+doctor-flow/
+        doctor login
+        views appointnent
+        view patient profile
+        updates prescriptions
+        sends notifications
 
+        dashboard-doctors/  
+                view_appointments.php
+                view_patient.php
+                updates_prescriptions.php
+                send_notification.php
+patient-flow/
+        patient login 
+        patient Books an appointment
+        patient Receives notifications
+        patient Views Prescriptions.
+
+        dashboard-patients/
+                profile_patients.php
+                Books_appointment.php
+                receives_notification.php
+                prescriptions.php
 asset/
         css/
                 styles.css
@@ -78,36 +99,6 @@ outlines/
         footer.php
         setting.php
 
-doctors/
-        doctor authentication
-                login.php 
-                register.php
-                logout.php
-
-        dashboard/  
-        panel-container
-                manage_doctors.php;
-
-                manage_appointments.php
-
-                manage_medical_records.php
-                                        
-                manage_prescriptions.php
-
-patients/
-        patient authentication
-                login.php
-                register.php 
-                logout.php 
-                
-        dashboard/
-        panel-container /
-                manage_patients.php
-                view_appointment.php
-                view_prescriptions.php
-                view_billings.php
-
-        
 
     
 
