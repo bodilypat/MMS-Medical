@@ -1,57 +1,44 @@
 admin-flow/
-        index.php
-        dashboard
-        auth /
-                login.php 
-                register.php 
-                logout.php
-                forgot_password.php
+        Patients Management
+                Search and Filter : A search bar to dind specific patients
+                Patient List : Display a list of Patients with their:
+                        Name, age, contact details
+                        Medical history and alergies
+                        Appointment history and upcomming appointments
+                Actions : Buttons for adding new patients, editing profiles, and viewing detailed medical records.
 
-        doctors/ 
-                        add_doctor.php 
-                        edit_doctor.php 
-                        delete_doctor.php 
-                        manage_doctor.php 
+        Doctors Management
+                Doctor Directory : A list of doctors with key inforamtion: 
+                                   Name, Specialization, contact details
+                                   Availability  and scheduled appointment, 
+                                   Patient feedback/rating
+                Doctor Scheduring : Allow adins to set or modify docctor availability (working, hours, time-off)
+                Action Buttons : Add new doctor, update details, or deactivate doctors.
 
-        patients /
-                        add_patient.php 
-                        edit_patient.php 
-                        delete_patient.php 
-                        manage_patients.php 
-                        
-        appointments/ 
-                        add_appointment.php 
-                        edit_appointment.php 
-                        delete_appointment.php 
-                        manage_appointments.php 
+        Appointment Manament 
+                Calendar Views : Display all appointments in a calender format, allowing easy navigating.
+                Appointment List : Show scheduled appointments for the day or week.
+                Management Appointments: Option to reschedule or cancel appointments and assign patients to different doctors.
 
-        prescriptions/ 
-                        add_prescription.php 
-                        edit_prescription.php 
-                        delete_prescription.php 
-                        manage_prescriptions.php 
+        Billing & Payments
+                invoice Overview: Display recent invoives with payment status(paid/unpaid)
+                Outstanding Payments: Highlight pending payments and allow for follow-up actions.
+                Generate Invoices: Option to manually create invoices for services rendered.
 
-        medical_reocords/
-                        add_medical_record.php 
-                        edit_medical_record.php 
-                        delete_medical_record.php 
-                        manage_medical_records.php 
+        Reports & Analytics :
+                Patient Reports: Generate reports on patients demographics, treatment history, and healthcare treads.
+                Fanancial Reports : Display earning, revenue breakdown, or outstanding debts.
+                Customizable Filters : Ability to filter reports by date range, doctor, department, or payment status.
 
-        billings /
-                        add_billing.php 
-                        edit_billing.php 
-                        delete_billing.php 
-                        manage_billings.php
-        payments/
-                        add_payment.php
-                        edit_payment.php
-                        delete_payment.php
-                        manage_payments.php
-        services/
-                        add_service.php
-                        edit_service.php
-                        delete_service.php
-                        manage_services.php
+        Messages/Comumnicate : 
+                Inbox : Display all unread message from doctors or patients
+                Message Details : Admin can read and replay to messages between patients and healthcare providers.
+
+        inventory Management : 
+                Stock Overveiw : Display inventory items like medical suppliers and their stock levels.
+                Low Stock Alerts : Notificatins when stock falls below a predefined threshold.
+                Inventory Management : Add new items, manage stock, or reroder suppliers.
+
 doctor-flow/
         doctor login
         views appointnent
@@ -59,18 +46,18 @@ doctor-flow/
         updates prescriptions
         sends notifications
 
-        dashboard-doctors/  
+        doctors-dashboard/  
                 view_appointments.php
                 view_patient.php
                 updates_prescriptions.php
                 send_notification.php
 patient-flow/
-        patient login 
+        patient longins
         patient Books an appointment
         patient Receives notifications
         patient Views Prescriptions.
 
-        dashboard-patients/
+        patients-dashboard/
                 profile_patients.php
                 Books_appointment.php
                 receives_notification.php
