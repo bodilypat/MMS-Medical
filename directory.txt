@@ -57,8 +57,15 @@ patient-flow/
         patient Views Prescriptions.
 
         patients-dashboard/
-                Personal detals, medical records, and upcimming appointments
-                Manage personal information, view medical history, and communicate with doctors
+                Home(Dashboard)
+                Appointments
+                Medical Records 
+                Prescriptions
+                Lab Results
+                Billing & Payments
+                Notifications
+                PRofile Settings
+                Logout
 asset/
         css/
                 styles.css
