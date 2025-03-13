@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Doctor | Dashboard</title>
+        <title>Patients | Dashboard</title>
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../asset/css/styles.css">
     </head>
@@ -26,7 +26,7 @@
                     <!-- page title -->
                     <section id="page-title">
                         <div class="row">
-                            <div class="col-sm-8"><h1 class="mainTitle">Patient | Dashboard<h1></h1></div>
+                            <div class="col-sm-8"><h1 class="mainTitle">Patients | Dashboard<h1></h1></div>
                             <ol class="breadcrumb">
                                  <li><span>Patients</span></li>
                                  <li>Dashboard</li>
@@ -45,7 +45,7 @@
                                         </span>
                                         <h2>Patients</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage_patients.php"></a>
+                                            <a href="patients.php"></a>
                                         </p>
                                     </div>
                                 </div>
@@ -60,8 +60,23 @@
                                         </span>
                                         <h2 class="StepTitle">Appointments</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage_appointments.php"></a>
+                                            <a href="appointments.php"></a>
                                         </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack-2x">
+                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2>Medical Records</h2>
+                                        <p class="links cl-effect-1">
+                                            <a href="medical_records.php"></a>
+                                        </p>        
                                     </div>
                                 </div>
                             </div>
@@ -75,12 +90,71 @@
                                         </span>
                                         <h2>Prescriptions</h2>
                                         <p class="links cl-effect-1">
-                                            <a href="manage_Prescriptions.php"></a>
+                                            <a href="prescriptions.php"></a>
                                         </p>        
                                     </div>
                                 </div>
                             </div>
-                            
+
+                            <div class="col-md-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack-2x">
+                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2>Billing</h2>
+                                        <p class="links cl-effect-1">
+                                            <a href="billing.php"></a>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack-2x">
+                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2>Lab Tests</h2>
+                                        <p class="links cl-effect-1">
+                                            <a href="lab_test.php"></a>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack-2x">
+                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2>Reports</h2>
+                                        <p class="links cl-effect-1">
+                                            <a href="reposts.php"></a>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-white no-radius text-center">
+                                    <div class="panel-body">
+                                        <span class="fa fa-stack-2x">
+                                             <i class="fa fa-square fa-stack-2x text-primary"></i>
+                                             <i class="fa fa-samil-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                        <h2>Settings</h2>
+                                        <p class="links cl-effect-1">
+                                            <a href="settings.php"></a>
+                                        </p>        
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
