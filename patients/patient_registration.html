@@ -1,0 +1,141 @@
+<?php
+
+    include '../includes/functions.php';
+
+    /* Fetch patients, doctors */
+    $patients = getPatients();
+    $doctors = getDoctors()
+
+    if($_SERVER["REQUEST_METHOD"] == 'POST'){
+        $patient_id = $_POST['patient_id'];
+        $doctor_id = $_POST['doctor_id'];
+        $appointment_date = $_POST['appointment_date'];
+        $status = $_POST['status'];
+        $note = $_POST['notes'];
+        $address = $_POST['address'];
+        $medical_history = $_POST['medical_history'];
+
+        if (addAppointment($patient_name, $doctor_name, $appointment_date, $status, $notes)){
+            header("Location: view_appointments.php");
+            exit();
+        } else {
+            $error = "Failed to add appointment.";
+        }
+   }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Patients | Add Patient</title>
+        <!-- Custom CSS -->
+        <link rel="styleshee" href="assets/css/styles.css">
+    </head>
+    <body>
+        <div class="app">
+            <!-- Outline : sidebar -->
+            <?php include('../outlines/sidebar.php');?>
+            <div class="app-content">
+                <!-- Outline: header -->
+                <?php include('../outlines/header.php');?>
+                <div class="main-content">
+                    <section id="page-title">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                 <h1 class="mainTitle">Patients | Add Patients</h1>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="container bg-white">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading"><h5 class="panel-title">Add Appointment</div>
+                                    <div class="panel-body">
+                                        <form role="form" name="patient-form" method="post">
+
+                                            <div class="form-group">                                                
+                                                <label for="firstName">First Name</label>
+                                                <input type="text" id="firstName" name="firtName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lastName">Last Name</label>
+                                                <input type="text" id="lastName" name="lastName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="gender">Gender</label>
+                                                <select id="gender" name="gender" required>
+                                                    <option value="male">Male</option>
+                                                    <option value="famale">Famale</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dob">Date of Birth</label>
+                                                <input type="date" id="dob" name="dob" required>
+                                            </div>
+                                            <!-- Contact Information -->
+                                            <div class="form-group">
+                                                <label for="contactNumber">Contact Number</label>
+                                                <input type="tel" id="contactNumber" name="contactNumber" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email Address</label>
+                                                <input type="email" id="email" name="email">
+                                            </div>
+                                            
+                                             <!-- Medical History and Other Details -->
+                                             <div class="form-group">
+                                                <label for="medicalHistory">Medical History</label>
+                                                <textarea id="medicalHistory" name="medicalHistory"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="currentMedications">Current Medications</label>
+                                                <textarea id="currentMedications" name="currentMedications" required>
+                                            </div>
+
+                                            <!-- Emergency Contact -->
+                                            <div class="form-group">
+                                                <label for="emergencyName">Emergency Contact Name</label>
+                                                <inpuut type="text" id="emergencyName" name="emergencyName" requried>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="emergencyRelation">Relationship</label>
+                                                <input type="text" id="emergencyRelation" name="emergencyRelation" requried>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="emergencyPhone">Emergency Contact Phone</label>
+                                                <input type="tel" id="emergencyPhone" name="emargencyPhone" required>
+                                            </div>
+
+                                            <!-- Submit & Cancel Button -->
+                                            <div class="form-group">
+                                                <button type="submit" class="btn">Submit</button>
+                                                <button type="button" class="btn cancel-btn" onclick="">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Outline : Footer -->
+            <?php include('../outline/footer.php');?>
+            <!-- Outlien : setting -->
+            <?php include('../outline/setting.php');?>
+        </div>
+        <!-- Custom JS -->
+        <script src="../asset/js/main.js"></script>
+        <script src="../asset/js/form-elements.js"></script>
+        <script>
+            jQuery(document).ready(function(){
+                Main.init();
+                Form-elements.init();
+            });
+        </script>
+    </body>
+</html>
+
