@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Appointment</title>
+        <link rel="stylesheet" href="assets/css/styles.css">
+    </head>
+    <body>
+        <h2>Book an Appointment</h2>
+        <form action="book_appointment.php" method="POST">
+            <div class="form-group">
+                <label for="doctor">Select Doctor: </label>
+                <select id="doctor" name="doctor_id" required>
+                    <!-- Doctor options will be populated using PHP -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="appointment_date">Select Appointment Date: </label>
+                <input type="date" id="appointment_date" name="appointment_date" required>
+            </div>
+            <div class="form-group">
+                <label for="appointment_time">Select Appointment Time: </label>
+                <select id="appointment_time" name="appointment_time" required>
+                    <!-- Time slots will be populated dynamically based on the doctor's availability -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="your name">Your Name: </label>
+                <input type="text" id="patient_name" name="patient_name" required>
+            </div>
+            <div class="form-group">
+                <label for="patient_email">Your Email: </label>
+                <input type="email" id="patient_email" name="patient_email" required>
+            </div>
+            <button type="submit">Book Appointment</button>
+        </form>
+        <h3>Your Appointments</h3>
+        <div id="appointments">
+            <!-- The list of patient's appointments will be shown here -->
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
