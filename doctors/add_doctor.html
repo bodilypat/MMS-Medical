@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add New Doctor</title>
+        <style></style>
+    </head>
+<body>
+    <h2>Add New Doctor</h2>
+    <div class="form-container">
+        <?php
+            if (!empty($error)) {
+                echo "<ul class='error'>";
+                foreach ($errors as $error) {
+                    echo "<li>$error</li>";
+                }
+                echo "</ul">;
+            }
+            if (isset($success_message)) {
+                echo "<p class='success'>$success_message</p>";
+            }
+        ?>
+        <form method='POST' action="backend/add_doctor.php">
+            <label for="first_name">First Name: </label>
+            <input type="text" id="first_name" name="first_name" value="<?php echo isset($first_name) ? first_name : ' ' ?>" required></br>
+
+            <label for="last_name">Last Name: </label>
+            <input type="text" id="last_name" name="last_name" value="<?php echo isset($lass_name) ? last_name : ' ' ?> " required></br>
+
+            <label for="specialization">Specialization: </label>
+            <input type="text" id="specialization" name="specialization" value="<?php echo isset($specialization) ? specialization : ' ' ?> " required></br>
+
+            <lable for="email">Email: </lable>
+            <input type="email" id="email" name="email" value="<?php echo isset($email) ? email : ' ' ?> " required></br>
+
+            <label for="phone_number">Phone Number: </label>
+            <input type="tel" id="phone_number" name="phone_number" value="<?php echo isset($phone_number) ? phone_number : ' ' ?> " required></br>
+
+            <label for="department">Department:</label>
+            <input type="department" name="department" value="<?php echo isset($department) ? department : ' ' ?> " required></br>
+
+            <button type="submit">Add Doctor</button>
+        </form>
+    </div>
+</body>
+
+</html>
