@@ -1,45 +1,48 @@
-admin-flow/
-        Patients Management
-                Search and Filter : A search bar to dind specific patients
-                Patient List : Display a list of Patients with their:
-                        Name, age, contact details
-                        Medical history and alergies
-                        Appointment history and upcomming appointments
-                Actions : Buttons for adding new patients, editing profiles, and viewing detailed medical records.
+Backend/
+       admin/
+            Patients Management
+                create_patient.php
+                update_patient.php
+                delete_patient.php
+                view_patients.php
+                manage_patients.php
 
-        Doctors Management
-                Doctor Directory : A list of doctors with key inforamtion: 
-                                   Name, Specialization, contact details
-                                   Availability  and scheduled appointment, 
-                                   Patient feedback/rating
-                Doctor Scheduring : Allow adins to set or modify docctor availability (working, hours, time-off)
-                Action Buttons : Add new doctor, update details, or deactivate doctors.
+            Doctors Management
+                create_doctor.php
+                update_doctor.php
+                delete_patient.php
+                view_doctors.php
+                manage_doctors.php
 
-        Appointment Manament 
-                Calendar Views : Display all appointments in a calender format, allowing easy navigating.
-                Appointment List : Show scheduled appointments for the day or week.
-                Management Appointments: Option to reschedule or cancel appointments and assign patients to different doctors.
+            Appointment Manament 
+                create_appointment.php
+                update_appointment.php
+                delete_appointment.php
+                view_appointments.php
+                manage_appointments.php
 
-        Billing & Payments
-                invoice Overview: Display recent invoives with payment status(paid/unpaid)
-                Outstanding Payments: Highlight pending payments and allow for follow-up actions.
-                Generate Invoices: Option to manually create invoices for services rendered.
+            Medical Records management 
+                create_medical-record.php
+                update_medical-record.php
+                delete_medical-record.php
+                view_medical-records.php
+                manage_medical-records.php
 
-        Reports & Analytics :
-                Patient Reports: Generate reports on patients demographics, treatment history, and healthcare treads.
-                Fanancial Reports : Display earning, revenue breakdown, or outstanding debts.
-                Customizable Filters : Ability to filter reports by date range, doctor, department, or payment status.
+            Prescription Management
+                create_prescription.php
+                update_prescription.php
+                delete_prescription.php
+                view_prescriptions.php
+                manage_prescriptions.php
+                           
+          Billing & Payments
+                create_payment.php
+                update_payment.php
+                delete_payment.php
+                view_payments.php
+                manage_payments.php
 
-        Messages/Comumnicate : 
-                Inbox : Display all unread message from doctors or patients
-                Message Details : Admin can read and replay to messages between patients and healthcare providers.
-
-        inventory Management : 
-                Stock Overveiw : Display inventory items like medical suppliers and their stock levels.
-                Low Stock Alerts : Notificatins when stock falls below a predefined threshold.
-                Inventory Management : Add new items, manage stock, or reroder suppliers.
-
-doctor-flow/
+Frontend Doctor-flow/
         doctor login
         views appointnent
         view patient profile
@@ -50,7 +53,7 @@ doctor-flow/
                 appointment management
                 Patient information and medical records
                 Access to scheduling and communication
-patient-flow/
+Frontend Patient-flow/
         patient longins
         patient Books an appointment
         patient Receives notifications
@@ -74,16 +77,14 @@ asset/
                 bg.jpg;
 
         js/
+                function.js
                 main.js
                 form-elements.js
 
 database/
         db_medical.sql
-
 includes/
         dbconnect.php
-        functions.php
-
 outlines/
         sidebar.php
         header.php
