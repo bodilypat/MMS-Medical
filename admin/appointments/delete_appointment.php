@@ -1,18 +1,16 @@
 <?php
+include 'config.php';
 
-    include ('../includes/functions.php');
+if (isset($_GET['id'])) {
+    $appointment_id = $_GET['id'];
+    $sql = "DELETE FROM appointments WHERE appointment_id = $appointment_id";
 
-    if(isset($_GET['id'])){
-        $delStmt = deleteAppointment($_GET['id']);
-
-        if($delStmt){            
-            header("Location:manage_appointments.php");
-            exit();
-        } else {
-            echo "Error deleting appointment."
-        }
+    if ($conn->query($sql) === TRUE) {
+        echo "Appointment deleted successfully.";
     } else {
-        header("Location:manage_appointments.php");
-        exit();
+        echo "Error: " . $conn->error;
     }
+}
+
+$conn->close();
 ?>
