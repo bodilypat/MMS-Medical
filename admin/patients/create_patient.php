@@ -1,63 +1,55 @@
 <?php
+include 'config.php';
 
-    include('../includes/functions.php');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $date_of_birth = $_POST['date_of_birth'];
+    $gender = $_POST['gender'];
+    $email = $_POST['email'];
+    $phone_number = $_POST['phone_number'];
+    $address = $_POST['address'];
+    $insurance_provider = $_POST['insurance_provider'];
+    $insurance_policy_number = $_POST['insurance_policy_number'];
+    $primary_care_physician = $_POST['primary_care_physician'];
+    $medical_history = $_POST['medical_history'];
+    $allergies = $_POST['allergies'];
+    $status = $_POST['status'];
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $name = $_POST['NAME'];
-        $email = $_POST['email'];
-        $date_of_birth = $_POST['date_of_birth'];
-        $gender = $_POST['gender'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
+    $sql = "INSERT INTO patients (first_name, last_name, date_of_birth, gender, email, phone_number, address, insurance_provider, insurance_policy_number, primary_care_physician, medical_history, allergies, status)
+    VALUES ('$first_name', '$last_name', '$date_of_birth', '$gender', '$email', '$phone_number', '$address', '$insurance_provider', '$insurance_policy_number', '$primary_care_physician', '$medical_history', '$allergies', '$status')";
 
-        if(addPatient($name, $email, $date_of_birth, $gender, $phone, $address)){
-            header("Location:manage_patients.php");
-            exit();
-        } else {
-            $error = "Failed to add patient.";
-        }
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
+}
+
+$conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Add Patient<title>
-    </head>
-    <body>
-        <h2>Add Patient</h2>
-        <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form method="post" name="form-patient">
-            <div class="form-group">
-                <label for="Name">Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Name" required>
-            </div>
-            <div class="form-group">
-                <label for="Email">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <label for="DateOfBirth">Date of Birth</label>
-                <input type="date" name="date_of_birth" required>
-            </div>
-            <div class="form-group">
-                <label for="Gender">Gender</label>
-                <select name="gender" required>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="Phone">Phone</label>
-                <input type="text" name="phone" class="form-control" placeholder="Phone" required>
-            </div>
-            <div class="form-group">
-                <label for="Address">Address</label>
-                <textarea name="address" placeholder="Address" required ></textarea>
-            </div>
-            <button type="submit">Add Patient</button>
-        </form>
-        <a href="manage_patients.php"></a>
-    </body>
-</html>
+
+<form method="POST" action="create_patient.php">
+    <input type="text" name="first_name" placeholder="First Name" required>
+    <input type="text" name="last_name" placeholder="Last Name" required>
+    <input type="date" name="date_of_birth" required>
+    <select name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select>
+    <input type="email" name="email" placeholder="Email">
+    <input type="text" name="phone_number" placeholder="Phone Number" required>
+    <input type="text" name="address" placeholder="Address">
+    <input type="text" name="insurance_provider" placeholder="Insurance Provider">
+    <input type="text" name="insurance_policy_number" placeholder="Insurance Policy Number">
+    <input type="text" name="primary_care_physician" placeholder="Primary Care Physician">
+    <textarea name="medical_history" placeholder="Medical History"></textarea>
+    <textarea name="allergies" placeholder="Allergies"></textarea>
+    <select name="status">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+        <option value="deceased">Deceased</option>
+    </select>
+    <button type="submit">Create Patient</button>
+</form>
