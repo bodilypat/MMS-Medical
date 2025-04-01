@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							   email='$email', 
 							   phone_number='$phone_number', 
 							   department='$department', 
-							   irthdate='$birthdate',
+							   birthdate='$birthdate',
 							   address='$address', 
 							   status='$status', 
 							   otes='$notes' 
