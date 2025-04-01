@@ -1,76 +1,64 @@
 <?php
+include 'config.php';
 
-    include('../includes/functions.php');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $patient_id = $_POST['patient_id'];
+    $appointment_id = $_POST['appointment_id'];
+    $diagnosis = mysqli_real_escape_string($conn, $_POST['diagnosis']);
+    $treatment_plan = mysqli_real_escape_string($conn, $_POST['treatment_plan']);
+    $note = mysqli_real_escape_string($conn, $_POST['note']);
+    $status = $_POST['status'];
+    $created_by = $_POST['created_by'];  // Assuming this is from the logged-in user
+    $updated_by = $_POST['updated_by'];  // Assuming this is from the logged-in user
+    $attachments = mysqli_real_escape_string($conn, $_POST['attachments']);  // File path/URL for attachments
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $patient_id = $_POST['patient_id'];
-        $doctor_id = $_POST['doctor_id'];
-        $record_date = $_POST['record_date'];
-        $diagnosis = $_POST['diagnosis'];
-        $treatment = $_POST['treatment'];
-        $notes = $_POST['notes'];
-        
+    // Insert query to create a new record
+    $sql = "INSERT INTO medical_records (patient_id, appointment_id, diagnosis, treatment_plan, note, status, created_by, updated_by, attachments)
+            VALUES ('$patient_id', '$appointment_id', '$diagnosis', '$treatment_plan', '$note', '$status', '$created_by', '$updated_by', '$attachments')";
 
-        if(addMedicationHistory($patient_id, $doctor_id, $record_date, $dianosis, $treatment, $notes )) {
-            header("Location:manage_medical_records.php");
-            exit();
-        } else {
-            $error = "Failed to add medical records.";
-        }
+    if ($conn->query($sql) === TRUE) {
+        echo "New medical record created successfully.";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
+}
+
+$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Add Medical History</title>
-    </head>
-    <body>
-        <h2>Add Medical History</h2>
-        <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form method="post" name="form-medical-history">
-            <!-- Medical Patient_id -->
-            <div class="form-group">
-                <label for="PatientName">Patient Name</label>
-                <select type="text" name="patient_id" class="form-control" required>
-                    <?php 
-                        /* Fetch Patient name */
-                        $patients = getPatients();
-                        foreach($patients as $patient): ?>
-                        <option value="<?php echo $patient['id'];?>"><?php echo $patient['patient_name'];?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <!-- Doctor Doctor_id -->
-            <div class="form-group">
-                <label for="DoctorName">Doctor Name</label>
-                <select type="text" name="doctor_id" class="form-control" required>
-                    <?php 
-                        /* Fetch Doctor name */
-                        $doctors = getDoctors();
-                        foreach($doctors as $doctor): ?>
-                        <option value="<?php echo $doctor['id'];?>"><?php echo $doctor['doctor_name'];?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="record_date">Record Date</label>
-                <input type="date" name="record_date" class="form-control" placeholder="Record Date" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="Diagnosis">Diagnosis</label>
-                <textarea name="diagnosis" class="form-control" placehodler="Diagnosis" required></textarea>
-            </div>
+<!-- HTML Form to Create Medical Record -->
+<form method="POST" action="create_medical_record.php">
+    <label for="patient_id">Patient ID:</label>
+    <input type="number" name="patient_id" required><br>
 
-            <div class="form-group">
-                <label for="Treatment">Treatment</label>
-                <textarea name="treatment" class="form-control" placeholder="treatment" required></textarea>
-            </div>
-            
-        </form>
-        <a href="manage_medical_records.php">View Medical History</a>
-    </body>
-</html>
+    <label for="appointment_id">Appointment ID:</label>
+    <input type="number" name="appointment_id" required><br>
+
+    <label for="diagnosis">Diagnosis:</label>
+    <input type="text" name="diagnosis" required><br>
+
+    <label for="treatment_plan">Treatment Plan:</label>
+    <textarea name="treatment_plan"></textarea><br>
+
+    <label for="note">Note:</label>
+    <textarea name="note"></textarea><br>
+
+    <label for="status">Status:</label>
+    <select name="status">
+        <option value="Active">Active</option>
+        <option value="Archived">Archived</option>
+        <option value="Inactive">Inactive</option>
+    </select><br>
+
+    <label for="created_by">Created By (User ID):</label>
+    <input type="number" name="created_by" required><br>
+
+    <label for="updated_by">Updated By (User ID):</label>
+    <input type="number" name="updated_by" required><br>
+
+    <label for="attachments">Attachments (File Path/URL):</label>
+    <input type="text" name="attachments"><br>
+
+    <button type="submit">Create Medical Record</button>
+</form>
