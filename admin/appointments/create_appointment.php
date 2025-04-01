@@ -1,67 +1,61 @@
 <?php
+include 'config.php';
 
-    include('../includes/functions.php');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $patient_id = $_POST['patient_id'];
+    $doctor_id = $_POST['doctor_id'];
+    $appointment_date = $_POST['appointment_date'];
+    $reason_for_visit = mysqli_real_escape_string($conn, $_POST['reason_for_visit']);
+    $status = $_POST['status'];
+    $duration = $_POST['duration'];
+    $appointment_type = mysqli_real_escape_string($conn, $_POST['appointment_type']);
+    $notes = mysqli_real_escape_string($conn, $_POST['notes']);
 
-    if ($_SERVER['REQUEST_METHOD'] =='POST') {
-        $patient_id = $_POST['patient_id'];
-        $doctor_id = $_POST['doctor_id'];
-        $appointment_date = $_POST['appointment_date'];
-        $notes = $_POST['notes'];
+    // Insert query
+    $sql = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, reason_for_visit, status, duration, appointment_type, notes)
+            VALUES ('$patient_id', '$doctor_id', '$appointment_date', '$reason_for_visit', '$status', '$duration', '$appointment_type', '$notes')";
 
-        if(addAppointment($patient_id, $doctor_id, $appointment_date, $staus, $notes)) {
-            header("Location:manage_appointments.php");
-            exit();
-        } else {
-            $error = "Failed to add appointment.";
-        }
+    if ($conn->query($sql) === TRUE) {
+        echo "New appointment created successfully.";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
+}
 
+$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Add Appointment</title>
-    </head>
-    <body>
-        <h2>Add Appointment</h2>
-        <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form method="post" name="form-appointment">
+<!-- HTML Form to Create Appointment -->
+<form method="POST" action="create_appointment.php">
+    <label for="patient_id">Patient ID:</label>
+    <input type="number" name="patient_id" required><br>
 
-            <!-- select patient name-->
-            <div class="form-group">
-                <label for="PatientName">Patient Name</label>
-                <select name="patient_id" class="form-control" required>
-                    <?php foreach($patients as $patient): ?>
-                         <option value="<?php echo $patient['id'];?>"><?php echo $patient['name'];?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+    <label for="doctor_id">Doctor ID:</label>
+    <input type="number" name="doctor_id" required><br>
 
-            <!-- Fetch doctor name-->
-            <div class="form-group">
-                <label for="DoctorName">Doctor Name</label>
-                <select name="doctor_id" class="form-control" required>
-                    <?php foreach($doctors as $doctor): ?>
-                        <option value="<?php echo $doctor['id'];?>"><?php echo $doctor['name'];?></option>
-                    <?php endforeach; ?>
-                </section>
-            </div>
+    <label for="appointment_date">Appointment Date:</label>
+    <input type="datetime-local" name="appointment_date" required><br>
 
-            <!-- appointment date -->
-            <div class="form-group">
-                <label for="AppointmentDate">Appointment date</label>
-                <input type="datetime-local" name="appointment_date" required>
-            </div>
+    <label for="reason_for_visit">Reason for Visit:</label>
+    <input type="text" name="reason_for_visit"><br>
 
-            <!-- notes -->
-            <div class="form-group">
-                <label for="Notes">Notes</label>
-                <textarea name="notes" class="form-control"></textarea>
-            </div>
-            <button type="submit" name="add" value="add appointmnet">Add Appointments</button>
-        </form>
-        <a href="manage_appointments.php">View Appointments</a>
-    </body>
-</html>
+    <label for="status">Status:</label>
+    <select name="status">
+        <option value="Scheduled">Scheduled</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="No-Show">No-Show</option>
+    </select><br>
+
+    <label for="duration">Duration (in minutes):</label>
+    <input type="number" name="duration"><br>
+
+    <label for="appointment_type">Appointment Type:</label>
+    <input type="text" name="appointment_type"><br>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes"></textarea><br>
+
+    <button type="submit">Create Appointment</button>
+</form>
