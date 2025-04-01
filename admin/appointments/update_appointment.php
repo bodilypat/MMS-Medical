@@ -1,80 +1,70 @@
 <?php
+include 'config.php';
 
-    include('../includes/functions.php');
+if (isset($_GET['id'])) {
+    $appointment_id = $_GET['id'];
+    $sql = "SELECT * FROM appointments WHERE appointment_id = $appointment_id";
+    $result = $conn->query($sql);
+    $appointment = $result->fetch_assoc();
+}
 
-    if(!isset($_GET['id'])){
-        header("Location:manage_appointments.php");
-        exit();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $patient_id = $_POST['patient_id'];
+    $doctor_id = $_POST['doctor_id'];
+    $appointment_date = $_POST['appointment_date'];
+    $reason_for_visit = mysqli_real_escape_string($conn, $_POST['reason_for_visit']);
+    $status = $_POST['status'];
+    $duration = $_POST['duration'];
+    $appointment_type = mysqli_real_escape_string($conn, $_POST['appointment_type']);
+    $notes = mysqli_real_escape_string($conn, $_POST['notes']);
+
+    // Update query
+    $sql = "UPDATE appointments 
+            SET patient_id='$patient_id', doctor_id='$doctor_id', appointment_date='$appointment_date', reason_for_visit='$reason_for_visit', 
+                status='$status', duration='$duration', appointment_type='$appointment_type', notes='$notes'
+            WHERE appointment_id = $appointment_id";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Appointment updated successfully.";
+    } else {
+        echo "Error: " . $conn->error;
     }
+}
 
-    $appointment = getAppointment($_GET['id']);
-
-    if($_SERVER['REQUEST_METHOD'] =='POST'){
-        $patient_id = $_POST['patient_id'];
-        $doctor_id = $_POST['doctor_id'];
-        $appointment_date = $_POST['appointment_date'];
-        $notes = $_POST['notes'];
-
-        if(updateAppointment($appointment['id'], $patient_id, $doctor_id, $appointment_date, $note)){
-            header("Location:manage_appointments.php");
-            exit();
-        } else {
-            $error = "Failed to update appointment";
-        }
-    }
+$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Edit Appointment</title>
-    </head>
-    <body>
-        <h2>Edit Appointment</title>
-        <?php if(isset($error)) echo "<p style='color:red;'>$error" ?>
-        <form method="post" name="form-appointment">
-            <input type="hidden" name="id" value="<?php $appointment['id'] ?>">
+<!-- HTML Form to Update Appointment -->
+<form method="POST" action="update_appointment.php?id=<?php echo $appointment['appointment_id']; ?>">
+    <label for="patient_id">Patient ID:</label>
+    <input type="number" name="patient_id" value="<?php echo $appointment['patient_id']; ?>" required><br>
 
-            <!-- Fetch  patient name -->
-            <div class="form-group">
-                <label for="PatientName">Patient Name</label>
-                <select name="patient_id" class="form-control"  value="<?php $appointments['patient_id']; ?>" required>
-                    <?php 
-                        $patients = getPatients();
-                        foreach ($patients as $patient) : ?>
-                            <option value="<?php echo $patient['id'];?>"><?php echo htmlspecialchars($patients['name']);?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <!-- Fetch doctor name -->
-            <div class="form-group">
-                <select name="doctor_id" value="<?php $appointment['doctor_id']; ?>" required>
-                    <?php
-                        $doctors = getDoctors();
-                        foreach ($doctors as $doctor): ?>
-                            <option value="<?php echo $doctor['id'];?>"><?php echo htmlspecialchars($doctor['name']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="AppointmentDate">Appointment Date</label>
-                <input type="datetime-local" name="appointment_date" value="<?php echo date('Y-md-d\TH:i', strtotime($appointment['appoint_date'])); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="Status">Status</label>
-                <select name="status"  class="form-control" require>
-                      <option value="Scheduled" <?php $appointment['status'] == 'Scheduled' ? 'selected' : ''?>>Scheduled</option>
-                      <option value="Completed" <?php $appointment['status'] == 'Completed' ? 'selected' : ''?>>Completed</option>
-                      <option value="Cancelled" <?php $appointment['status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="Note">Notes</label>
-                <textarea name="notes"><?php $appointment['notes'] ?></textarea>
-            </div>
-             <button type="submit" name="update" value="update Appointment" >Update Appointment</button>
-        </form>
-        <a href="manage_appointments.php">Cancel</a>
-    </body>
-</html>
+    <label for="doctor_id">Doctor ID:</label>
+    <input type="number" name="doctor_id" value="<?php echo $appointment['doctor_id']; ?>" required><br>
+
+    <label for="appointment_date">Appointment Date:</label>
+    <input type="datetime-local" name="appointment_date" value="<?php echo $appointment['appointment_date']; ?>" required><br>
+
+    <label for="reason_for_visit">Reason for Visit:</label>
+    <input type="text" name="reason_for_visit" value="<?php echo $appointment['reason_for_visit']; ?>"><br>
+
+    <label for="status">Status:</label>
+    <select name="status">
+        <option value="Scheduled" <?php echo $appointment['status'] == 'Scheduled' ? 'selected' : ''; ?>>Scheduled</option>
+        <option value="Completed" <?php echo $appointment['status'] == 'Completed' ? 'selected' : ''; ?>>Completed</option>
+        <option value="Cancelled" <?php echo $appointment['status'] == 'Cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+        <option value="No-Show" <?php echo $appointment['status'] == 'No-Show' ? 'selected' : ''; ?>>No-Show</option>
+    </select><br>
+
+    <label for="duration">Duration (in minutes):</label>
+    <input type="number" name="duration" value="<?php echo $appointment['duration']; ?>"><br>
+
+    <label for="appointment_type">Appointment Type:</label>
+    <input type="text" name="appointment_type" value="<?php echo $appointment['appointment_type']; ?>"><br>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes"><?php echo $appointment['notes']; ?></textarea><br>
+
+    <button type="submit">Update Appointment</button>
+</form>
