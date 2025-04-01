@@ -2,19 +2,19 @@
 include 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $date_of_birth = $_POST['date_of_birth'];
-    $gender = $_POST['gender'];
-    $email = $_POST['email'];
-    $phone_number = $_POST['phone_number'];
-    $address = $_POST['address'];
-    $insurance_provider = $_POST['insurance_provider'];
-    $insurance_policy_number = $_POST['insurance_policy_number'];
-    $primary_care_physician = $_POST['primary_care_physician'];
-    $medical_history = $_POST['medical_history'];
-    $allergies = $_POST['allergies'];
-    $status = $_POST['status'];
+    $first_name = mysqli_real_escape_strint($deal,$_POST['first_name']);
+    $last_name = mysqli_real_escape_strint($deal,$_POST['last_name']);
+    $date_of_birth = mysqli_real_escape_strint($deal,$_POST['date_of_birth']);
+    $gender = mysqli_real_escape_strint($deal,$_POST['gender']);
+    $email = mysqli_real_escape_strint($deal,$_POST['email']);
+    $phone_number = mysqli_real_escape_strint($deal,$_POST['phone_number']);
+    $address = mysqli_real_escape_strint($deal,$_POST['address']);
+    $insurance_provider = mysqli_real_escape_strint($deal,$_POST['insurance_provider']);
+    $insurance_policy_number = mysqli_real_escape_strint($deal,$_POST['insurance_policy_number']);
+    $primary_care_physician = mysqli_real_escape_strint($deal,$_POST['primary_care_physician']);
+    $medical_history = mysqli_real_escape_strint($deal,$_POST['medical_history']);
+    $allergies = mysqli_real_escape_strint($deal,$_POST['allergies']);
+    $status = mysqli_real_escape_strint($deal,$_POST['status']);
 
     $sql = "INSERT INTO patients (first_name, last_name, date_of_birth, gender, email, phone_number, address, insurance_provider, insurance_policy_number, primary_care_physician, medical_history, allergies, status)
     VALUES ('$first_name', '$last_name', '$date_of_birth', '$gender', '$email', '$phone_number', '$address', '$insurance_provider', '$insurance_policy_number', '$primary_care_physician', '$medical_history', '$allergies', '$status')";
