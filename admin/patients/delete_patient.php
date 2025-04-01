@@ -1,18 +1,22 @@
 <?php
+include 'config.php';
 
-    include('../includes/functions.php');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $patient_id = $_POST['patient_id'];
 
-    if(!isset($_GET['id'])){
-        $delePat = deletePatient($_GET['id']);
-        
-        if($delStmt) {
-            header('Location:manage_patients.php');
-            exit(); 
-        } else {
-                echo"Error deleting patient.";
-            }
-        } else { 
-            header("Location:manage_patients.php");
-            exit();
+    $sql = "DELETE FROM patients WHERE patient_id=$patient_id";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
+}
+
+$conn->close();
 ?>
+
+<form method="POST" action="delete_patient.php">
+    <input type="number" name="patient_id" placeholder="Patient ID" required>
+    <button type="submit">Delete Patient</button>
+</form>
