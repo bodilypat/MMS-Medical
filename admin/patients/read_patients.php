@@ -2,7 +2,7 @@
 include 'config.php';
 
 $sql = "SELECT * FROM patients";
-$result = $conn->query($sql);
+$result = $deal->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
