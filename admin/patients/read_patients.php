@@ -5,23 +5,35 @@ $sql = "SELECT * FROM patients";
 $result = $deal->query($sql);
 
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "ID: " . $row["patient_id"]. " - Name: " . $row["first_name"]. " " . $row["last_name"]. "<br>";
-        echo "Date of Birth: " . $row["date_of_birth"]. "<br>";
-        echo "Gender: " . $row["gender"]. "<br>";
-        echo "Email: " . $row["email"]. "<br>";
-        echo "Phone: " . $row["phone_number"]. "<br>";
-        echo "Address: " . $row["address"]. "<br>";
-        echo "Insurance Provider: " . $row["insurance_provider"]. "<br>";
-        echo "Policy Number: " . $row["insurance_policy_number"]. "<br>";
-        echo "Primary Care Physician: " . $row["primary_care_physician"]. "<br>";
-        echo "Medical History: " . $row["medical_history"]. "<br>";
-        echo "Allergies: " . $row["allergies"]. "<br>";
-        echo "Status: " . $row["status"]. "<br>";
-        echo "<br>";
+    echo "<table border='1'>";
+    echo "<tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>";
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["patient_id"] . "</td>";
+        echo "<td>" . $row["first_name"] . " " . $row["last_name"] . "</td>";
+        echo "<td>" . $row["gender"] . "</td>";
+        echo "<td>" . $row["email"] . "</td>";
+        echo "<td>" . $row["phone_number"] . "</td>";
+        echo "<td>" . $row["status"] . "</td>";
+        echo "<td>
+            <a href='update_patient.php?id=" . $row["patient_id"] . "'>Edit</a> |
+            <a href='delete_patient.php?id=" . $row["patient_id"] . "'>Delete</a>
+        </td>";
+        echo "</tr>";
     }
+
+    echo "</table>";
 } else {
-    echo "0 results";
+    echo "No patients found.";
 }
 
 $conn->close();
