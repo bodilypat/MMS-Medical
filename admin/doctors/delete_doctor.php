@@ -1,18 +1,16 @@
 <?php
+include 'config.php';
 
-    include('../includes/functions.php');
-    
-    if(!isset($_GET['id'])) {
-        $delStmt = deleteDoctor($_GET['id']);
-        
-        if($delStmt){
-            header("Location:manage_doctors.php") ;
-            exit();
-        } else {
-            echo "Error deleting doctors.";
-        }
+if (isset($_GET['id'])) {
+    $doctor_id = $_GET['id'];
+    $sql = "DELETE FROM doctors WHERE doctor_id = $doctor_id";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Doctor record deleted successfully.";
     } else {
-        header('Location:manage_doctors.php');
-        exit();
+        echo "Error: " . $conn->error;
     }
+}
+
+$conn->close();
 ?>
