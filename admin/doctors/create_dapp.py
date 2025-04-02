@@ -5,10 +5,10 @@ app = Flask(__name__)
 
 # Database connection configuration
 db_config = {
-    'host': 'your_host',
-    'user': 'your_user',
-    'password': 'your_password',
-    'database': 'your_database'
+    'host': 'localhost',
+    'user': 'pacha',
+    'password': 'medical',
+    'database': 'dbmedical'
 }
 
 # Route for creating doctor
