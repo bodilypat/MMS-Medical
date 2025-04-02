@@ -1,7 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root"; // Change to your database username
-$password = ""; // Change to your database password
+$servername = "psmedical.com";
+$username = "pacha"; // Change to your database username
+$password = "medical"; // Change to your database password
 $dbname = "dbmedical"; // Change to your database name
 
 // Create connection
