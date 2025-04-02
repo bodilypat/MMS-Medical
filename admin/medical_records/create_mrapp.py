@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Database connection configuration
 db_config = {
-    'host': 'localhost',       # Replace with your database host
+    'host': 'psmedical.com',       # Replace with your database host
     'user': 'pacha',       # Replace with your database username
     'password': 'medical', # Replace with your database password
     'database': 'dbmedical' # Replace with your database name
