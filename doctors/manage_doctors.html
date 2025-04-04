@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Management</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS for styling -->
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor Management System</h1>
+
+        <!-- Doctor Add/Edit Form -->
+        <form id="doctorForm">
+            <fieldset>
+                <legend>Add or Edit Doctor</legend>
+
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required><br>
+
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required><br>
+
+                <label for="specialization">Specialization:</label>
+                <input type="text" id="specialization" name="specialization" required><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" required><br>
+
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department"><br>
+
+                <button type="submit">Save Doctor</button>
+            </fieldset>
+        </form>
+
+        <!-- Doctor Table for Displaying Doctors -->
+        <h2>Doctor List</h2>
+        <table id="doctorsTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Specialization</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic doctor rows will go here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scripts.js"></script> <!-- Link to external JavaScript for handling form submission and interactions -->
+</body>
+</html>
