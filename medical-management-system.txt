@@ -1,0 +1,23 @@
+doctor-management-system/
+├── backend/                   # Backend API (PHP files)
+│   ├── api/                   # API endpoints for CRUD operations
+│   │   ├── doctors.php        # Endpoint for handling doctor-related requests
+│   │   ├── db_connect.php     # Database connection
+│   │   └── ...                # Other API files for various operations
+│   ├── config/                # Configuration files (e.g., database connection settings)
+│   │   └── config.php         # Configuration file (e.g., database settings)
+│   └── .htaccess              # If you're using Apache server (optional)
+├── frontend/                  # Frontend (HTML, JavaScript, CSS files)
+│   ├── index.html             # Main HTML file with form and table
+│   ├── css/                   # CSS styles
+│   │   └── style.css          # Styles for the frontend
+│   ├── js/                    # JavaScript files
+│   │   ├── main.js            # Main JavaScript file for handling API requests (AJAX)
+│   │   ├── utils.js           # Helper functions (optional)
+│   │   └── ajax-requests.js   # Separate file for AJAX requests (optional)
+├── assets/                    # Public assets (images, fonts, etc.)
+│   └── logo.png               # Example logo
+├── .gitignore                 # Git ignore file (optional)
+└── README.md                  # Project readme (optional)
+
+API frontend using JavaScript 
