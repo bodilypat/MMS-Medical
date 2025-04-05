@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Payments</h1>
+
+    <!-- Form to Edit Payment -->
+    <form id="edit-payment-form">
+        <input type="hidden" id="edit-billing-id" name="billing_id">
+        <label for="edit-patient-id">Patient ID:</label>
+        <input type="text" id="edit-patient-id" name="patient_id">
+        <label for="edit-appointment-id">Appointment ID:</label>
+        <input type="text" id="edit-appointment-id" name="appointment_id">
+        <label for="edit-total-amount">Total Amount:</label>
+        <input type="text" id="edit-total-amount" name="total_amount">
+        <label for="edit-amount-paid">Amount Paid:</label>
+        <input type="text" id="edit-amount-paid" name="amount_paid">
+        <label for="edit-balance-due">Balance Due:</label>
+        <input type="text" id="edit-balance-due" name="balance_due">
+        <label for="edit-payment-status">Payment Status:</label>
+        <select id="edit-payment-status" name="payment_status">
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+            <option value="Partially Paid">Partially Paid</option>
+        </select>
+        <label for="edit-insurance-claimed-amount">Insurance Claimed Amount:</label>
+        <input type="text" id="edit-insurance-claimed-amount" name="insurance_claimed_amount">
+        <label for="edit-insurance-status">Insurance Status:</label>
+        <select id="edit-insurance-status" name="insurance_status">
+            <option value="Approved">Approved</option>
+            <option value="Pending">Pending</option>
+            <option value="Denied">Denied</option>
+        </select>
+        <button type="submit">Update Payment</button>
+    </form>
+
+    <table id="payments-table">
+        <thead>
+            <tr>
+                <th>Billing ID</th>
+                <th>Patient ID</th>
+                <th>Appointment ID</th>
+                <th>Total Amount</th>
+                <th>Amount Paid</th>
+                <th>Balance Due</th>
+                <th>Payment Status</th>
+                <th>Payment Date</th>
+                <th>Insurance Claimed Amount</th>
+                <th>Insurance Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Payments will be displayed here -->
+        </tbody>
+    </table>
+</body>
+</html>
