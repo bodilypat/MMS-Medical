@@ -1,23 +1,83 @@
-doctor-management-system/
-├── backend/                   # Backend API (PHP files)
-│   ├── api/                   # API endpoints for CRUD operations
-│   │   ├── doctors.php        # Endpoint for handling doctor-related requests
-│   │   ├── db_connect.php     # Database connection
-│   │   └── ...                # Other API files for various operations
-│   ├── config/                # Configuration files (e.g., database connection settings)
-│   │   └── config.php         # Configuration file (e.g., database settings)
-│   └── .htaccess              # If you're using Apache server (optional)
-├── frontend/                  # Frontend (HTML, JavaScript, CSS files)
-│   ├── index.html             # Main HTML file with form and table
-│   ├── css/                   # CSS styles
-│   │   └── style.css          # Styles for the frontend
-│   ├── js/                    # JavaScript files
-│   │   ├── main.js            # Main JavaScript file for handling API requests (AJAX)
-│   │   ├── utils.js           # Helper functions (optional)
-│   │   └── ajax-requests.js   # Separate file for AJAX requests (optional)
-├── assets/                    # Public assets (images, fonts, etc.)
-│   └── logo.png               # Example logo
-├── .gitignore                 # Git ignore file (optional)
-└── README.md                  # Project readme (optional)
+medical-management-system
+ 
+	admin-management-system/
+	├── backend/                   		# Backend API (PHP files)
+	│   ├── api/                   		# API endpoints for CRUD operations
+	│   │   ├── doctors.php        		# Endpoint for handling doctor-related requests
+	│   │   ├── patients.php       		# Endpoint for handling patient-related requests
+	│   │   ├── appointments.php   		# Endpoint for handling appointment-related requests
+	│   │   ├── medical_records.php     # Endpoint for handling medical_record-related requests
+	│   │   ├── prescriptions.php       # Endpoint for handling prescription-related requests
+	│   │   ├── payments.php            # Endpoint for handling payment-related requests
+	│   │   ├── pharmacies.php          # Endpoint for handling pharmacies-related requests
+	│   │   ├── insurances.php          # Endpoint for handling insurance-related requests
+	│   │   ├── users.php               # Endpoint for handling user-related requests
+		|   |
+	│   │   ├── dbconnect.php           # Database connection
+	│   │   └── ...                     # Other API files for various operations
+	│   ├── config/                     # Configuration files (e.g., database connection settings)
+	│   │   └── config.php              # Configuration file (e.g., database settings)
+	│   └── .htaccess                   # If you're using Apache server (optional)
+	├── frontend/                       # Frontend (HTML, JavaScript, CSS files)
+	│   ├── index.html                  # Main HTML file with form and table
+	│   ├── css/                        # CSS styles
+	│   │   └── style.css               # Styles for the frontend
+	│   ├── js/                         # JavaScript files
+	│   │   ├── main.js                 # Main JavaScript file for handling API requests (AJAX)
+	│   │   ├── utils.js                # Helper functions (optional)
+	│   │   └── ajax-requests.js        # Separate file for AJAX requests (optional)
+	├── assets/                         # Public assets (images, fonts, etc.)
+	│   └── logo.png                    # Example logo
+	├── .gitignore                      # Git ignore file (optional)
+	└── README.md                       # Project readme (optional)
+
+	doctor-management-system/
+	├── backend/                        # Backend API (PHP files)
+	│   ├── api/                        # API endpoints for CRUD operations
+	│   │   ├── doctors.php             # Endpoint for handling doctor-related requests
+	│   │   ├── dbconnect.php           # Database connection
+	│   │   └── ...                     # Other API files for various operations
+	│   ├── config/                     # Configuration files (e.g., database connection settings)
+	│   │   └── config.php              # Configuration file (e.g., database settings)
+	│   └── .htaccess                   # If you're using Apache server (optional)
+	├── frontend/                       # Frontend (HTML, JavaScript, CSS files)
+	│   ├── index.html                  # Main HTML file with form and table
+	│   ├── css/                        # CSS styles
+	│   │   └── style.css               # Styles for the frontend
+	│   ├── js/                         # JavaScript files
+	│   │   ├── main.js                 # Main JavaScript file for handling API requests (AJAX)
+	│   │   ├── utils.js                # Helper functions (optional)
+	│   │   └── ajax-requests.js        # Separate file for AJAX requests (optional)
+	├── assets/                         # Public assets (images, fonts, etc.)
+	│   └── logo.png                    # Example logo
+	├── .gitignore                      # Git ignore file (optional)
+	└── README.md                       # Project readme (optional)
+
+	patient-management-system/
+	├── backend/                        # Backend API (PHP files)
+	│   ├── api/                        # API endpoints for CRUD operations
+	│   │   ├── patients.php            # Endpoint for handling doctor-related requests
+	│   │   ├── dbconnect.php           # Database connection
+	│   │   └── ...                     # Other API files for various operations
+	│   ├── config/                     # Configuration files (e.g., database connection settings)
+	│   │   └── config.php              # Configuration file (e.g., database settings)
+	│   └── .htaccess                   # If you're using Apache server (optional)
+	├── frontend/                       # Frontend (HTML, JavaScript, CSS files)
+	│   ├── index.html                  # Main HTML file with form and table
+	│   ├── css/                        # CSS styles
+	│   │   └── style.css               # Styles for the frontend
+	│   ├── js/                         # JavaScript files
+	│   │   ├── main.js                 # Main JavaScript file for handling API requests (AJAX)
+	│   │   ├── utils.js                # Helper functions (optional)
+	│   │   └── ajax-requests.js        # Separate file for AJAX requests (optional)
+	├── assets/                         # Public assets (images, fonts, etc.)
+	│   └── logo.png                    # Example logo
+	├── .gitignore                      # Git ignore file (optional)
+	└── README.md                       # Project readme (optional)
+	
+	include
+	outline
+	database
+	
 
 API frontend using JavaScript 
