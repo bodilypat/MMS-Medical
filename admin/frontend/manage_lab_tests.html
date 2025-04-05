@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Tests</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Lab Tests</h1>
+
+    <!-- Form to Edit Lab Test -->
+    <form id="edit-lab-test-form">
+        <input type="hidden" id="edit-test-id" name="test_id">
+        <label for="edit-patient-id">Patient ID:</label>
+        <input type="text" id="edit-patient-id" name="patient_id">
+        <label for="edit-appointment-id">Appointment ID:</label>
+        <input type="text" id="edit-appointment-id" name="appointment_id">
+        <label for="edit-test-name">Test Name:</label>
+        <input type="text" id="edit-test-name" name="test_name">
+        <label for="edit-test-date">Test Date:</label>
+        <input type="date" id="edit-test-date" name="test_date">
+        <label for="edit-results">Results:</label>
+        <textarea id="edit-results" name="results"></textarea>
+        <label for="edit-test-status">Test Status:</label>
+        <select id="edit-test-status" name="test_status">
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+            <option value="Failed">Failed</option>
+            <option value="In Progress">In Progress</option>
+        </select>
+        <button type="submit">Update Lab Test</button>
+    </form>
+
+    <table id="lab-tests-table">
+        <thead>
+            <tr>
+                <th>Test ID</th>
+                <th>Patient ID</th>
+                <th>Appointment ID</th>
+                <th>Test Name</th>
+                <th>Test Date</th>
+                <th>Results</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Lab test records will be populated here -->
+        </tbody>
+    </table>
+</body>
+</html>
