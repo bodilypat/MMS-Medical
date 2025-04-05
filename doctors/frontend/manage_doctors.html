@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Management System</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <h1>Doctor Management System</h1>
+    
+    <!-- Doctor Registration Form -->
+    <section>
+        <h2>Add New Doctor</h2>
+        <form id="doctor-form">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+
+            <label for="specialization">Specialization:</label>
+            <input type="text" id="specialization" name="specialization" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required>
+
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department">
+
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdate" name="birthdate">
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address"></textarea>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="retired">Retired</option>
+            </select>
+
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes"></textarea>
+
+            <button type="submit">Add Doctor</button>
+        </form>
+    </section>
+
+    <!-- Doctors List Section -->
+    <section>
+        <h2>Doctors List</h2>
+        <table id="doctors-table">
+            <thead>
+                <tr>
+                    <th>Doctor ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="doctors-list">
+                <!-- Doctor rows will be populated here via JavaScript -->
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        // Fetch doctors list from the database
+        function loadDoctors() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "fetch_doctors.php", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const doctors = JSON.parse(xhr.responseText);
+                    const doctorsTableBody = document.getElementById("doctors-list");
+                    doctorsTableBody.innerHTML = ""; // Clear existing table rows
+
+                    // Loop through each doctor and create a table row
+                    doctors.forEach(doctor => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${doctor.doctor_id}</td>
+                            <td>${doctor.first_name} ${doctor.last_name}</td>
+                            <td>${doctor.specialization}</td>
+                            <td>${doctor.email}</td>
+                            <td>${doctor.phone_number}</td>
+                            <td>${doctor.department}</td>
+                            <td>${doctor.status}</td>
+                            <td class="actions">
+                                <button onclick="editDoctor(${doctor.doctor_id})">Edit</button>
+                                <button onclick="deleteDoctor(${doctor.doctor_id})">Delete</button>
+                            </td>
+                        `;
+                        doctorsTableBody.appendChild(row);
+                    });
+                }
+            };
+            xhr.send();
+        }
+
+        // Add doctor to the database
+        document.getElementById('doctor-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const formData = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'add_doctor.php', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = xhr.responseText;
+                    if (response === 'success') {
+                        alert('Doctor added successfully!');
+                        loadDoctors(); // Reload doctors list after adding a new doctor
+                    } else {
+                        alert('Error: ' + response);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+
+        // Call loadDoctors to populate the table when the page loads
+        window.onload = loadDoctors;
+
+        // Edit doctor functionality (Not implemented here, just an example)
+         // Show edit form and populate with existing doctor data
+        function editDoctor(doctorId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `get_doctor.php?doctor_id=${doctorId}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const doctor = JSON.parse(xhr.responseText);
+                    if (doctor) {
+                        // Populate the edit form with the doctor's current data
+                        document.getElementById("edit-doctor-id").value = doctor.doctor_id;
+                        document.getElementById("edit-first_name").value = doctor.first_name;
+                        document.getElementById("edit-last_name").value = doctor.last_name;
+                        document.getElementById("edit-specialization").value = doctor.specialization;
+                        document.getElementById("edit-email").value = doctor.email;
+                        document.getElementById("edit-phone_number").value = doctor.phone_number;
+                        document.getElementById("edit-department").value = doctor.department;
+                        document.getElementById("edit-birthdate").value = doctor.birthdate;
+                        document.getElementById("edit-address").value = doctor.address;
+                        document.getElementById("edit-status").value = doctor.status;
+                        document.getElementById("edit-notes").value = doctor.notes;
+
+                        // Show the edit section
+                        document.getElementById("edit-doctor-section").style.display = "block";
+                    } else {
+                        alert("Doctor not found!");
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        // Update doctor data
+        document.getElementById('edit-doctor-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const formData = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'update_doctor.php', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = xhr.responseText;
+                    if (response === 'success') {
+                        alert('Doctor updated successfully!');
+                        loadDoctors(); // Reload doctors list after updating
+                        document.getElementById("edit-doctor-section").style.display = "none"; // Hide the edit form
+                    } else {
+                        alert('Error: ' + response);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+
+        // Call loadDoctors to populate the table when the page loads
+        window.onload = loadDoctors;
+
+        // Delete doctor functionality
+        function deleteDoctor(doctorId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'delete_doctor.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (xhr.responseText === 'success') {
+                        alert('Doctor deleted successfully!');
+                        loadDoctors(); // Reload doctors list after deleting
+                    } else {
+                        alert('Error: ' + xhr.responseText);
+                    }
+                }
+            };
+            xhr.send('doctor_id=' + doctorId);
+        }
+    </script>
+
+</body>
+</html>
