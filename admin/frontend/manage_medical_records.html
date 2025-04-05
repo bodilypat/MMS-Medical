@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Medical Records</h1>
+
+    <!-- Form to Edit Record -->
+    <form id="edit-record-form">
+        <input type="hidden" id="edit-record-id" name="record_id">
+        <label for="edit-patient-id">Patient ID:</label>
+        <input type="text" id="edit-patient-id" name="patient_id">
+        <label for="edit-appointment-id">Appointment ID:</label>
+        <input type="text" id="edit-appointment-id" name="appointment_id">
+        <label for="edit-diagnosis">Diagnosis:</label>
+        <textarea id="edit-diagnosis" name="diagnosis"></textarea>
+        <label for="edit-treatment-plan">Treatment Plan:</label>
+        <textarea id="edit-treatment-plan" name="treatment_plan"></textarea>
+        <label for="edit-note">Note:</label>
+        <textarea id="edit-note" name="note"></textarea>
+        <label for="edit-status">Status:</label>
+        <select id="edit-status" name="status">
+            <option value="Active">Active</option>
+            <option value="Archived">Archived</option>
+            <option value="Inactive">Inactive</option>
+        </select>
+        <button type="submit">Update Record</button>
+    </form>
+
+    <table id="medical-records-table">
+        <thead>
+            <tr>
+                <th>Record ID</th>
+                <th>Patient ID</th>
+                <th>Appointment ID</th>
+                <th>Diagnosis</th>
+                <th>Treatment Plan</th>
+                <th>Note</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Medical records will be populated here -->
+        </tbody>
+    </table>
+</body>
+</html>
