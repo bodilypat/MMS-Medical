@@ -1,0 +1,43 @@
+<!-- Add Appointment Form -->
+<form id="add-appointment-form">
+    <select name="patient_id" required>
+        <!-- Patient options will be dynamically populated from the backend -->
+    </select>
+    <select name="doctor_id" required>
+        <!-- Doctor options will be dynamically populated from the backend -->
+    </select>
+    <input type="datetime-local" name="appointment_date" required>
+    <input type="text" name="reason_for_visit" placeholder="Reason for Visit">
+    <input type="number" name="duration" placeholder="Duration in minutes">
+    <input type="text" name="appointment_type" placeholder="Appointment Type">
+    <textarea name="notes" placeholder="Notes"></textarea>
+    <select name="status">
+        <option value="Scheduled">Scheduled</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="No-Show">No-Show</option>
+    </select>
+    <button type="submit">Add Appointment</button>
+</form>
+
+<!-- Edit Appointment Form -->
+<form id="edit-appointment-form" style="display: none;">
+    <!-- Same form fields as the add form, but pre-filled -->
+    <button type="submit">Update Appointment</button>
+</form>
+
+<!-- Table to display appointments -->
+<table id="appointments-table">
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Appointment Date</th>
+            <th>Reason for Visit</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
