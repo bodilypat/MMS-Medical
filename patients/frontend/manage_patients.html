@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management System</title>
+    <link rel="stylesheet" href="css/styles.css" >
+</head>
+<body>
+
+    <h1>Patient Management System</h1>
+    
+    <div class="container">
+        <form action="add_patient.php" method="POST">
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="tel" id="phone_number" name="phone_number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="insurance_provider">Insurance Provider</label>
+                <input type="text" id="insurance_provider" name="insurance_provider">
+            </div>
+
+            <div class="form-group">
+                <label for="insurance_policy_number">Insurance Policy Number</label>
+                <input type="text" id="insurance_policy_number" name="insurance_policy_number">
+            </div>
+
+            <div class="form-group">
+                <label for="primary_care_physician">Primary Care Physician</label>
+                <input type="text" id="primary_care_physician" name="primary_care_physician">
+            </div>
+
+            <div class="form-group">
+                <label for="medical_history">Medical History</label>
+                <textarea id="medical_history" name="medical_history"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="allergies">Allergies</label>
+                <textarea id="allergies" name="allergies"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="deceased">Deceased</option>
+                </select>
+            </div>
+
+            <button type="submit">Add Patient</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Existing Patients</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Here you can use PHP to fetch and display patient data from the database -->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="status active">Active</span></td>
+                    <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	<script src="fontend/js/ajax_requests.js"></script>
+</body>
+</html>
