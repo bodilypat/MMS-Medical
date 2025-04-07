@@ -13,13 +13,12 @@ medical-management-system
 	│   │   ├── insurances.php          # Endpoint for handling insurance-related requests
 	│   │   ├── users.php               # Endpoint for handling user-related requests
 		|   |
-	│   │   ├── dbconnect.php           # Database connection
 	│   │   └── ...                     # Other API files for various operations
 	│   ├── config/                     # Configuration files (e.g., database connection settings)
-	│   │   └── config.php              # Configuration file (e.g., database settings)
+	│   │   └── dbconnect.php           # Database connection
 	│   └── .htaccess                   # If you're using Apache server (optional)
 	├── frontend/                       # Frontend (HTML, JavaScript, CSS files)
-	│   ├── dashboard.html                  # Main HTML file with form and table
+	│   ├── admin-dashboard.html                  # Main HTML file with form and table
 	│   ├── css/                        # CSS styles
 	│   │   └── style.css               # Styles for the frontend
 	│   ├── js/                         # JavaScript files
@@ -35,13 +34,13 @@ medical-management-system
 	├── backend/                        # Backend API (PHP files)
 	│   ├── api/                        # API endpoints for CRUD operations
 	│   │   ├── doctors.php             # Endpoint for handling doctor-related requests
-	│   │   ├── dbconnect.php           # Database connection
+	│   │   ├── api_handling.php        # Endpoint for handling related requests
 	│   │   └── ...                     # Other API files for various operations
 	│   ├── config/                     # Configuration files (e.g., database connection settings)
-	│   │   └── config.php              # Configuration file (e.g., database settings)
+	│   │   └── dbconnect.php              # Database connection
 	│   └── .htaccess                   # If you're using Apache server (optional)
 	├── frontend/                       # Frontend (HTML, JavaScript, CSS files)
-	│   ├── dashboard.html                  # Main HTML file with form and table
+	│   ├── doctor-dashboard.html                  # Main HTML file with form and table
 	│   ├── css/                        # CSS styles
 	│   │   └── style.css               # Styles for the frontend
 	│   ├── js/                         # JavaScript files
@@ -57,13 +56,13 @@ medical-management-system
 	├── backend/                        # Backend API (PHP files)
 	│   ├── api/                        # API endpoints for CRUD operations
 	│   │   ├── patients.php            # Endpoint for handling doctor-related requests
-	│   │   ├── dbconnect.php           # Database connection
+	│   │   ├── api_handling.php        # Endpoint for handling related requests
 	│   │   └── ...                     # Other API files for various operations
 	│   ├── config/                     # Configuration files (e.g., database connection settings)
-	│   │   └── config.php              # Configuration file (e.g., database settings)
+	│   │   └── dbconnect.php           # Database connection
 	│   └── .htaccess                   # If you're using Apache server (optional)
 	├── frontend/                       # Frontend (HTML, JavaScript, CSS files)
-	│   ├── dashboard.html                  # Main HTML file with form and table
+	│   ├── patient-dashboard.html      # Main HTML file with form and table
 	│   ├── css/                        # CSS styles
 	│   │   └── style.css               # Styles for the frontend
 	│   ├── js/                         # JavaScript files
