@@ -1,15 +1,16 @@
 <?php
-// dbconnect.php
-$host = 'localhost'; // or your database host
-$dbname = 'dbmedical'; // Database name
-$username = 'root'; // Database username
-$password = ''; // Database password
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    exit();
-}
+	$host = 'localhost';
+	$db = 'dbmedical';
+	$user = 'medical';
+	$pass = '';
+	$charset = 'utf8mb4';
+	
+	try {
+			$handle = new PDO("mysql:$host;dbname=$db;charset=$charset",$user, $pass);
+			$handle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERROR_EXCEPTION);
+	} catch (PDOException $e) {
+		http_response_code(500);
+		echo json_encode('error' => 'Database connection failed']);
+		exit;
+	}
 ?>
