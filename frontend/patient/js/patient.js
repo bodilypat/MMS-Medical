@@ -1,4 +1,4 @@
-const API_URL = 'api/patients.php'; // Adjust URL to your backend
+const API_URL = 'api/common/patients.php'; // Adjust URL to your backend
 
 // Fetch all patient records
 async function fetchPatients() {
