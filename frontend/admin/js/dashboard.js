@@ -1,4 +1,4 @@
-const API_URL = '/api/doctors.php'; // Change URL based on your backend
+const API_URL = '/api/common/doctors.php'; // Change URL based on your backend
 
 // Fetch all doctor records
 async function fetchDoctors() {
@@ -159,7 +159,7 @@ document.querySelector('#edit-doctor-form').addEventListener('submit', (event) =
 
 // Fetch and display all doctor records on page load
 document.addEventListener('DOMContentLoaded', fetchDoctors);
-const API_URL = '/api/patients.php'; // Adjust URL to your backend
+const API_URL = '/api/common/patients.php'; // Adjust URL to your backend
 
 // Fetch all patient records
 async function fetchPatients() {
@@ -334,7 +334,7 @@ document.querySelector('#edit-patient-form').addEventListener('submit', (event) 
 // Fetch and display all patient records on page load
 document.addEventListener('DOMContentLoaded', fetchPatients);
 // Define the API URL for appointment-related requests
-const API_URL = '/api/appointments.php';  // Replace with your actual API URL
+const API_URL = '/api/common/appointments.php';  // Replace with your actual API URL
 
 /**
  * Fetch all appointments and display them in the table
@@ -541,7 +541,7 @@ document.querySelector('#edit-appointment-form').addEventListener('submit', upda
 // Fetch and display appointments when the page loads
 document.addEventListener('DOMContentLoaded', fetchAppointments);
 
-const API_URL = '/api/lab_tests.php';
+const API_URL = '/api/common/lab_tests.php';
 
 // Fetch all lab tests for a given patient (or all if no patient filter is applied)
 async function fetchLabTests(patientId = null) {
@@ -698,7 +698,7 @@ document.querySelector('#edit-lab-test-form').addEventListener('submit', (event)
 // Fetch and display all lab tests on page load
 document.addEventListener('DOMContentLoaded', fetchLabTests);
 
-const API_URL = '/api/medical_records.php';
+const API_URL = '/api/common/medical_records.php';
 
 // Fetch all medical records
 async function fetchMedicalRecords() {
@@ -856,7 +856,7 @@ document.querySelector('#edit-record-form').addEventListener('submit', (event) =
 // Fetch and display all records on page load
 document.addEventListener('DOMContentLoaded', fetchMedicalRecords);
 
-const API_URL = '/api/prescriptions.php';
+const API_URL = '/api/common/prescriptions.php';
 
 // Fetch all prescriptions
 async function fetchPrescriptions() {
@@ -1017,7 +1017,7 @@ document.querySelector('#edit-prescription-form').addEventListener('submit', (ev
 // Fetch and display all prescriptions on page load
 document.addEventListener('DOMContentLoaded', fetchPrescriptions);
 
-const API_URL = '/api/pharmacies.php';
+const API_URL = '/api/common/pharmacies.php';
 
 // Fetch all pharmacies
 async function fetchPharmacies() {
@@ -1167,7 +1167,7 @@ document.querySelector('#edit-pharmacy-form').addEventListener('submit', (event)
 // Fetch and display all pharmacies on page load
 document.addEventListener('DOMContentLoaded', fetchPharmacies);
 
-const API_URL = '/api/insurance.php';
+const API_URL = '/api/common/insurance.php';
 
 // Fetch all insurance records
 async function fetchInsurance() {
@@ -1324,7 +1324,7 @@ document.querySelector('#edit-insurance-form').addEventListener('submit', (event
 // Fetch and display all insurance records on page load
 document.addEventListener('DOMContentLoaded', fetchInsurance);
 
-const API_URL = '/api/payments.php';
+const API_URL = '/api/common/payments.php';
 
 // Fetch all payments for a given patient
 async function fetchPayments(patientId = null) {
