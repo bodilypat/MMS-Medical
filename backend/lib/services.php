@@ -1,4 +1,6 @@
-$services = [
-    'db' => new PDO(...),
-  'mailer' => new Mailer(...),
-];
+<?php
+	$services = [
+		'db' => new PDO(...),
+		'mailer' => new Mailer(...),
+	];
+	
