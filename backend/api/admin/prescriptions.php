@@ -169,17 +169,17 @@ function updatePrescription($pdo, $prescription_id) {
 
 //  Delete Prescription
 function deletePrescription($pdo) {
-    if (!$data || empty($data['prescription'])) {
+    if (empty($data['prescription'])) {
 		return sendResponse(400, ['message' => 'prescription)id, is required']);
 	}
 	try {
-		$stmt = $pdo->prepare('SELECT 1 FROM prescriptions WHERE prescription_id = :id');
+		$stmt = $pdo->prepare('SELECT 1 FROM prescriptions WHERE prescription_id = :prescript_id');
 		$stmt->execute(['prescription_id' => $data['prescription_id']]);
 		if (!$stmt->fetch()) {
 			return sendResponse(404, ['message' => 'Prescription not found']);
 			return;
 		}
-	    $stmt = $pdo->prepare('DELETE FROM prescriptions WHERE prescription_id = :prescription_id');
+	    	$stmt = $pdo->prepare('DELETE FROM prescriptions WHERE prescription_id = :prescription_id');
 		$stmt->execute(['prescription_id' => $data['prescription_id']]);
 		
 		sendResponse(200, ['message' => 'Prescription deleted successfully']);
