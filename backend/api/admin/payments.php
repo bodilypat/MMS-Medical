@@ -35,8 +35,16 @@ function sendResponse($code, $data) {
 // Validte input 
 function validatePaymetnInput($dta) {
     if (!$data) return 'Invalid JSON payload';
-    
-
+    if (empty($data['patient_id']) || empty($data['appointment_id']) || empty($data['payment_date'])) {
+        return 'Missing required fields (patient_id, appointment_id,payment_date)';
+    }
+    if ($balance_due <= 0) {
+        return 'Status Paid';
+    } else {
+        return 'Partially Paid';
+    }
+    return true;
+}
 
 //  GET All
 function getAllPayments($pdo) {
