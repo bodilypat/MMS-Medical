@@ -13,7 +13,11 @@ if ($method === 'POST' && isset($_POST['_method'])) {
 
 switch ($method) {
     case 'GET':
-		isset($GET['prescription_id') ? getPrescription($pdo, $_GET['prescription_id']) : getPrescriptions($pdo, $_GET['prescription_id']);
+	if (isset($_GET['prescription_id'])) {
+		getPrescription($pdo, $_GET['prescription_id']);
+	} else {
+		getPrescriptions($pdo, $_GET['prescription_id']);
+	}
         break;
     case 'POST':
         createPrescription($pdo, $input);
