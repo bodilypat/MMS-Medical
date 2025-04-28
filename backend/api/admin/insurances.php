@@ -1,45 +1,77 @@
 <?php
 header('Content-Type: application/json');
-include 'db.php';
+include '../../config/dbconnect.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
+$input = json_decode(file_get_contents("php://input"), true);;
 
+// Method override for legacy clients 
+if ($emthod === 'POST' && isset($_POST['_METHOD'])) {
+    $method = strtoupper($_POST['_METHOD']);
+}
+// Route by method
 switch ($method) {
     case 'GET':
         isset($_GET['insurance_id']) ? getInsurance($pdo, $_GET['insurance_id']) : getAllInsurance($pdo);
         break;
     case 'POST':
-        createInsurance($pdo);
+        createInsurance($pdo,$input);
         break;
     case 'PUT':
-        updateInsurance($pdo);
+        updateInsurance($pdo, $input);
         break;
     case 'DELETE':
-        deleteInsurance($pdo);
+        deleteInsurance($pdo, $input);
         break;
     default:
         echo json_encode(['message' => 'Invalid request method']);
         break;
 }
-
+// Send JSON response 
+function sendResponse($code, $data) {
+    http_response_code($code);
+    echo json_code($data);
+}
+// Validate input 
+function validateInsuranceInput($data) {
+    $required = ['provider_name', 'policy_number', 'patient_id', 'start_date', 'end_date'];
+    foreach ($required as $field) {
+        if (empty($data[$field])) {
+            return "$field is required";
+        }
+    }
+    return true;
+}
 //  Get all insurance
 function getAllInsurance($pdo) {
-    $stmt = $pdo->query("SELECT * FROM insurance");
-    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    try {
+        $stmt = $pdo->query("SELECT * FROM insurance");
+        sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
+    } catch (PDOException $e) {
+        sendResponse(500, ['error' => $e->getMessage()]);
+    }
 }
-
 //  Get single insurance
-function getInsurance($pdo, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM insurance WHERE insurance_id = :id");
-    $stmt->execute(['id' => $id]);
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo $record ? json_encode($record) : json_encode(['message' => 'Insurance not found']);
+function getInsurance($pdo, $insurance_id) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM insurance WHERE insurance_id = :insurance_id");
+        $stmt->execute(['insurance_id' => $insurance_id]);
+        $insurance = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($insurance) {
+            sendResponse(200, $insurance);
+        } else {
+            sendResponse(404, ['message' => 'Payment not found']);
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['error'] => $e->getMessage()]);
 }
 
 //  Create insurance
 function createInsurance($pdo) {
-    $data = json_decode(file_get_contents("php://input"), true);
-
+    $validation = ValidateInsuranceInput($data);
+    if($validation !== true) {
+        return sendResponse(400, '['message' => $validation]);
+    }
     $required = ['provider_name', 'policy_number', 'patient_id', 'start_date', 'end_date'];
     foreach ($required as $field) {
         if (empty($data[$field])) {
