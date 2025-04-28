@@ -29,10 +29,14 @@
 			break;
 	}
 	
+	/* Reusable response function */
+	function sendResponse($code, $data) {
+		http_response_code($code);
+		echo json_encode($data);
+	}
+	/* Validation logic */
 	function validateMedicalRecordInput($data) {
-		if (!$data) {
-			return 'Invalid JSON payload';
-		}
+		if (!$data) return 'Invalid JSON payload';
 		
 		/* Validate required field */
 		if (empty($data['patient_id']) || empty($data['appointment_id']) || empty($data['diagnosis'])) {
@@ -41,23 +45,23 @@
 		
 		/* Validate the diagnosis */
 		if (strlen($data['diagnosis']) > 500) {
-		    echo json_encode(['message' => 'Diagnosis exceeds 500 characters']);
-			return;
+		    return 'Diagnosis exceeds 500 characters';
 		}
 		return true;
 	}
-	/* GET single medical record */
+	
+	/* GET all medical record */
 	function getMedicalRecords($pdo, $record_id) {
 		try {
 			$stmt = $pdo->query('SELECT * FROM medical_records');
 			$records = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			echo json_encode($records);
+			sendResponse(200, $records);
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode('error' => $e->getMessage()]);
+			sendResponse(500,['error' => $e->getMessage()]);
 		}
 	}
 	
+	/* GET single record */
 	function getMedicalRecord($pdo, $record_id) {
 		try {
 			$stmt = $pdo->prepare('SELECT * FROM medical_records WHERE record_id = :record_id');
@@ -65,47 +69,38 @@
 			$record= $stmt->fetch(PDO::FETCH_ASSOC);
 			
 			if ($record) {
-				echo json_encode($record);
+				sendResponse(200, $record);
 			} else {
-				http_response_code(404); // Not Found 
-				echo json_encode(['message' => 'Medical Record ot found']);
+				sendRespone(404,['message' => 'Medical record not found']); // Not Found 
 			}
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500,['error'] => $e->getMessage()]);
 		}
 	}
 	
+	/* Create record */
 	function createMedicalRecord($pdo, $data) {
 		$validation = validateMedicalRecordInput($data);
 		
 		if (!$validation !== true) {
-			http_response_code(400); // Bad Request
-			echo json_encode(['message' => $validation]);
-			return;
+			return sendResponse(400, ['message' => $validation]); 
 		}
 		
 		try {
 			/* Check if the patient exists */
 			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
-			$patient = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!$patient) {
-				http_response_code(404); // Not Found 
-				echo json_encode(['message' => 'Patient not found']);
-				return;
+			if (!stmt->fetch()) {
+				sendResponse(404, ['message' => 'Patient not found']); // Not Found 
 			}
 			
 			/* check if the appointment exists */
 			$stmt = $pdo->prepare('SELECT * FROM appointments WHERE appointment_id = :appointment_id');
 			$stmt->execute['appointment_id' => $data['appointment_id']]);
-			$appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!$appointment) {
-				http_response_code(404); // Not Found 
-				echo json_encode(['message' => 'Appointment not found']);
-				return;
+			if (!$stmt->fetch()) {
+				return sendResponse(404, ['message'] => 'Appointment not found'); 
 			}
 			
 			/* Insert the medical records */
@@ -126,37 +121,31 @@
 					'updated_by' => $data['updated_by'] ?? null,
 					'attachments' => $data['attachments'] ?? null
 				]);	
-				http_response_code(201); // Create
-				echo json_encode(['message'=> 'Medical record created successfully']);
+				sendResponse(201, ['message' => 'Midical Record created successfully']); 
 		} catch (PDOException $e) {
-			http_response_code(500); // Interal Server Error
-			echo json_encode(['error' => $e->getMessage()]);
+			sendReponse(500, ['error' => $e->Message()]); 
 		}
 	}
+	
 	/* PUT Update Record */
 	function updateMedicalRecord($pdo, $data) {
 		if (empty($data['record_id'])) {
-			http_response_code(400);
-			echo json_encode(['message' => 'Medical Records ID is required']);
-			return;
+			return sendResponse(400, ['message' => 'Medical Record ID is reuqired']);
 		}
 		
 		$validation = validateMedicalRecordInput($data);
 		
 		if ($validation !== true) {
-			http_response_code(400);
-			echo json_encode(['message' => $validation]);
-			return;
+			return sendResponse(400, ['message' => $validation]);
 		}
 		try {
+			/* Check existing record */
 			$stmt = $pdo->prepare('SELECT * FROM medical_records WHERE record_id = :record_id');
 			$stmt->execute(['record_id' => $data['record_id']]);
-			$existingRecord = $stmt->fetch(PDO::FETCH_ASSOC);
+			$record = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!$existingRecord) {
-				http_response_code(404);
-				echo json_encode(['message' => 'Medical Record not found']);
-				return;
+			if (!$record) {
+				return sendReponse(404, ['message' => 'Medical Record not found']);
 			}
 			$stmt = $pdo->prepare('
 				UPDATE medical_records 
@@ -173,51 +162,42 @@
 			');
 			
 			$stmt->execute([
-				'patient_id' => $data['patient_id'] ?? $existingRecord['patient_id'],
-				'appointment_id' => $data['appointment_id'] ?? $existingRecord['appointment_id'],
-				'diagnosis' => $data['diagnosis'] ?? $exingRecord['diagnosis'],
-				'treatment_plan' => $data['treatment_plan'] ?? $existingRecord['treatment_plan'],
-				'note' => $data['note'] ?? $existingRecord['note'],
-				'status' => $data['status'] ?? $exisitingRecord['status'],
-				'updated_by' => $data['updated_by'] ?? $existingRecord['updated_by'],
-				'attactments' => $data['attachments'] ?? $existingRecord['attachments'],
+				'patient_id' => $data['patient_id'] ?? $record['patient_id'],
+				'appointment_id' => $data['appointment_id'] ?? $record['appointment_id'],
+				'diagnosis' => $data['diagnosis'] ?? $record['diagnosis'],
+				'treatment_plan' => $data['treatment_plan'] ?? $record['treatment_plan'],
+				'note' => $data['note'] ?? $record['note'],
+				'status' => $data['status'] ?? $record['status'],
+				'updated_by' => $data['updated_by'] ?? $record['updated_by'],
+				'attactments' => $data['attachments'] ?? $record['attachments'],
 				'record_id' => $data['record_id']
 			]);
 		
-			http_response_code(200);
-			echo json_encode(['message' => 'Medical Record updated successfully']);
+			sendResponse(200, ['message' => 'Medical Record updated successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendReponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
 	/* DELETE record */
 	function deleteMedicalRecord($pdo, $data) {
 		if (empty($data['record_id'])) {
-			http_response_code(400);
-			echo json_encode(['message' => 'Medical Records ID is requried']);
-			return;
+			return sendReponse(400, ['message' => 'Medical record ID is required']);
 		}
 		
 		try {
-			$stmt = $pdo->prepare('SELECT * FROM medical_records WHERE record_id = : record_id');
+			$stmt = $pdo->prepare('SELECT 1 FROM medical_records WHERE record_id = : record_id');
 			$stmt->execute(['record_id' => $data['record_id']]);
-			$record = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!$record) {
-				http_response_code(404);
-				echo json_encode(['message' => 'Medical Record not found']);
-				return;
+			if (!$stmt->fetch()) {
+				return sendResponse(404, ['message' => 'Medical Record not found']);
 			}
 			$stmt = $pdo->prepare('DELETE FROM medical_records WHERE record_id = :record_id');
 			$stmt->execute(['record_id'] => $data['record_id']]);
 			
-			http_response_code(200);
-			echo json_encode(['message' => 'Medical Record deleted successuflly']);
+			sendReponse(200, ['message' => 'Medical Record deleted successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			return sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 ?>
