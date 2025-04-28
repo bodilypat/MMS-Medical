@@ -1,8 +1,14 @@
 <?php
 header('Content-Type: application/json');
-include 'db.php';
+include '../../config/dbconnect.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
+$input = json_decode(file_get_contents("php://input),true);
+
+/* Method override for legacy clients */
+if ($method === 'POST' && isset($_POST['_METHOD'])) {
+    $method = strtoupper($_POST['_METHOD']);
+}
 
 switch ($method) {
     case 'GET':
@@ -21,6 +27,16 @@ switch ($method) {
         echo json_encode(['message' => 'Invalid request method']);
         break;
 }
+// Reusable response function
+function sendResponse($code, $data) {
+    http_response_code($code0;
+    ech json_encode($data);
+}
+// Validte input 
+function validatePaymetnInput($dta) {
+    if (!$data) return 'Invalid JSON payload';
+    if 
+
 
 //  GET All
 function getAllPayments($pdo) {
