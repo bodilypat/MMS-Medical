@@ -35,7 +35,7 @@ function sendResponse($code, $data) {
 // Validte input 
 function validatePaymetnInput($dta) {
     if (!$data) return 'Invalid JSON payload';
-    if 
+    
 
 
 //  GET All
