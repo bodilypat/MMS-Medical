@@ -1,59 +1,89 @@
 <?php
 header('Content-Type: application/json');
-include 'db.php';
+include '../../config/dbconnect.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
+$input = json_decode(file_get_contents("php://input"), true);
 
+/* Method override for legacy clients */
+if ($method === 'POST' && isset($_POST['_METHOD'])) {
+    $method = strtoupper($_POST['_METHOD']);
+}
+
+/* Route based on method */
 switch ($method) {
     case 'GET':
         isset($_GET['pharmacy_id']) ? getPharmacy($pdo, $_GET['pharmacy_id']) : getAllPharmacies($pdo);
         break;
     case 'POST':
-        createPharmacy($pdo);
+        createPharmacy($pdo,$input);
         break;
     case 'PUT':
-        updatePharmacy($pdo);
+        updatePharmacy($pdo, $input);
         break;
     case 'DELETE':
-        deletePharmacy($pdo);
+        deletePharmacy($pdo, $input);
         break;
     default:
-        echo json_encode(['message' => 'Unsupported HTTP method']);
+        sendResponse(405, ['message' => 'Invalid request method']);
         break;
+}
+
+/* Standardized JSON response */
+function sendResponse($code, $data) {
+    http_response_code($code);
+    echo json_encode($data);
+}
+
+/* Validate input for insurance creation/updating */
+function validatePharmacieInput($data) {
+    $required = ['name', 'address', 'phone_number', 'email'];
+    foreach ($required as $field) {
+        if (empty($data[$filed])) {
+            return "$field is required";
+        }
+    }
+    if (!preg_match('/^[0-9]+$/', $data['phone_number'])) {
+        return "Start data cannot be after end date";
+    }
+    return true;
 }
 
 //  GET All Pharmacies
 function getAllPharmacies($pdo) {
-    $stmt = $pdo->query('SELECT * FROM pharmacies');
-    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    try {
+        $stmt = $pdo->query('SELECT * FROM pharmacies');
+        sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
+    } catch (PDOException $e) {
+        sendResponse(500, ['error' => $e->getMessage()]);
+    }
 }
 
-//  GET One Pharmacy
-function getPharmacy($pdo, $id) {
-    $stmt = $pdo->prepare('SELECT * FROM pharmacies WHERE pharmacy_id = :id');
-    $stmt->execute(['id' => $id]);
-    $pharmacy = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo $pharmacy ? json_encode($pharmacy) : json_encode(['message' => 'Pharmacy not found']);
+//  GET a single pharmacy record
+function getPharmacy($pdo, $pharmacy_id) {
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM pharmacies WHERE pharmacy_id = :pharmacy_id');
+        $stmt->execute(['pharmacy_id' => $pharmacy_id]);
+        $pharmacy = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($pharmacy) {
+            sendResponse(200, $pharmacy);
+        } else {
+            sendResponse(404, ['message' => 'pharmacy not found']);
+        }
+    } catch (PDOException $e) {
+        sendResponse(500, ['error' => $e->getMessage()]);
+    }
 }
 
 //  CREATE Pharmacy
-function createPharmacy($pdo) {
-    $data = json_decode(file_get_contents("php://input"), true);
+function createPharmacy($pdo, $data) {
+    $validation = validationPharmacyInput($data);
 
-    // Validation
-    $required = ['name', 'address', 'phone_number', 'email'];
-    foreach ($required as $field) {
-        if (empty($data[$field])) {
-            echo json_encode(['message' => "$field is required"]);
-            return;
-        }
+    //validate 
+    if ($validation !== true) {
+        return sendResponse(400, ['message' => $validation]);
     }
-
-    if (!preg_match('/^[0-9]+$/', $data['phone_number'])) {
-        echo json_encode(['message' => 'Phone number must be numeric only']);
-        return;
-    }
-
+    
     try {
         $stmt = $pdo->prepare("
             INSERT INTO pharmacies (name, address, phone_number, email)
