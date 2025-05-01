@@ -29,9 +29,7 @@
 			deletePatient($pdo, $input);
 			break;
 		default: 
-			http_response_code(405);
-			echo json_code(['message' => 'Method Not Allowed']);
-			break;
+			echo json_code(405,['message' => 'Method Not Allowed']);
 	}
 	
 	/* ==== response helper ==== */
@@ -43,6 +41,8 @@
 	/* ==== Validation login ==== */
 	function validatePatientInput($data) {
 		if (!$data) return 'Invalid JSON payload';
+		
+		if (empty($data['first_name']) || empty($data['last_name'])) return 'First and last name are required';
 		
 		if (!empty($data['email']) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
 			return 'Invalid email format';
