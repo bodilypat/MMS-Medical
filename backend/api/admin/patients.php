@@ -38,7 +38,7 @@
 		echo json_encode($data);
 	}
 	
-	/* ==== Validation login ==== */
+	/* ==== Validation logic ==== */
 	function validatePatientInput($data) {
 		if (!$data) return 'Invalid JSON payload';
 		
