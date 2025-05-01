@@ -226,13 +226,12 @@
 		
 		/* Validate required field */
 		if (empty($data['patient_id']) || empty($data['appointment_id']) || empty($data['diagnosis'])) {
-			return 'Missing required fields: patient_id, appointment_id, diagnosis';
+			return 'Missing required fields';
 		}
 		
 		/* Validate the diagnosis */
-		if (strlen($data['diagnosis']) > 500) {
-		    return 'Diagnosis exceeds 500 characters';
-		}
+		if (strlen($data['diagnosis']) > 500) return 'Diagnosis too long';
+		
 		return true;
 	}
 	
@@ -242,9 +241,9 @@
 		try {
 			$stmt = $pdo->query('SELECT * FROM medical_records');
 			$records = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			sendResponse(200, $records);
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
 		} catch (PDOException $e) {
-			sendResponse(500,['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
@@ -269,35 +268,18 @@
 	function createMedicalRecord($pdo, $data) {
 		$validation = validateMedicalRecordInput($data);
 		
-		if (!$validation !== true) {
-			return sendResponse(400, ['message' => $validation]); 
-		}
+		if (!$validation !== true) return sendResponse(400, ['message' => $validation]); 
 		
 		try {
-			/* Check if the patient exists */
-			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
-			$stmt->execute(['patient_id' => $data['patient_id']]);
-			
-			if (!stmt->fetch()) {
-				sendResponse(404, ['message' => 'Patient not found']); // Not Found 
-			}
-			
-			/* check if the appointment exists */
-			$stmt = $pdo->prepare('SELECT * FROM appointments WHERE appointment_id = :appointment_id');
-			$stmt->execute['appointment_id' => $data['appointment_id']]);
-			
-			if (!$stmt->fetch()) {
-				return sendResponse(404, ['message'] => 'Appointment not found'); 
-			}
 			
 			/* Insert the medical records */
-			$stmt = $pdo->prepare('
+			$stmt = $pdo->prepare("
 				INSERT INTO medical_records 
 					(patient_id, appointment_id, diagnosis, treatment_plan, note, status, created_by, update_by, attactments)
 				VALUES
 					(:patient_id, :appointment_id, :diagnosis, :treatment_plan, :note, :status, :created_by,:updated_by, :attactments)
-				');
-				$stmt->execute([
+				");
+			$stmt->execute([
 					'patient_id' => $data['patient_id'],
 					'appointment_id' => $data['appointment_id'],
 					'diagnosis' => $data['diagnosis'],
@@ -316,24 +298,16 @@
 	
 	/* PUT Update Record */
 	function updateMedicalRecord($pdo, $data) {
-		if (empty($data['record_id'])) {
-			return sendResponse(400, ['message' => 'Medical Record ID is reuqired']);
-		}
+		
+		if (empty($data['record_id'])) return sendResponse(400, ['message' => 'Medical Record ID is reuqired']);
 		
 		$validation = validateMedicalRecordInput($data);
 		
-		if ($validation !== true) {
-			return sendResponse(400, ['message' => $validation]);
-		}
+		if ($validation !== true) return sendResponse(400, ['message' => $validation]);
+	
+		
 		try {
-			/* Check existing record */
-			$stmt = $pdo->prepare('SELECT * FROM medical_records WHERE record_id = :record_id');
-			$stmt->execute(['record_id' => $data['record_id']]);
-			$record = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!$record) {
-				return sendReponse(404, ['message' => 'Medical Record not found']);
-			}
 			$stmt = $pdo->prepare('
 				UPDATE medical_records 
 				SET patient_id = :patient_id, 
@@ -368,17 +342,12 @@
 	
 	/* DELETE record */
 	function deleteMedicalRecord($pdo, $data) {
-		if (empty($data['record_id'])) {
-			return sendReponse(400, ['message' => 'Medical record ID is required']);
-		}
+		
+		if (empty($data['record_id'])) return sendReponse(400, ['message' => 'Medical record ID is required']);
+		
 		
 		try {
-			$stmt = $pdo->prepare('SELECT 1 FROM medical_records WHERE record_id = : record_id');
-			$stmt->execute(['record_id' => $data['record_id']]);
 			
-			if (!$stmt->fetch()) {
-				return sendResponse(404, ['message' => 'Medical Record not found']);
-			}
 			$stmt = $pdo->prepare('DELETE FROM medical_records WHERE record_id = :record_id');
 			$stmt->execute(['record_id'] => $data['record_id']]);
 			
@@ -392,6 +361,7 @@
 	function sendResponse($code, $data) {
 		http_response_code($code);
 		echo json_encode($data);
+		exit();
 	}
 	
 ?>
