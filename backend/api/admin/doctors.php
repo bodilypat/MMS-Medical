@@ -67,7 +67,7 @@
 				sendResponse(404,['message' => 'Doctor not found']);
 			}
 		} catch (PDOException $e) 
-			sendResponse(500,['error' => $e->getMessage()]);
+			response(500,['error' => $e->getMessage()]);
 		}
 	}
 	
