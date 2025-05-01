@@ -2,45 +2,46 @@
 	header('Content-Type: application/json');
 	include '../../config/dbconnect.php';
 	
+	/* Get request method and input */
 	$method = $_SERVER['REQUEST_METHOD'];
 	$input =  json_decode(file_get_contents("php://input"), true);
 	
-	// Optional method override for clients that can't use PUT/DELETE 
+	/* Allow method overrid via _method param  */
 	if ($method === 'POST' && isset($_POST['_method'])) {
 		$method = strtoupper($_POST['_method']);
 	}
 	
-	switch ($method) {
-		case 'GET': 
-			isset($_GET['doctor_id']) ? getDoctor($pdo, $_GET['doctor_id']) : getDoctors($pdo);
-			break;
-		case 'POST':
-			createDoctor($pdo, $input);
-			break;
-		case 'PUT':
-			updateDoctor($pdo, $input);
-			break;
-		case 'DELETE':
-			deleteDoctor($pdo, $input);
-			break;
-		default: 
-			http_response_code(405);
-			echo json_encode('message' => 'Method Not Allowed']);
-			break;
-		}
-	function validateDoctorInput($data) {
-		if (!$data) return 'Invalid JSON payload';
-		
-		if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-			return 'Invalid or missing email format';
+	/* Handle  doctor routes */
+	if (isset($_GET['type']) && $_GET['type'] === 'doctor') {
+		$handleDoctorRequest($mdthod, $pdo, $input);
+	}
+	
+	/* Handle medical record routes */
+		elseif (isset($_GET['type']) && $_GET['type'] === 'medical_record') {
+			handleMedicalRecordRequest($method, $pdo, $input);
+		} else {
+			sendResponse(400, ['message' => 'Invalid API type']);
 		}
 		
-		if (empty($data['phone_number']) || !preg_match('/^[0-9]{10,15}$/', $data['phone_number'])) {
-			return 'Invalid or missing phone number format';
-		}
-		
-		// Add more field-specific validations if needed 
-		return true;
+	/* Doctor Logic */
+	function handleDoctorRequest($method, $pdo, $input) {
+			
+		switch ($method) {
+			case 'GET': 
+				isset($_GET['doctor_id']) ? getDoctor($pdo, $_GET['doctor_id']) : getDoctors($pdo);
+				break;
+			case 'POST':
+				createDoctor($pdo, $input);
+				break;
+			case 'PUT':
+				updateDoctor($pdo, $input);
+				break;
+			case 'DELETE':
+				deleteDoctor($pdo, $input);
+				break;
+			default: 
+				sendResponse(405, 'message' => 'Method Not Allowed']);
+			}
 	}
 	
 	/* CRUD : DOCTOR */
@@ -86,10 +87,10 @@
 				return sendResponse(409, ['message' => 'Doctor with the same email or phone number already exists']);
 			}
 			
-			$stmt = $pdo->prepare('
+			$stmt = $pdo->prepare("
 				INSERT INTO doctors (first_name, last_name, specialization, email, phone_number, department, birthdate, address, status, notes)
 				VALUES (:first_name, :last_name, :specialization, :email, :phone_number, :department, birthdate, :address, :status, :notes) 
-			');
+			");
 			$stmt->execute([
 				'first_name' => $data['first_name'],
 				'last_name' => $data['last_name'],
@@ -182,29 +183,41 @@
 		}
 	}
 	
-	/*  Reusable response */
-	function sendResponse($code, $data) {
-		http_response_code($code);
-		echo json_encode($data);
+	/* Validation Doctor */
+	function validateDoctorInput($data) {
+		if (!$data) return 'Invalid JSON payload';
+		
+		if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+			return 'Invalid or missing email format';
+		}
+		
+		if (empty($data['phone_number']) || !preg_match('/^[0-9]{10,15}$/', $data['phone_number'])) {
+			return 'Invalid or missing phone number format';
+		}
+		
+		// Add more field-specific validations if needed 
+		return true;
 	}
 	
-	switch ($method) {
-		case 'GET':
-			isset($_GET['record_id']) ? getMedicalRecord($pdo, $_GET['record_id']) : getMedicalRecords($pdo)
-			break;
-		case 'POST':
-			createMedicalRecord($pdo, $input);
-			break;
-		case 'PUT':
-			updateMedicalRecord($pdo, $input);
-			break;
-		case 'DELETE':
-			deleteMedicalRecord($pdo, $input);
-			break;
-		default:
-			http_response_code(405); // Method Not Allowed
-			echo json_encode(['message' => ' Method Not Allowed']);
-			break;
+	/* Medical Record Logic */
+	function handleMedicalRecordRequest($method, $pdo, $input) {
+		
+		switch ($method) {
+			case 'GET':
+				isset($_GET['record_id']) ? getMedicalRecord($pdo, $_GET['record_id']) : getMedicalRecords($pdo)
+				break;
+			case 'POST':
+				createMedicalRecord($pdo, $input);
+				break;
+			case 'PUT':
+				updateMedicalRecord($pdo, $input);
+				break;
+			case 'DELETE':
+				deleteMedicalRecord($pdo, $input);
+				break;
+			default:
+				sendResponse(405, ['message' => ' Method Not Allowed']);
+		}
 	}
 	
 	/* Validation logic */
@@ -223,8 +236,8 @@
 		return true;
 	}
 	
+	
 	/* CRUD : Medical record */
-	/* GET all medical record */
 	function getMedicalRecords($pdo, $record_id) {
 		try {
 			$stmt = $pdo->query('SELECT * FROM medical_records');
@@ -374,6 +387,13 @@
 			return sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
+	
+	/*  Reusable response */
+	function sendResponse($code, $data) {
+		http_response_code($code);
+		echo json_encode($data);
+	}
+	
 ?>
 
 	
