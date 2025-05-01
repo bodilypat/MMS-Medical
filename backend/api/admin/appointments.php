@@ -12,7 +12,11 @@
 	
 	switch ($method) {
 		case 'GET':
-			isset($_GET['appointment_id']) ? getAppointment($pdo, $_GET['appointment_id']) :getAppointments($pdo);
+			if (isset($_GET['appointment_id'])) {
+			    getAppointment($pdo, $_GET['appointment_id']);
+			} else {
+			   getAppointments($pdo);
+			}
 			break;
 		case 'POST':
 			createAppointment($pdo, $input);
@@ -24,17 +28,20 @@
 			deleteAppointment($pdo, $input);
 			break;
 		default:
-			http_response_code(405); // Method not allowed 
+			sendReponse(405, ['message' => 'Method Not Allowed); // Method not allowed 
 			break;
 	}
-	function validateAppointmentInput($data) {
-		if (!$data) {
-			return 'Invalid JSON payload';
-		}
-		
-		/* Validate the appointment date (it must be in the future) */
-		if (empty($data['patient_id']) || empty($data['doctor_id') || empty($data['appointment_date'])) {
-			return 'Appointment date must be in the future';
+ /* ==== Response Helper ==== */
+ function sendResponse($code, $data) {
+ 	http_response_code($code);
+  	echo json_encode($data);
+}
+/* Validation Logic */
+function validateAppointmentInput($data) {
+   if (!$data) return 'Invalid JSON payload';
+    /* Validate the appointment date (it must be in the future) */
+   if (empty($data['patient_id']) || empty($data['doctor_id') || empty($data['appointment_date'])) {
+		return 'Appointment date must be in the future';
 		}
 		return true;
 	}
