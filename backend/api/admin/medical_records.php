@@ -10,9 +10,14 @@
 		$method = strtoupper($_POST['_method']);
 	}
 
+	/* Handle Medical record logic */
 	switch ($method) {
 		case 'GET':
-			isset($_GET['record_id']) ? getMedicalRecord($pdo, $_GET['record_id']) : getMedicalRecords($pdo)
+			if (isset($_GET['record_id'])) {
+				getMedicalRecord($pdo, $_GET['record_id']);
+			else {
+				getMedicalRecords($pdo);
+			}
 			break;
 		case 'POST':
 			createMedicalRecord($pdo, $input);
@@ -24,17 +29,16 @@
 			deleteMedicalRecord($pdo, $input);
 			break;
 		default:
-			http_response_code(405); // Method Not Allowed
-			echo json_encode(['message' => ' Method Not Allowed']);
-			break;
+			sendResponse(405, ['message' => ' Method Not Allowed']);
 	}
 	
-	/* Reusable response function */
+	/* ==== response helper ==== */
 	function sendResponse($code, $data) {
 		http_response_code($code);
 		echo json_encode($data);
 	}
-	/* Validation logic */
+	
+	/* ==== Validation logic  ==== */
 	function validateMedicalRecordInput($data) {
 		if (!$data) return 'Invalid JSON payload';
 		
@@ -50,18 +54,18 @@
 		return true;
 	}
 	
-	/* GET all medical record */
+	/* ==== GET all medical record ==== */
 	function getMedicalRecords($pdo, $record_id) {
 		try {
 			$stmt = $pdo->query('SELECT * FROM medical_records');
 			$records = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			sendResponse(200, $records);
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
 		} catch (PDOException $e) {
 			sendResponse(500,['error' => $e->getMessage()]);
 		}
 	}
 	
-	/* GET single record */
+	/* ==== GET single record ==== */
 	function getMedicalRecord($pdo, $record_id) {
 		try {
 			$stmt = $pdo->prepare('SELECT * FROM medical_records WHERE record_id = :record_id');
@@ -78,7 +82,7 @@
 		}
 	}
 	
-	/* Create record */
+	/* ==== Create record ==== */
 	function createMedicalRecord($pdo, $data) {
 		$validation = validateMedicalRecordInput($data);
 		
@@ -88,10 +92,10 @@
 		
 		try {
 			/* Check if the patient exists */
-			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
+			$stmt = $pdo->prepare('SELECT 1 FROM patients WHERE patient_id = :patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
 			
-			if (!stmt->fetch()) {
+			if (!$stmt->fetch()) {
 				sendResponse(404, ['message' => 'Patient not found']); // Not Found 
 			}
 			
@@ -162,14 +166,14 @@
 			');
 			
 			$stmt->execute([
-				'patient_id' => $data['patient_id'] ?? $record['patient_id'],
-				'appointment_id' => $data['appointment_id'] ?? $record['appointment_id'],
+				'patient_id' => $data['patient_id'], 
+				'appointment_id' => $data['appointment_id'],,
 				'diagnosis' => $data['diagnosis'] ?? $record['diagnosis'],
-				'treatment_plan' => $data['treatment_plan'] ?? $record['treatment_plan'],
-				'note' => $data['note'] ?? $record['note'],
-				'status' => $data['status'] ?? $record['status'],
-				'updated_by' => $data['updated_by'] ?? $record['updated_by'],
-				'attactments' => $data['attachments'] ?? $record['attachments'],
+				'treatment_plan' => $data['treatment_plan'],,
+				'note' => $data['note'] ?? null,
+				'status' => $data['status'] ?? 'Active',
+				'updated_by' => $data['updated_by'] ?? null,
+				'attactments' => $data['attachments'] ?? null,
 				'record_id' => $data['record_id']
 			]);
 		
@@ -179,7 +183,7 @@
 		}
 	}
 	
-	/* DELETE record */
+	/* ==== DELETE record ==== */
 	function deleteMedicalRecord($pdo, $data) {
 		if (empty($data['record_id'])) {
 			return sendReponse(400, ['message' => 'Medical record ID is required']);
