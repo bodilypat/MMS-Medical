@@ -10,9 +10,14 @@
 		$method = strtoupper($_POST['_method']);
 	}
 	
+	/* Handle patient logic */
 	switch ($method) {
 		case 'GET':
-			isset($_GET['patient_id']) ? getPatient($pdo, $_GET['patient_id']) : getPatients($PDO);
+			if (isset($_GET['patient_id'])) {
+					getPatient($pdo, $_GET['patient_id']);
+			 } else {
+					getPatients($PDO);
+			 }
 			break;
 		case 'POST':
 			createPatient($pdo, $input);
@@ -29,6 +34,13 @@
 			break;
 	}
 	
+	/* ==== response helper ==== */
+	function sendResponse($code, $data) {
+		http_response_code($code);
+		echo json_encode($data);
+	}
+	
+	/* ==== Validation login ==== */
 	function validatePatientInput($data) {
 		if (!$data) return 'Invalid JSON payload';
 		
@@ -47,11 +59,9 @@
 	function getPatients($pdo) {
 		try {	
 			$stmt = $pdo->query("SELECT * FROM patients");
-			$patients = $stmt->fetch(PDO::FETCH_ASSOC);
-			echo json_encode($patients);
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
 		} else (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
@@ -62,23 +72,20 @@
 			$patient = $stmt->fetch(PDO::FETCH_ASSOC);
 			
 			if ($patient) {
-				echo json_encode($patient);
+				sendResponse(200, $patient);
 			} else {
-				http_response_code(404);
-				echo json_encode(['message' => 'Patient not found']);
+				sendResponse(404, ['message' => 'Patient not found']);
 			}
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
 	function createPatient($pdo, $data) {
 		$validattion = validatePatientInput($data);
+		
 		if ($validation !== true) {
-			http_response_code(400);
-			echo json_encode(['message' => $validation]);
-			return;
+			sendResponse(400, ['message' => $validation]);
 		}
 		
 		try {
@@ -88,10 +95,8 @@
 				'phone_number' => $data['phone_number']
 			]);
 			
-			if ($stmt->rowCount() > 0) {
-				http_response_code(409);
-				echo json_encode(['message' => 'Patient with same email or phone already exists']);
-				return;
+			if ($stmt->fetch()) {				
+				sendResponse(404, ['message' => 'Patient with same email or phone already exists']);
 			}
 			
 			$stmt = $pdo->prepare('
@@ -120,36 +125,27 @@
 				'allergies' => $data['allergies'],
 				'status' => $data['status']
 			]);
-			
-			http_response_code(201);
-			echo json_encode(['message' => 'Patient created successfully.']);
+			sendResponse(201, ['message' => 'Patient created successfully.']);
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
 	function updatePatient($pdo $data) {
 		if (!isset($data['patient_id'])) {
-			http_response_code(400);
-			echo json_encode(['message' => 'Patient ID is required']);
-			return;
+			sendResponse(400, ['message' => 'Patient ID is required']);
 		}
 		
 		$validation = validatePatientInput($data);
 		if ($validation != true) {
-			http_response_code(400);
-			echo json_encode(['message' => $validation]);
-			return;
+		    sendResponse(400, ['message' => $validation]);
 		}
 		
 		try {
 			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
 			if (!$stmt->fetch(PDO::FETCH_ASSOC)) {
-				http_response_code(404);
-				echo json_encode(['message' => 'Patient not found']);
-				return;
+				sendResponse(404, ['message' => 'Patient not found']);
 			}
 			$stmt = $pdo->prepare('
 				UPDATE patients SET 
@@ -187,38 +183,29 @@
 				'patient_id'] => $data['patient_id']
 			]);
 			
-			http_response_code(200);
-			echo json_encode(['message' => 'Patient updated successfully']);
+			sendResponse(200, ['message' => 'Patient updated successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_code(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
 	function deletePatient($pdo, $data) {
 		if (!isset($data['patient_id'])) {
-			http_response_code(400);
-			echo json_encode(['message' => 'Patient ID is required']);
-			return;
-			
+			sendResponse(400, ['message' => 'Patient ID is required']);
 		}
 		
 		try {
 			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
 			if (!isset->fetch(PDO::FETCH_ASSOC)) {
-				http_response_code(404);
-				echo json_encode(['message' => 'Patient not found']);
-				return;
+				sendResponse(404, ['message' => 'Patient not found']);
 			}
 			$stmt = $pdo->prepare('DELETE FROM patients WHERE patient_id = :patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
 			
-			http_response_code(200);
-			echo json_encode(['message' => 'Patient deleted successfully']);
+			sendResponse(200, ['message' => 'Patient deleted successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error'] => $e->getMessage()]);
+			sendResponse(500,['error'] => $e->getMessage()]);
 		}
 	}
 ?>
