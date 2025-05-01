@@ -6,15 +6,19 @@
 	$method = $_SERVER['REQUEST_METHOD'];
 	$input =  json_decode(file_get_contents("php://input"), true);
 	
-	/* Allow method overrid via _method param  */
+	/* Support emthod override  */
 	if ($method === 'POST' && isset($_POST['_method'])) {
 		$method = strtoupper($_POST['_method']);
 	}
 	
-	/* Doctor Logic */
+	/* Handle doctor  Logic */
 	switch ($method) {
 		case 'GET': 
-			isset($_GET['doctor_id']) ? getDoctor($pdo, $_GET['doctor_id']) : getDoctors($pdo);
+			if (isset($_GET['doctor_id'])) {
+				getDoctor($pdo, $_GET['doctor_id']);
+			else {
+				getDoctors($pdo);
+			}
 			break;
 		case 'POST':
 			createDoctor($pdo, $input);
@@ -26,10 +30,11 @@
 			deleteDoctor($pdo, $input);
 			break;
 		default: 
-			http_response_code(405);
-			echo json_encode('message' => 'Method Not Allowed']);
+			sendResponse(405, ['message' => 'Method Not Allowed']);
 			break;
 		}
+		
+		/* === Validate === */
 	function validateDoctorInput($data) {
 		if (!$data) return 'Invalid JSON payload';
 		
@@ -41,15 +46,15 @@
 			return 'Invalid or missing phone number format';
 		}
 		
-		// Add more field-specific validations if needed 
+		 /* Addittion validations can be here  */
 		return true;
 	}
 	
-	/* CRUD : DOCTOR */
+	/* ==== CRUD : DOCTOR ==== */
 	function getDoctors($pdo) {
 		try {
 			$stmt = $pdo->query('SELECT * FROM doctors');
-			echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC);
+			sendResponse($stmt->fetchAll(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
@@ -62,12 +67,12 @@
 			$doctor = $stmt->fetch(PDO::FETCH_ASSOC);
 			
 			if ($doctor) {
-				echo json_encode($doctor);
+				sendResponse(200, $doctor);
 			} else {
 				sendResponse(404,['message' => 'Doctor not found']);
 			}
 		} catch (PDOException $e) 
-			response(500,['error' => $e->getMessage()]);
+			sendResponse(500,['error' => $e->getMessage()]);
 		}
 	}
 	
@@ -104,7 +109,7 @@
 				'status' => $data['status'],
 				'notes' => $data['notes']
 			]);
-			sendResponse(500,['message' => 'Doctor created successfully']);
+			sendResponse(201,['message' => 'Doctor created successfully']);
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
@@ -179,12 +184,11 @@
 			
 			sendResponse(200, ['message' => 'Doctor deleted successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500);
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
-	/*  Reusable response */
+	/*  ==== Utility ==== */
 	function sendResponse($code, $data) {
 		http_response_code($code);
 		echo json_encode($data);
