@@ -29,7 +29,7 @@
 			deletePatient($pdo, $input);
 			break;
 		default: 
-			echo json_code(405,['message' => 'Method Not Allowed']);
+			sendResponse(405,['message' => 'Method Not Allowed']);
 	}
 	
 	/* ==== response helper ==== */
