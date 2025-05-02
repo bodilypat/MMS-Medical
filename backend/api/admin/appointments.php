@@ -9,13 +9,13 @@
 	if ($method === 'POST' && isset($_POST['_method'])) {
 		$method = strtoupper($_POST['_method']);
 	}
-	
+	/* Handle appointment logic */
 	switch ($method) {
 		case 'GET':
 			if (isset($_GET['appointment_id'])) {
-			    getAppointment($pdo, $_GET['appointment_id']);
+				getAppointment($pdo, $_GET['appointment_id'])
 			} else {
-			   getAppointments($pdo);
+				getAppointments($pdo);
 			}
 			break;
 		case 'POST':
@@ -28,20 +28,22 @@
 			deleteAppointment($pdo, $input);
 			break;
 		default:
-			sendReponse(405, ['message' => 'Method Not Allowed); // Method not allowed 
-			break;
+			sendResponse(405['message' => 'Method Not allowed']); 
 	}
- /* ==== Response Helper ==== */
- function sendResponse($code, $data) {
- 	http_response_code($code);
-  	echo json_encode($data);
-}
-/* Validation Logic */
-function validateAppointmentInput($data) {
-   if (!$data) return 'Invalid JSON payload';
-    /* Validate the appointment date (it must be in the future) */
-   if (empty($data['patient_id']) || empty($data['doctor_id') || empty($data['appointment_date'])) {
-		return 'Appointment date must be in the future';
+	
+	/* ==== response Helper ==== */
+	function sendResponse($data) {
+		http_response_code($code);
+		echo json_encode($data0;
+	}
+	
+	/* ==== Validattion logic */
+	function validateAppointmentInput($data) {
+		if (!$data) return 'Invalid JSON payload';
+		
+		/* Validate the appointment date (it must be in the future) */
+		if (empty($data['patient_id']) || empty($data['doctor_id') || empty($data['appointment_date'])) {
+			return 'Appointment date must be in the future';
 		}
 		return true;
 	}
@@ -49,11 +51,9 @@ function validateAppointmentInput($data) {
 	function getAppointments($pdo) {
 		try {
 			$stmt = $pdo->query('SELECT * FROM appointments');
-			$appointments = $stmt->fetch(PDO::FETCH_ASSOC);
-			echo json_encode($appointments);
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
@@ -64,23 +64,20 @@ function validateAppointmentInput($data) {
 			$patient = $stmt->fetch(PDO::FETCH_ASSOC);
 			
 			if ($appointment) {
-				echo json_encode($appointment);
+				sendRespone(200, $appointment);
 			} else {
-				http_response_code(404); // Not found
-				echo json_encode(['message' => 'Appointment not found']);
+				sendResponse(404, ['message' => 'Appointment not found']);
 			}
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
 	function createAppointment($pdo, $data) {
 		$validation = validateAppointmentInput($data);
+		
 		if ($validation !== true) {
-			http_response_code(400); // Bad Request
-			echo json_encode(['message' => $validation]);
-			return;
+			sendResponse(400, ['message' => $validation]);
 		}
 		
 		try {
