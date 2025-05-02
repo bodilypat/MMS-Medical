@@ -9,7 +9,7 @@
 	if ($method === 'POST' && isset($_POST['_method'])) {
 		$method = strtoupper($_POST['_method']);
 	}
-	/* Handle appointment logic */
+	/* Main Router */
 	switch ($method) {
 		case 'GET':
 			if (isset($_GET['appointment_id'])) {
@@ -43,8 +43,12 @@
 		
 		/* Validate the appointment date (it must be in the future) */
 		if (empty($data['patient_id']) || empty($data['doctor_id') || empty($data['appointment_date'])) {
+			return 'Patient ID, Doctor ID, and Appointment Date are required';
+		}
+		if (strtotime($data['appointment_date']) <= time()) {
 			return 'Appointment date must be in the future';
 		}
+		
 		return true;
 	}
 	 
@@ -57,6 +61,7 @@
 		}
 	}
 	
+	/* ==== Get Single Appointment ==== */
 	function getAppointment($pdo, $appointment_id) {
 		try {
 			$stmt = $pdo->prepare('SELECT * FROM appointments WHERE appointment_id = :appointment_id');
@@ -73,22 +78,22 @@
 		}
 	}
 	
+	/* ==== Create Appointment ====  */
 	function createAppointment($pdo, $data) {
 		$validation = validateAppointmentInput($data);
 		
 		if ($validation !== true) {
 			sendResponse(400, ['message' => $validation]);
+			return;
 		}
 		
 		try {
 			/* Check if the patient exists */
 			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
-			$patient = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!$patient) {
-				http_response_code(404); // Not found 
-				echo json_encode(['message' => 'Patient not found']);
+			if (!$stmt->fetch()) {
+				sendResponse(404, ['message' => 'Patient not found']);
 				return ;
 			}
 			
@@ -97,9 +102,8 @@
 			$stmt->execute(['doctor_id' => $data['doctor_id']]);
 			$doctor = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!doctor) {
-				http_response_code(404); // Not found
-				echo json_encode(['message' => 'Doctor not found']);
+			if (!$stmt->fetch()) {
+				sendResponse(404,['message' => 'Doctor not found']);
 				return;
 			}
 			
@@ -118,25 +122,16 @@
 				'appointment_type' => $data['appointment_type'] ?? 'In-Person',
 				'notes' => $data['notes'] ?? null
 			]);
-			http_response_code(201); // created 
-			echo json_encode(['message' => 'Appointment created successfully']);
+			sendResponse(201, ['message' => 'Appointment created successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500); // Internal Server Error 
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
+	/* ==== Update Appontment ==== */
 	function updateAppointment($pdo, $data) {
 		if (empty($data['appointment_id'])) {
-			http_response_code(400); // bad request
-			echo json_encode(['message' => 'Appointment ID is required']);
-			return;
-		}
-		
-		$validation = validateAppointmentInput($data);
-		if ($validation !== true) {
-			http_response_code(400); 
-			echo json_encode(['message' => $validation]);
+			sendResponse(400,['message' => 'Appointment ID is required']);
 			return;
 		}
 		
@@ -147,8 +142,7 @@
 			$appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 			
 			if (!$appointment) {
-				http_response_code(404); // Not found 
-				echo json_encode(['message' => 'Appointment not found']);
+				sendResponse(404, ['message' => 'Appointment not found']);
 				return;
 			}
 			
@@ -173,40 +167,36 @@
 				'appointment_id' => $data['appointment_id']
 			]);
 			
-			http_response_code(200); // ok 
-			echo json_encode(['message' => 'Appointment updated successfully']);
+			sendResponse(200, ['message' => 'Appointment updated successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500); // Internal Server Error 
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
+	/* ==== Delete Appointment */
 	function deleteAppointment($pdo, $data) {
 		if (empty($data['appointment_id'])) {
-			http_response_code(400); // Bad request
-			echo json_encode(['message' => 'Appointments ID is required']);
+			sendResponse(400, ['message' => 'Appointments ID is required']);
 			return;
 		}
 		try {
 				/* Check if the appointment exists */
-				$stmt = $pdo->prepare('SELECT * FROM appointments WHERE appointment_id = :appointment_i');
+				$stmt = $pdo->prepare('SELECT * FROM appointments WHERE appointment_id = :appointment_id');
 				$stmt->execute(['appointment_id' => $data['appointment_id']]);
 				$appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 				
-				if (!$appointment) {
-					http_response_code(400); // Not found
-					echo json_encode('message' => 'Appointment not found']);
+				if (!$stmt->fetch()) {
+					sendResponse(404, ['message' => 'Appointment not found']);
 					return;
 				}
 				/* delete the appointment */
 				$stmt = $pdo->prepare('DELETE FROM appointments WHERE appointment_id = :appointment_id');
-				$stmt->execute(['appointment_id' => $data['appointment_id']]]);
+				$stmt->execute(['appointment_id' => $data['appointment_id']]);
 				
 				http_response_code(200); // OK
 				echo json_encode(['message' => 'Appointment deleted successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500); //Internal Server Error 
-			echo json_encode(['error' => $e->getMessage()]]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 ?>
