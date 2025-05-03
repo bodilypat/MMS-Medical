@@ -34,7 +34,7 @@
 	/* ==== response Helper ==== */
 	function sendResponse($data) {
 		http_response_code($code);
-		echo json_encode($data0;
+		echo json_encode($data);
 	}
 	
 	/* ==== Validattion logic */
