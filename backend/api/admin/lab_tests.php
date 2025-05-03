@@ -12,7 +12,11 @@
 	
 	switch ($method) {
 		case 'GET':
-			isset($_GET['test_id']) ? getLabTest($pdo, $_GET['test_id']) : getLabTests($pdo)
+			if (isset($_GET['test_id']))
+				getLabTest($pdo, $_GET['test_id']);
+			} else {
+				getLabTests($pdo);
+			}
 			break;
 		case 'POST':
 			createLabTest($pdo, $input);
@@ -24,11 +28,17 @@
 			deleteLabTest($pdo, $input);
 			break;
 		default:
-			http_response_code(405);
-			echo json_encode(['message' => 'Method not allowed']);
+			sendResponse(405, ['message' => 'Method not allowed']);
 			break;
 	}
 	
+	/* ==== Response Helper ==== */
+	function sendResponse($data) {
+		http_response_code($code);
+		echo json_encode($data);
+	}
+	
+	/* ==== Validation logic */
 	function validateLabTestInput($data) {
 		if (!$data) {
 			return 'Invalid JSON payload';
@@ -45,15 +55,14 @@
 		}
 		return true;
 	}
+	
 	/* Get all Lab Tests */
 	function getLabTests($pdo) {
 		try {
-			$stmt =$pdo->query('SELECT * FROM lab_tests');
-			$labTests = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			echo json_encode($tests);
+			$stmt = $pdo->query('SELECT * FROM lab_tests');
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
@@ -65,14 +74,12 @@
 			$labTest = $stmt->fetch(PDO::FETCH_ASSOC);
 			
 			if ($labTest) {
-				echo json_encode($labTest);
+				sendResponse(200, $labTest);
 			} else {
-				http_response_code(500);
-				echo json_encode(['error' => $e->getMessage()]);
+				sendResponse(404, ['error' => $e->getMessage()]);
 			}
 		} catch (PDOException $e) {
-			http_response_code(500);
-			echo json_encode(['error' => $e->getMessagge()]);
+			sendResponse(500, ['error' => $e->getMessagge()]);
 		}
 	}
 	
@@ -82,29 +89,24 @@
 		
 		$validation = validateLabTestInput($data);
 		if ($validation !== true) {
-			http_response_code(400); // Bad request
-			echo json_encode(['message' => $validation]);
+			sendResponse(400, ['message' => $validation]);
 			return;
 		}
 		try {
 			/* Check if the patient exists */
 			$stmt = $pdo->prepare('SELECT * FROM patients WHERE patient_id = : patient_id');
 			$stmt->execute(['patient_id' => $data['patient_id']]);
-			$patient = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!patient) {
-				http_response_code(404); // Not found 
-				echo json_encode(['message' => 'Patient not found']);
+			if (!$stmt->fetch()) {
+				sendResponse(404, ['message' => 'Patient not found']);
 				return;
 			}
 			/* Check if the appointment exists */
 			$stmt = $pdo->prepare('SELECT * FROM appointments WHERE appointment_id = :appointment_id');
 			$stmt->execute(['appointment_id' => $data['appointment_id']]);
-			$appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if (!appointment) {
-				http_response_code(404); // Not Found 
-				echo json_encode('message' => 'Appointment not found']);
+			if (!$stmt->fetch()) {
+				sendResponse(404,['message' => 'Appointment not found']);
 				return;
 			}
 			
@@ -123,10 +125,9 @@
 			]);
 			
 			http_response_code(201); // Created
-			echo json_encode('[message'] => 'Lab test created successfully']);
+			sendResponse(201['message'] => 'Lab test created successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500); // Internal Server Error 
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
