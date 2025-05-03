@@ -1,5 +1,5 @@
 <?php
-	header('Content-Type: appointment/json'0;
+	header('Content-Type: appointment/json');
 	include '../../config/dbconnect.php';
 	
 	$method = $_SERVER['REQUEST_METHOD'];
@@ -10,6 +10,7 @@
 		$method = strtoupper($_POST['_method']);
 	}
 	
+	/* ==== Route request ==== */
 	switch ($method) {
 		case 'GET':
 			if (isset($_GET['test_id']))
@@ -76,7 +77,7 @@
 			if ($labTest) {
 				sendResponse(200, $labTest);
 			} else {
-				sendResponse(404, ['error' => $e->getMessage()]);
+				sendResponse(404, ['error' => 'Lab test not found']);
 			}
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessagge()]);
@@ -85,7 +86,6 @@
 	
 	/* Create a lab test */
 	function createLabTest($pdo, $data) {
-		$required = ['patient_id', 'appointment_id','test_name','test_date'];
 		
 		$validation = validateLabTestInput($data);
 		if ($validation !== true) {
@@ -110,7 +110,7 @@
 				return;
 			}
 			
-			/* Insert the appointment */
+			/* Insert the lab test */
 			$stmt = $pdo->prepare('
 				               INSERT INTO lab_tests (patient_id, appointment_id, test_name, results, test_status)
 							   VALUES (:patient_id, :appointment_id, :test_name, :test_date, :result, :test_status)
@@ -123,24 +123,22 @@
 				'results' => $data['results'] ?? null,
 				'test_status' => $data['test_status'] ?? 'Pending'
 			]);
-			
-			http_response_code(201); // Created
 			sendResponse(201['message'] => 'Lab test created successfully']);
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 	
+	/* ==== Update Lab test ==== */
 	function updateLabTest($pdo, $data) {
 		if (empty($data['test_id'])) {
-			http_response_code(400); // Bad request
-			echo json_encode(['message' => 'LabTest ID is required']);
+			sendResponse(400, ['message' => 'LabTest ID is required']);
 			return;
 		}
+		
 		$validation = validationLabTestInput($data);
 		if ($validation !== true) {
-			http_response_code(400);
-			echo json_encode(['message' => $validation]);
+			sendResponse(400, ['message' => $validation]);
 			return;
 		}
 		try {
@@ -149,9 +147,8 @@
 			$stmt->execute(['test_id' => $data['test_id']]);
 			$labTest = $stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if(!labTest) {
-				http_response_code(404); // Not found 
-				echo json_encode(['message' => 'appointment not found']);
+			if(!$labTest) {
+				sendResponse(404, ['messsage' => 'appointment not found']);
 				return;
 			}
 			
@@ -177,18 +174,15 @@
 					'test_id' => $data['test_id']
 				]);
 				
-				http_response_code(200); // OK
-				echo json_encode(['message' => 'Lab Test updated successfully']);
+				sendResponse(200, ['message' => 'Lab Test updated successfully']);
 		} catch (PDOException $e) {
-			http_response_code(500); // Internal Server Error 
-			echo json_encode(['error' => $e-> getMessage()]);
+			sendResponse(500, ['error' => $e-> getMessage()]);
 		}
 	}
 	
 	function deleteLabTest($pdo, $data) {
 		if (empty($data['test_id'])) {
-			http_response_code(400); // Bad Request 
-			echo json_encode(['message' => 'Test ID is required']);
+			sendResponse(400, ['message' => 'Test ID is required']);
 			return;
 		}
 		try {
@@ -198,8 +192,7 @@
 				$labTest = $stmt->fetch(PDO::FETCH_ASSOC);
 				
 				if (!$labTest) {
-						http_response_code(404); // Not Found 
-						echo json_encode(['message' => 'LabTest not found']0;
+						sendResponse(404, ['message' => 'LabTest not found']0;
 						return;
 				}
 				
@@ -207,11 +200,9 @@
 				$stmt = $pdo->prepare('DELETE FROM lab_tests WHERE test_id = :test_id');
 				$stmt->execute(['test_id' => $data['test_id']]);
 				
-				http_response_code(500); // OK
-				echo json_encode(['message' => 'Lab Test deleted successfully']);
+				sendResponse(200, ['message' => 'Lab Test deleted successfully']);
 		} catch (PDOException $d) {
-			http_response_code(500); // Internal Server Error 
-			echo json_encode(['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 ?>
