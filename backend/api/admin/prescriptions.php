@@ -33,12 +33,13 @@
 			break;
 	}
 
-	/*  Reusable response function */
+	/*  ==== Reusable response function ==== */
 	function sendResponse($code, $data) {
 		http_response_code($code);
 		echo json_encode($data);
 	}
-	/* Validate logic */
+	
+	/* ==== Validate logic ==== */
 	function validatePrescriptionInput($data) {
 		if (!$data) return 'Invalid JSON payload';
 		
@@ -51,18 +52,18 @@
 		return true;
 	}
 
-	//  Get All Prescriptions
+	 /* ==== Get All Prescriptions ====*/
 	function getAllPrescriptions($pdo) {
 		try {		
 			$stmt = $pdo->query('SELECT * FROM prescriptions');
 			$prescriptions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			sendResponse(200, $prescriptions);
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC));
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
 
-	//  Get Single Prescription
+	/* ==== Get Single Prescription ==== */
 	function getPrescription($pdo, $prescription_id) {
 		try {
 			$stmt = $pdo->prepare('SELECT * FROM prescriptions WHERE prescription_id = :prescription_id');
@@ -79,7 +80,7 @@
 		}
 	}
 
-	//  Create New Prescription
+	  /* ==== Create New Prescription ==== */
 	function createPrescription($pdo) {
 		$validation  = validatePrescriptionInput($data);
 		
@@ -95,7 +96,7 @@
 					sendResponse(404, ['message' => 'Medical record not found']);
 			}
 			
-			// Insert prescription
+			/* Insert prescription */
 			$stmt = $pdo->prepare('
 					INSERT INTO prescriptions 
 							   (record_id, medication_name, dosage, frequency, start_date, end_date, instructions, status, created_by, updated_by)
@@ -107,7 +108,7 @@
 				'record_id' => $data['record_id'],
 				'medication_name' => $data['medication_name'],
 				'dosage' => $data['dosage'],
-				'frequency' => $data['frequency'],
+				'frequency' => $data['frequency'] ?? null,
 				'start_date' => $data['start_date'],
 				'end_date' => $data['end_date'] ?? null,
 				'instructions' => $data['instructions'] ?? null,
@@ -120,7 +121,7 @@
 			sendResponse(500, ['error' => $e->getMessage()]);
 	}
 
-	//  Update Prescription
+	/* ==== Update Prescription ==== */
 	function updatePrescription($pdo, $prescription_id) {
 		if (!$data || empty($data['prescription_id']]) {
 			return sendResponse(400, ['message' => 'Prescription ID is required']);
@@ -171,7 +172,7 @@
 		}
 	}
 
-	//  Delete Prescription
+	 /* ==== Delete Prescription ==== */
 	function deletePrescription($pdo) {
 		if (!$data || empty($data['prescription'])) {
 			return sendResponse(400, ['message' => 'prescription)id, is required']);
