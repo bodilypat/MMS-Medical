@@ -54,7 +54,7 @@
 	function getDoctors($pdo) {
 		try {
 			$stmt = $pdo->query('SELECT * FROM doctors');
-			sendResponse($stmt->fetchAll(PDO::FETCH_ASSOC);
+			sendResponse(200, $stmt->fetchAll(PDO::FETCH_ASSOC);
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
@@ -72,10 +72,10 @@
 				sendResponse(404,['message' => 'Doctor not found']);
 			}
 		} catch (PDOException $e) 
-			sendResponse(500,['error' => $e->getMessage()]);
+			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
-	
+	/* CRUD: Insert doctor */
 	function createDoctor($pdo, $data) {
 		$validation = validateDoctorInput($data);
 		if ($validation !== true) {
@@ -83,6 +83,7 @@
 		}
 		
 		try {
+			/* Check for duplicate */
 			$stmt = $pdo->prepare('SELECT 1 FROM doctors WHERE email = :email OR phone_number = :phone_number');
 			$stmt->execute([
 				'email' => $data['email'],
@@ -90,9 +91,10 @@
 			]);
 			
 			if ($stmt->fetch()) {
-				return sendResponse(409, ['message' => 'Doctor with the same email or phone number already exists']);
+				return sendResponse(404, ['message' => 'Doctor with the same email or phone number already exists']);
 			}
 			
+			/* Insert doctor */
 			$stmt = $pdo->prepare('
 				INSERT INTO doctors (first_name, last_name, specialization, email, phone_number, department, birthdate, address, status, notes)
 				VALUES (:first_name, :last_name, :specialization, :email, :phone_number, :department, birthdate, :address, :status, :notes) 
@@ -114,7 +116,7 @@
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}
 	}
-	
+	/* CRUD : Update Doctor */
 	function updateDoctor($pdo, $data) {
 		if (empty($data['doctor_id'])) {
 			return sendResponse(400,['message' => 'Doctor ID is required']);
@@ -161,7 +163,7 @@
 				'notes' => $data['notes'],
 				'doctor_id' => $data['doctor_id']
 			]);
-			sendResponse(400, ['message' => 'Doctor update successfully']);
+			sendResponse(200, ['message' => 'Doctor update successfully']);
 		} catch (PDOException $e) {
 			sendResponse(500, ['error' => $e->getMessage()]);
 		}	
