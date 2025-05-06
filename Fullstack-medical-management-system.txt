@@ -1,0 +1,90 @@
+FullStack-medical-management-system/
+│   │ 
+│   ├── backend                         	             # Backend (PHP, Node.js/Express or Laravel) custom MVC model system backend
+│   │ 	├── config/                     	             # DB script and seeders
+│   │  	│ 	 ├── database.php                       	
+│   │   │ 	 ├── /seeds             	        
+│   │   │    └── /schema.sql   
+│   │   │ 
+│   │   ├── controller/              					 # Handle request logic
+│   │   │   ├── DoctorController.php  
+│   │   │   ├── PatientController.php  
+│   │   │   ├── AppointmentController.php  
+│   │   │   ├── Lab_testController.php  
+│   │   │   ├── MedicalRecordController.php            	
+│   │   │   ├── PrescriptionController.php  
+│   │   │   ├── PharmacyController.php  
+│   │   │   ├── PaymentController.php 
+│   │   │   ├── InsuranceController.php   
+│   │   │   └── validation.php       	         		 # Input validation helpers
+│   │   ├── models/                  		      		 # DB  interactions 
+│   │   │   ├── doctor.php      	
+│   │   │   ├── Appointment.php   
+│   │   │   ├── Patient.php  
+│   │   │   ├── Insurance.php 
+│   │   │   ├── Lab_test.php 	
+│   │   │   ├── Medical_record.php 
+│   │   │   ├── Prescription.php 
+│   │   │   ├── Pharmacy.php 
+│   │   │   ├── Billing.php 
+│   │   │   ├── Payment.php 
+│   │   │   └── 
+│   │   ├── routes/                         			 # API route 
+│   │   │   ├── api.php
+│   │   │   ├── 
+│   │   │   └── 
+│   │   ├── public/               	        			 # Public API entry point
+│   │   │   ├── api 
+│  	│   │   │   └── patients
+│   │   │   ├── index.php
+│   │   │   └── 
+│   │   ├── middleware/              	    			 # (Optional) Auth, validation middleware
+│   │   │   ├── database.php
+│   │   │   └── Response.php
+│   │   │
+│   │   ├── helpers/               			             # Utility function	
+│   │   │   ├── ResponseHelpers.php 
+│  	│   │   │   
+│   │   │   ├── index.php
+│   │   │   └── patients
+│   │   └── .htaccess                                    # URL writting           	
+│   ├── /docs/  
+│   │   ├── API.md            	
+│   │   ├── ER-diagram          	        
+│   │   └── README.md  
+│  	│
+│   │ 
+│   │ 
+│   ├── frontend                            	        # Frontend (React/Vue/Angular/HTML)
+│   │   ├── appointments.html                           # Main UI for appointment management-system
+│   │  	│
+│   │   ├── css/ 
+│   │  	│   ├── styles.css
+│   │   │   └── appointments.css                        # Styles for the appointments page
+│   │  	│
+│   │   ├── js/                    	
+│   │  	│ 	├── api.js                                  # Fetch fuctions to call backend
+│   │  	│ 	├── auth.js
+│   │  	│ 	├── patients.js                             # DOM interaction and event handling
+│   │  	│   ├── appointments.js
+│   │  	│   ├── doctors.js
+│   │  	│   ├── insurance.js
+│   │  	│   ├── lab_tests.js
+│   │  	│   ├── medical_records.js
+│   │  	│   ├── prescriptions.js
+│   │  	│   ├── pharmacies.js
+│   │  	│   ├── billing.js
+│	│	│	└── payments.js      
+│   │   │    
+│   │   ├── components/        	                       # Reusable UI components (Buftton, Modal)
+│   │  	│   ├── header.html                     
+│   │  	│ 	├── footer.html                     
+│   │  	│ 	├── sidebar.html                    
+│   │   │   └── navbar.html                     
+│   │   │      
+│   │   │               
+│   │   ├── assets/           	                       # Icons, Images 
+│	│	│	└── calender-icon.png  
+│   │   │              	                             
+│   │   └── index.html                                 # Main dashboard or redirect
+├── Read.md                           	
