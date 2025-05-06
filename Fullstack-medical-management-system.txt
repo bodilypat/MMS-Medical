@@ -1,16 +1,19 @@
 FullStack-medical-management-system/
 │   │ 
-│   ├── backend                         	             # Backend (PHP, Node.js/Express or Laravel) custom MVC model system backend
+│   ├── backend                         	             # Backend (PHP, Node.js/Express or Laravel) custom MVC model 
+│   │   │ 
 │   │ 	├── config/                     	             # DB script and seeders
 │   │  	│ 	 ├── database.php                       	
-│   │   │ 	 ├── /seeds             	        
-│   │   │    └── /schema.sql   
+│   │   │ 	 ├── schema.sql     	        
+│   │   │    └── seeds/  
+                  ├── doctorSeeder.php 
+				  └── ...  				  
 │   │   │ 
 │   │   ├── controller/              					 # Handle request logic
 │   │   │   ├── DoctorController.php  
 │   │   │   ├── PatientController.php  
 │   │   │   ├── AppointmentController.php  
-│   │   │   ├── Lab_testController.php  
+│   │   │   ├── LabTestController.php  
 │   │   │   ├── MedicalRecordController.php            	
 │   │   │   ├── PrescriptionController.php  
 │   │   │   ├── PharmacyController.php  
@@ -39,33 +42,32 @@ FullStack-medical-management-system/
 │   │   │   ├── index.php
 │   │   │   └── 
 │   │   ├── middleware/              	    			 # (Optional) Auth, validation middleware
-│   │   │   ├── database.php
-│   │   │   └── Response.php
+│   │   │   ├── AuthMiddleware.php
+│   │   │   ├── ValidationMiddleware.php  
+│   │   │   └── ResponseMiddleware.php
 │   │   │
 │   │   ├── helpers/               			             # Utility function	
 │   │   │   ├── ResponseHelpers.php 
-│  	│   │   │   
-│   │   │   ├── index.php
-│   │   │   └── patients
+│   │   │   └── DataSanitizer.php
 │   │   └── .htaccess                                    # URL writting           	
-│   ├── /docs/  
-│   │   ├── API.md            	
-│   │   ├── ER-diagram          	        
-│   │   └── README.md  
-│  	│
+│   │
 │   │ 
-│   │ 
-│   ├── frontend                            	        # Frontend (React/Vue/Angular/HTML)
-│   │   ├── appointments.html                           # Main UI for appointment management-system
-│   │  	│
+│   ├── frontend                            	         # Frontend (React/Vue/Angular/HTML)
+│   │	├── index.html                                   # login page
+│   │  	│ 
+│   │   ├── pages/                                       # Main UI for appointment management-system
+│   │  	│   ├── admin.html                               # admin dashboard
+│   │  	│   ├── doctor_manage.html                       # doctor dashboard
+│   │  	│   ├── patient_manage.html                      #  patient dashboard 
+│   │  	│   
 │   │   ├── css/ 
 │   │  	│   ├── styles.css
-│   │   │   └── appointments.css                        # Styles for the appointments page
+│   │   │   └── appointments.css                         # Styles for the appointments page
 │   │  	│
 │   │   ├── js/                    	
-│   │  	│ 	├── api.js                                  # Fetch fuctions to call backend
+│   │  	│ 	├── api.js                                   # Fetch fuctions to call backend
 │   │  	│ 	├── auth.js
-│   │  	│ 	├── patients.js                             # DOM interaction and event handling
+│   │  	│ 	├── patients.js                              # DOM interaction and event handling
 │   │  	│   ├── appointments.js
 │   │  	│   ├── doctors.js
 │   │  	│   ├── insurance.js
@@ -76,15 +78,13 @@ FullStack-medical-management-system/
 │   │  	│   ├── billing.js
 │	│	│	└── payments.js      
 │   │   │    
-│   │   ├── components/        	                       # Reusable UI components (Buftton, Modal)
+│   │   ├── components/        	                        # Reusable UI components (Buftton, Modal)
 │   │  	│   ├── header.html                     
 │   │  	│ 	├── footer.html                     
 │   │  	│ 	├── sidebar.html                    
 │   │   │   └── navbar.html                     
-│   │   │      
-│   │   │               
+│   │   │                 
 │   │   ├── assets/           	                       # Icons, Images 
 │	│	│	└── calender-icon.png  
-│   │   │              	                             
-│   │   └── index.html                                 # Main dashboard or redirect
+│                	                             
 ├── Read.md                           	
