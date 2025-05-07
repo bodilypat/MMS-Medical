@@ -1,5 +1,7 @@
 <?php
 	class Patient {
+		private $pdo;
+		
 		public function __construct($pdo) {
 			$this->pdo = $pdo;
 		}
@@ -18,7 +20,7 @@
 		public function exists($email, $phone) {
 			$stmt = $this->dpo->prepare("SELECT 1 FROM patients WHERE email = :email OR phone_number = :phone");
 			$stmt->execute(['email' => $email, 'phone' => $phone]);
-			return $stmt->fetch();
+			return $stmt->fetchColumn() !== false;
 		}
 		
 		public function create($data) {
@@ -42,44 +44,44 @@
 				'policy' => $data['insurance_policy_number'],
 				'physician' => $data['primary_care_physical'],
 				'history' => $data['medical_history'],
-				'allergies' => $data['alleries'],
+				'allergies' => $data['allergies'],
 				'status' => $data['status'],
 			]);
 		}
 		
 		public function update($data) {
 			$sql = "UPDATE patients SET 
-				first_name = :first_name,
-				last_name = :last_name,
-				date_of_birth = :dob,
-				gender = :gender,
-				email = :email,
-				phone_numver = :phone,
-				address = :address,
-				insurnce_provider = :insurance,
-				insurance_policy_number = :policy,
-				primary_care_physician = :physician,
-				medical_history = :history,
-				allergies = :allergies,
-				status = :status,
-				updated_at = CURRENT_TIMESTAMP
+						first_name = :first_name,
+						last_name = :last_name,
+						date_of_birth = :dob,
+						gender = :gender,
+						email = :email,
+						phone_number = :phone,
+						address = :address,
+						insurnce_provider = :insurance,
+						insurance_policy_number = :policy,
+						primary_care_physician = :physician,
+						medical_history = :history,
+						allergies = :allergies,
+						status = :status,
+						updated_at = CURRENT_TIMESTAMP
 			WHERE patient_id = :id";
 			$stmt = $this->pdo->prepare($sql);
 			$stmt->execute([
-				'first_name' => $data['first_name'],
-				'last_name' => $data['last_name'],
-				'dob' => $data['date_of_birth'],
-				'gender' => $data['gender'],
-				'email' => $data['email'],
-				'phone' => $data['phone_number'],
-				'address' => $data['address'],
-				'insurance' => $data['insurance_provider'],
-				'policy' => $data['insurance_policy_number'],
-				'physician' => $data['primary_care_physician'],
-				'history' => $data['medical_history'],
-				'allergies' => $data['allergies'],
-				'status' => $data['status'],
-				'id' => $data['patient_id']
+					'first_name' => $data['first_name'],
+					'last_name' => $data['last_name'],
+					'dob' => $data['date_of_birth'],
+					'gender' => $data['gender'],
+					'email' => $data['email'],
+					'phone' => $data['phone_number'],
+					'address' => $data['address'],
+					'insurance' => $data['insurance_provider'],
+					'policy' => $data['insurance_policy_number'],
+					'physician' => $data['primary_care_physician'],
+					'history' => $data['medical_history'],
+					'allergies' => $data['allergies'],
+					'status' => $data['status'],
+					'id' => $data['patient_id']
 			]);
 		}
 		
@@ -88,4 +90,6 @@
 			$stmt->execute(['id' => $id]);
 		}
 	}
-?>
+	
+	
+						   
