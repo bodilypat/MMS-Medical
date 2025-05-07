@@ -1,36 +1,62 @@
 <?php
 	class Appointment {
-		private $pdo;
+		private PDO $pdo;
 		
-		public function __construct($pdo) {
+		public function __construct(PDO $pdo) {
 			$this->pdo = $pdo;
 		}
 		
-		public functiion getAll() {
-			$stmt = $this->pdo->query("SELECT * FROM appointment");
+		public function getAll(): array {
+			$stmt = $this->pdo->query("SELECT * FROM appointments");
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}
 		
-		public function getById($id) {
+		public function getById(int $id): ?array {
 			$stmt = $this->pdo->prepare("SELECT * FROM appointments WHERE appointment_id = ?");
-			$stmt->execute([$id]);
-			return $stmt->fetch(PDO::FETCH_ASSOC);
+			$stmt->execute[$id]);
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $result ?: null;
 		}
 		
-		public function create($data) {
-			$stmt = $this->pdo->prepare("INSERT INTO appointments(patient_id, doctor_id, appointment_date, status)
-			                                    VALUES(?, ?, ?, ?)
-										");
-		    return $stmt->execute([$data['patient_id'], $data['doctor_id'], $data['appointment_date'], $data['status'] ?? 'Scheduled']);
+		public function create(array $data): bool {
+			if (
+			empty($data['patient_id']) ||
+			empty($data['doctor_id']) ||
+			empty($data['appointment_date'])
+			) {
+				return false;
+			}
+			$stmt = $this->pdo->prepare(" INSERT INTO appointments(patient_id, doctor_id, appointment_date, status)
+										  VALUES(?, ?, ?, ?)
+										 ");
+			return $stmt->execute([
+					$data['patient_id'],
+					$data['doctor_id'],
+					$data['appointment_id'],
+					$data['status'] ?? 'Scheduled'
+				]);
 		}
 		
-		public function update($data) {
-			$stmt = $this->pdo->prepare("UPDATE appointments SET patient_id = ?, doctor_id = ?, appointment_date = ?, status = ? 
-			                             WHERE appointment_id = ? ");
-			return $stmt->execute([$data['patient_id'], $data['doctor_id'], $data['appointment_date'], $data['status'], $data['appointment_id']]);
+		public function update(array $data): bool {
+			if (empty($data['appointment_id'])) {
+				return false;
+			}
+			
+			$stmt = $this->pdo->prepare("UPDATE appointments 
+			                             SET patient_id = ?, doctor_id = ?, appointment_date = ?, status = ? 
+			                             WHERE appointment_id = ? 
+									");
+			return $stmt->execute([
+					$data['patient_id'], 
+					$data['doctor_id'], 
+					$data['appointment_date'], 
+					$data['status'], 
+					$data['appointment_id']
+				]);
 		}
 		
-		public function delete($id) {
+		public function delete(int $id):bool {
 			$stmt = $this->pdo->prepare("DELETE FROM appointments WHERE appointment_id = ?");
+			return $stmt->execute([$id]);
 		}
 	}
