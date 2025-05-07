@@ -4,21 +4,45 @@
 	require_once __DIR__ . '../config/database.php';
 	require_once __DIR__ . '../controllers/PatientController.php'
 	require_once __DIR__ . '../controllers/AppointmentController.php';
+	require_once __DIR__ . '../controllers/DoctorController.php',
+	
+	
 	
 	/* Set JSON response header */
 	header('Content-Type: application/json');
 	
 	/* Parse request */
-	$uri = parse_url($_SERVER['REQUEST_URI'], PHP_PATH);
+	$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	$method = $_SERVER['REQUEST_METHOD'];
 	$input = json_decode(file_get_contents("php://input"), true) ?? [];
 	$queryParams = $_GET ?? [];
 	
-	/* Basic routing */
+	/* Remoce "/api/ prefix*/
 	$path = preg_replace('#^/api#', '', $uri);
 	
 	/* Basic routing */
 	try {
+		switch (true) {
+			case $path ==='/patients' && $method === 'GET':
+				(new PatientController($pdo))->index();
+				break;
+				
+			case strpos($path, '/appointments') === 0:
+				(new AppointmentController($pdo))->handleRequest($method, $input, $queryParams);
+				break;
+			case strpos($path,'/doctors') === 0:
+				(new DoctorController($pdo))->handleRequest($method, $input, $queryParams);
+				break;
+			default : 
+				http_response_code(404);
+				echo json_encode(['error'] => 'Endpoint not found']);
+				break;
+		}
+	} catch (Exception $e) {
+		http_response_code(500);
+		echo json_encode(['error' => 'Internal server error', 'message' => $e->getMessage()]);
+	}
+	
 			if ($path === '/patients' && $method === 'GET') {
 					$controller = new PatientController($pdo);
 					$controlller->index();
