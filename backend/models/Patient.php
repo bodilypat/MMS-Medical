@@ -16,7 +16,7 @@
 		}
 		
 		public function exists($email, $phone) {
-			$stmt = $this->dpo->prepare("SELECT * FROM patients WHERE email = :email OR phone_number = :phone");
+			$stmt = $this->dpo->prepare("SELECT 1 FROM patients WHERE email = :email OR phone_number = :phone");
 			$stmt->execute(['email' => $email, 'phone' => $phone]);
 			return $stmt->fetch();
 		}
@@ -88,3 +88,4 @@
 			$stmt->execute(['id' => $id]);
 		}
 	}
+?>
