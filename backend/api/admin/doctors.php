@@ -1,6 +1,6 @@
 <?php
 	header('Content-Type: application/json');
-	include '../../config/dbconnect.php';
+	include '../config/dbconnect.php';
 	
 	/* Get request method and input */
 	$method = $_SERVER['REQUEST_METHOD'];
