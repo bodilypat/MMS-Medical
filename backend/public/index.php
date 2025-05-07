@@ -1,22 +1,27 @@
 <?php
-	require_once '../config/database.php';
-	require_once '../controllers/PatientController.php'
-	require_once '../controllers/AppointmentController.php';
+	require_once __DIR__ . '../config/database.php';
+	require_once __DIR__ . '../controllers/PatientController.php'
+	require_once __DIR__ . '../controllers/AppointmentController.php';
 	
-	/* Basic routing (or use FastRoute or similar for real apps */
+	/* Basic routing (consider using a router like FastRoute or Slim of real-world apps) */
 	$uri = parse_url($_SERVER['REQUEST_URI'], PHP_PATH);
 	$method = $_SERVER['REQUEST_METHOD'];
+	$input = json_decode(file_get_contents("php://input"), true) ?? [];
+	$queryParams = $_GET ?? [];
 	
-	$controller = new PatientController($pdo);
-	
-	if ($uri ==='api/patients' && $method === 'GET') {
-		$controller->index();
+	/* Route handling */
+	switch (true) {
+		case $uri === '/api/patients' && $method === 'get';
+		$controller = new PatientController($pdo);
+		$controlller->index();
+		break;
+	case strpos($uri,'api/appointments') === 0:
+		$controller = new AppointmentController($pdo)
+		$controller->handleRequest($method, $input, $queryParams);
+		break;
+	default:
+		http_response_code(404);
+		echo json_encode(['error' => 'Endpoint not found']);
+		break;
 	}
-	
-	$controller = new AppointmentController($pdo);
-	$method = $_SERVER['REQUEST_METHOD'];
-	$input = json_decode(file_get_contents("php://input", true);
-	$queryParam = $_GET;
-	
-	$controller->handleRequest($method, $input, $queryParams); 
 	
