@@ -5,34 +5,79 @@
 	use App\Core\Response;
 	
 	class DoctorController {
-		private $model;
+		private Doctor $model;
 		
 		public function __construct() {
 			$this->model = new Doctor();
 		}
 		
-		public function index() {
-			response::json(200, $this->model->getAll();
+		public function index(): void {
+			$doctors = $this->model->getAll();
+			response::json(200, $doctors);
 		}
 		
-		public function show($id) {
+		public function show($id): void {
 			$doctor = $this->model->find($id);
-			$doctor ? Response::json(200, $doctor) : Response::json(404, ['message' => 'Doctor not found']);
+			if ($doctor) {
+				response::json(200, $doctor);
+			} else {
+				response::json(404, ['message' => 'Doctor not found']);
+			}
 		}
 		
-		public function store($data) {
+		public function store(array $data): void {
 			$success = $this->model->create($data);
-			$success ? Response::json_(201, ['message' => 'Doctor created']) : Response::json(500, ['error' => 'insert failed']);
+			if ($success) {
+				Response::json(201, ['message' => 'Doctor created']);
+			} else {
+				Response::json(500, ['error' => 'Doctor ID is required for update']);
+				return;
 		}
 		
-		public function update($data) {
-			$success = $this->model->update($data);
-			$success ? Response::json(200, ['message' =>  'Doctor updated']) : Response::json(500, ['error' => 'Update failed']);
+		public function update($data): void {
+			if (Empty($data['id'])) {
+				Response::json(400, ['error' => 'Doctor ID is required for update']);
+				return ;
+			} else {
+				Response::json(500, ['error' => 'Update failed']);
+			}
 		}
 		
-		public function delete($id) {
+		public function delete($id): void {
 			$success = $this->model->delete($id);
-			$success ? Response::json(200, ['message' => 'Doctor deleted']); : Response::json(500, ['error' => 'Delete failed']);
+			if ($success) {
+				Response::json(200, ['message' => 'Doctor deleted']);
+			} else {
+				Response::json(500, ['error' => 'Delete failed'])
+			}
+		}
+		
+		public function handleRequest(string $method, array $input, array $queryParams): void {
+			switch ($method) {
+				case 'GET':
+					if (!empty($queryParams['id'])) {
+						$this->show($queryParams['id']);
+					} else {
+						$this->index();
+					} 
+					break;
+				case 'POST':
+					$this->store($input);
+					break;
+				case 'PUT':
+					$this->update($input);
+					break;
+				case 'DELETE':
+				if (!empty($queryParams['id'])) {
+					$this->delete($queryParams['id']);
+				} else {
+					Response::json(400, ['error' => 'Doctor ID required for deletion']);
+				}
+				break;
+			default:
+				Response::json(405, ['error' => 'Method not allowed']);
+				break;
+			}
 		}
 	}
-?>
+	
