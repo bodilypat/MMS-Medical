@@ -5,7 +5,7 @@
 	class LabTestController {
 		private LabTest $model;
 		
-		public fuction __construct(PDO $pdo) {
+		public function __construct(PDO $pdo) {
 			$this->model = new LabTest($pdo);
 		}
 		
@@ -51,6 +51,7 @@
 							sendResponse(500, ['message' => 'Failed to update lab test']);
 						}
 						break;
+						
 					case 'DELETE':
 						if (empty($data['test_id'])) {
 							sendResponse(400, ['message' => 'Missing test_id']);
@@ -63,6 +64,7 @@
 							sendResponse(500, ['message' => 'failed to delete lab test']);
 						}
 						break;
+						
 					default: 
 						sendResponse(405, ['message' => 'method not allowed']);
 				 }
