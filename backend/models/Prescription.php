@@ -38,7 +38,7 @@
 			try {
 				 $stmt = $this->pdo->prepare("
 					INSERT INTO prescriptions (
-						record_id, medication_mame, dosage, frequency, start_date, end_date, instructions, status, created_by, updated_by
+						record_id, medication_name, dosage, frequency, start_date, end_date, instructions, status, created_by, updated_by
 					)
 					VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 				");
@@ -93,7 +93,7 @@
 		/* Delete a prescription */
 		public function delete(int prescriptionId): bool {
 			try {
-				$stmt = $this->pdo->prepare("SELECT FROM prescriptions WHERE prescription_id = ?");
+				$stmt = $this->pdo->prepare("DELETE FROM prescriptions WHERE prescription_id = ?");
 				return $stmt->execute([$prescriptionId]);
 			} catch (PDOException $e) {
 				error_log($e->getMessage());
