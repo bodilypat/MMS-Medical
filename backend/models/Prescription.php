@@ -2,7 +2,7 @@
 	class Prescription {
 		private PDO $pdo;
 		
-		public function __construct(PDO $pdo0 {
+		public function __construct(PDO $pdo) {
 			$this->pdo = $pdo;
 		}
 		
@@ -12,6 +12,7 @@
 				$stmt = $this->pdo->query("SELECT * FROM prescriptions");
 				return $stmt->fetchAll(PDO::FETCH_ASSOC);
 			} catch (PDOException $e) {
+				error_log($e->getMessage());
 				return [];
 			}
 		}
@@ -24,6 +25,7 @@
 				$result = $stmt->fetch(PDO::FETCH_ASSOC);
 				return $result ?:null;
 			} catch (PDOException $e ) {
+				error_log($e->getMessage());
 				return null;
 			}
 		}
@@ -46,20 +48,21 @@
 					$data['dosage'],
 					$data['frequency'],
 					$data['start_date'],
-					$data['end_date'],
-					$data['instructions'],
-					$data['status'],
+					$data['end_date'] ?? null,
+					$data['instructions'] ?? null,
+					$data['status'] ?? 'Active',
 					$data['created_by'] ?? null,
 					$data['updated_by'] ?? null 
 				]);
 			} catch (PDOException $e) {
+				error_log($e->getMessage());
 				return false;
 			}
 		}
 		
 		/* Update an existing prescription */
 		public function update(array $data): bool {
-			if (empty($data['prescription_id'])) {
+			if (empty($data['prescription_id']) || !$this->isValidCreateData($data)) {
 				return false;
 			}
 			try {
@@ -82,6 +85,7 @@
 					$data['prescription_id']
 				]);
 			} catch (PDOException $e) {
+				error_log($e->getMessage());
 				return false;
 			}
 		}
@@ -92,6 +96,7 @@
 				$stmt = $this->pdo->prepare("SELECT FROM prescriptions WHERE prescription_id = ?");
 				return $stmt->execute([$prescriptionId]);
 			} catch (PDOException $e) {
+				error_log($e->getMessage());
 				return false;
 			}
 		}
@@ -104,7 +109,7 @@
 				$data['dosage'],
 				$data['frequency'],
 				$data['start_date']
-			);;
+			);
 		}
 	}
 	
