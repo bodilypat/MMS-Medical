@@ -1,15 +1,15 @@
 FullStack-medical-management-system/
 │   │ 
-│   ├── backend                         	             # Backend (PHP, Node.js/Express or Laravel) custom MVC model 
+│   ├── backend                         	               # Backend (PHP, Node.js/Express or Laravel) custom MVC model 
 │   │   │ 
-│   │ 	├── config/                     	             # DB script and seeders
+│   │ 	├── config/                     	               # DB script and seeders
 │   │  	│ 	 ├── database.php                       	
 │   │   │ 	 ├── schema.sql     	        
 │   │   │    └── seeds/  
 │   │   │        ├── doctorSeeder.php 
-│   │   │ 		 └── ...  				  
+│   │   │ 		   └── ...  				  
 │   │   │ 
-│   │   ├── controller/              					 # Handle request logic
+│   │   ├── controller/              					          # Handle request logic
 │   │   │   ├── DoctorController.php  
 │   │   │   ├── PatientController.php  
 │   │   │   ├── AppointmentController.php  
@@ -19,8 +19,8 @@ FullStack-medical-management-system/
 │   │   │   ├── PharmacyController.php  
 │   │   │   ├── PaymentController.php 
 │   │   │   ├── InsuranceController.php   
-│   │   │   └── validation.php       	         		 # Input validation helpers
-│   │   ├── models/                  		      		 # DB  interactions 
+│   │   │   └── validation.php       	         		      # Input validation helpers
+│   │   ├── models/                  		      		      # DB  interactions 
 │   │   │   ├── doctor.php      	
 │   │   │   ├── Appointment.php   
 │   │   │   ├── Patient.php  
@@ -32,45 +32,45 @@ FullStack-medical-management-system/
 │   │   │   ├── Billing.php 
 │   │   │   ├── Payment.php 
 │   │   │   └── 
-│   │   ├── routes/                         			 # API route 
+│   │   ├── routes/                         			      # API route 
 │   │   │   ├── api.php
 │   │   │   ├── 
 │   │   │   └── 
-│   │   ├── public/               	        			 # Public API entry point
+│   │   ├── public/               	        			      # Public API entry point
 │   │   │   ├── api 
 │  	│   │   │   └── patients
 │   │   │   ├── index.php
 │   │   │   └── 
-│   │   ├── middleware/              	    			 # (Optional) Auth, validation middleware
+│   │   ├── middleware/              	    			         # (Optional) Auth, validation middleware
 │   │   │   ├── AuthMiddleware.php
 │   │   │   ├── ValidationMiddleware.php  
 │   │   │   └── ResponseMiddleware.php
 │   │   │
-│   │   ├── helpers/               			             # Utility function	
+│   │   ├── helpers/               			                 # Utility function	
 │   │   │   ├── ResponseHelpers.php 
 │   │   │   └── DataSanitizer.php
 │   │   └── .htaccess                                    # URL writting           	
 │   │
 │   │ 
-│   ├── frontend                            	         # Frontend (HTML, CSS, JS)
-│   │	├── index.html                                   # Login / Loading page
+│   ├── frontend                            	           # Frontend (HTML, CSS, JS)
+│   │	├── index.html                                     # Login / Loading page
 │   │  	│ 
 │   │   ├── pages/                                       # Main UI for appointment management-system
 │   │  	│   ├── admin/                                   
-│   │  	│	│    └── dashboard.html  					 # Admin dashboard
+│   │  	│	  │   └── dashboard.html  					           # Admin dashboard
 │   │  	│   │
 │   │  	│ 	├── doctor/                                    
-│   │  	│   │	 ├── dashboard.html                       # doctor dashboard
+│   │  	│   │	 ├── dashboard.html                        # doctor dashboard
 │   │  	│   │	 ├── appointments.html  
-│   │  	│	│    └── patients.html 
+│   │  	│	  │  └── patients.html 
 │   │  	│   │	
 │   │  	│   ├── patient/                       
 │   │  	│   │	 ├── dashboard.html                       # patient dashboard
 │   │  	│   │	 ├── appointments.html  
-│   │  	│	│    └── records.html 
+│   │  	│	  │  └── records.html 
 │   │  	│   ├── patient/                       
 │   │  	│   │	 ├── list.html                            
-│   │  	│	│    └── create.html 
+│   │  	│	  │  └── create.html 
 │   │  	│ 	├── prescriptions/      
 │   │  	│   │
 │   │  	│ 	├── Lab_tests/      
@@ -91,9 +91,9 @@ FullStack-medical-management-system/
 │   │   │   └── [module-specific].css                    
 │   │  	│
 │   │   ├── js/                    	
-│   │  	│ 	├── api/                                   # Fetch fuctions to call backend
-│   │  	│   │	 ├── api.js                            # Global API fetch helpers
-│   │  	│	│    └── [module].api.js                   # patient.api.js, doctor.api.js 
+│   │  	│ 	├── api/                                     # Fetch fuctions to call backend
+│   │  	│   │	 ├── api.js                                # Global API fetch helpers
+│   │  	│	  │  └── [module].api.js                       # patient.api.js, doctor.api.js 
 │   │  	│ 	├── modules/
 │   │  	│   │	 ├── auth.js                            
 │   │  	│   │	 ├── patients.js  
@@ -107,24 +107,24 @@ FullStack-medical-management-system/
 │   │  	│	│    └── payments.js     
 │   │  	│	│   
 │   │  	│	├── utils/     
-│   │  	│		 ├── validation.js                            # Form Validation
-│   │  	│	 	 ├── dom.js                                   # DOM helpers
-│   │  	│	     └── auth.js                                  # Token/session Logic
+│   │  	│		 ├── validation.js                                    # Form Validation
+│   │  	│	 	 ├── dom.js                                           # DOM helpers
+│   │  	│	   └── auth.js                                          # Token/session Logic
 │   │  	│
 │   │   ├── components/ 
-│   │  	│ 	├── header.html                                   # DOM interaction and event handling
+│   │  	│ 	├── header.html                                       # DOM interaction and event handling
 │   │  	│   ├── footer.html
 │   │  	│   ├── navbar.html
 │   │  	│   ├── slidebar.html
 │   │  	│   ├── model.html
 │   │  	│   └── alert.html      
 │   │   │    
-│   │   └── assets/       	                                 # Static assets
+│   │   └── assets/       	                                      # Static assets
 │   │  	    ├── images/                 
-│   │  	 	│ 	├── logo.png   
-│   │  		│ 	└── calender-icon.png    
-│   │  		│              
-│   │  		└── icons/                  
+│   │  	│ 	├── logo.png   
+│   │  	│ 	└── calender-icon.png    
+│   │  	│              
+│   │  	└── icons/                  
 │   │           └── ...               
 │   └── README.md               	                             
                        	
