@@ -3,13 +3,13 @@ FullStack-medical-management-system/
 │   ├── backend                         	             # Backend (PHP, Node.js/Express or Laravel) custom MVC model 
 │   │   │ 
 │   │ 	├── config/                     	             # DB script and seeders
-│   │  	│ 	 ├── dbconnect.php                       	
+│   │  	│ 	 ├── database.php                       	
 │   │   │ 	 ├── schema.sql     	        
 │   │   │    └── seeds/  
-                  ├── doctorSeeder.php 
-				  └── ...  				  
+│   │   │        ├── doctorSeeder.php 
+│   │   │ 		 └── ...  				  
 │   │   │ 
-│   │   ├── controllers/              					 # Handle request logic
+│   │   ├── controller/              					 # Handle request logic
 │   │   │   ├── DoctorController.php  
 │   │   │   ├── PatientController.php  
 │   │   │   ├── AppointmentController.php  
@@ -38,7 +38,7 @@ FullStack-medical-management-system/
 │   │   │   └── 
 │   │   ├── public/               	        			 # Public API entry point
 │   │   │   ├── api 
-│  	│   │   │   
+│  	│   │   │   └── patients
 │   │   │   ├── index.php
 │   │   │   └── 
 │   │   ├── middleware/              	    			 # (Optional) Auth, validation middleware
@@ -52,39 +52,79 @@ FullStack-medical-management-system/
 │   │   └── .htaccess                                    # URL writting           	
 │   │
 │   │ 
-│   ├── frontend                            	         # Frontend (React/Vue/Angular/HTML)
-│   │	├── index.html                                   # login page
+│   ├── frontend                            	         # Frontend (HTML, CSS, JS)
+│   │	├── index.html                                   # Login / Loading page
 │   │  	│ 
 │   │   ├── pages/                                       # Main UI for appointment management-system
-│   │  	│   ├── admin.html                               # admin dashboard
-│   │  	│   ├── doctor_manage.html                       # doctor dashboard
-│   │  	│   ├── patient_manage.html                      #  patient dashboard 
-│   │  	│   
+│   │  	│   ├── admin/                                   
+│   │  	│	│    └── dashboard.html  					 # Admin dashboard
+│   │  	│   │
+│   │  	│ 	├── doctor/                                    
+│   │  	│   │	 ├── dashboard.html                       # doctor dashboard
+│   │  	│   │	 ├── appointments.html  
+│   │  	│	│    └── patients.html 
+│   │  	│   │	
+│   │  	│   ├── patient/                       
+│   │  	│   │	 ├── dashboard.html                       # patient dashboard
+│   │  	│   │	 ├── appointments.html  
+│   │  	│	│    └── records.html 
+│   │  	│   ├── patient/                       
+│   │  	│   │	 ├── list.html                            
+│   │  	│	│    └── create.html 
+│   │  	│ 	├── prescriptions/      
+│   │  	│   │
+│   │  	│ 	├── Lab_tests/      
+│   │  	│   │
+│   │  	│ 	├── medical_records/      
+│   │  	│   │
+│   │  	│ 	├── insurance/      
+│   │  	│   │
+│   │  	│ 	├── pharmacies/      
+│   │  	│   │
+│   │  	│ 	├── payments/      
+│   │  	│   │
 │   │   ├── css/ 
-│   │  	│   ├── styles.css
-│   │   │   └── appointments.css                         # Styles for the appointments page
+│   │  	│   ├── main.css                                 # Global styles
+│   │  	│   ├── Layout.css                               # Layout/grid helpers
+│   │  	│   ├── component.css                            # Reusable components (modal button, buttons)
+│   │  	│   ├── appointments.css
+│   │   │   └── [module-specific].css                    
 │   │  	│
 │   │   ├── js/                    	
-│   │  	│ 	├── api.js                                   # Fetch fuctions to call backend
-│   │  	│ 	├── auth.js
-│   │  	│ 	├── patients.js                              # DOM interaction and event handling
-│   │  	│   ├── appointments.js
-│   │  	│   ├── doctors.js
-│   │  	│   ├── insurance.js
-│   │  	│   ├── lab_tests.js
-│   │  	│   ├── medical_records.js
-│   │  	│   ├── prescriptions.js
-│   │  	│   ├── pharmacies.js
-│   │  	│   ├── billing.js
-│	│	│	└── payments.js      
+│   │  	│ 	├── api/                                   # Fetch fuctions to call backend
+│   │  	│   │	 ├── api.js                            # Global API fetch helpers
+│   │  	│	│    └── [module].api.js                   # patient.api.js, doctor.api.js 
+│   │  	│ 	├── modules/
+│   │  	│   │	 ├── auth.js                            
+│   │  	│   │	 ├── patients.js  
+│   │  	│   │	 ├── doctors.js   
+│   │  	│   │	 ├── appointments.js   
+│   │  	│   │	 ├── insurance.js   
+│   │  	│   │	 ├── lab_tests.js   
+│   │  	│   │	 ├── prescriptions.js   
+│   │  	│   │	 ├── pharmacies.js   
+│   │  	│   │	 ├── billing.js                            
+│   │  	│	│    └── payments.js     
+│   │  	│	│   
+│   │  	│	├── utils/     
+│   │  	│		 ├── validation.js                            # Form Validation
+│   │  	│	 	 ├── dom.js                                   # DOM helpers
+│   │  	│	     └── auth.js                                  # Token/session Logic
+│   │  	│
+│   │   ├── components/ 
+│   │  	│ 	├── header.html                                   # DOM interaction and event handling
+│   │  	│   ├── footer.html
+│   │  	│   ├── navbar.html
+│   │  	│   ├── slidebar.html
+│   │  	│   ├── model.html
+│   │  	│   └── alert.html      
 │   │   │    
-│   │   ├── components/        	                        # Reusable UI components (Buftton, Modal)
-│   │  	│   ├── header.html                     
-│   │  	│ 	├── footer.html                     
-│   │  	│ 	├── sidebar.html                    
-│   │   │   └── navbar.html                     
-│   │   │                 
-│   │   ├── assets/           	                       # Icons, Images 
-│	│	│	└── calender-icon.png  
-│                	                             
-├── Read.md                           	
+│   │   └── assets/       	                                 # Static assets
+│   │  	    ├── images/                 
+│   │  	 	│ 	├── logo.png   
+│   │  		│ 	└── calender-icon.png    
+│   │  		│              
+│   │  		└── icons/                  
+│   │           └── ...               
+│   └── README.md               	                             
+                       	
