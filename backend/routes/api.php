@@ -1,71 +1,72 @@
 <?php
-	require_once '../config/database.php';
-	require_once '../helpers/ResponseHelper.php';
+	require_once BASE_PATH . '/config/dbconenct.php';
+	require_once BASE_PATH . '/helpers/ResponseHelper.php';
 	
 	/* Import controller */
-	require_once '../controllers/DoctorController.php';
-	require_once '../controllers/PatientController.php';
-	require_once '../controllers/AppointmentController.php';
-	require_once '../controllers/LabTestController.php';
-	require_once '../controllers/MedicalRecordController.php';
-	require_once '../controllers/PrescriptionController.php';
-	require_once '../controllers/PharmacyController.php';
-	require_once '../controllers/PaymentController.php';
-	require_once '../controllers/InsuranceController.php';
-	
-	/* Intialize database connection */
-	$pdo = require '../config/dbconnect.php';
+	require_once BASE_PATH . '/controllers/DoctorController.php';
+	require_once BASE_PATH . '/controllers/PatientController.php';
+	require_once BASE_PATH . '/controllers/AppointmentController.php';
+	require_once BASE_PATH . '/controllers/LabTestController.php';
+	require_once BASE_PATH . '/controllers/MedicalRecordController.php';
+	require_once BASE_PATH . '/controllers/PrescriptionController.php';
+	require_once BASE_PATH . '/controllers/PharmacyController.php';
+	require_once BASE_PATH . '/controllers/PaymentController.php';
+	require_once BASE_PATH . '/controllers/InsuranceController.php';	
 	
 	/* Parse request */
 	$method = $_SERVER['REQUEST_METHOD'];
-	$uri = trim($_SERVER['REQUEST_URI'],
-	$path = explode('/', $uri);
+	$uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 	
 	/* Get input data */
-	$data = json_decode(file_get_contents("php://input"), true) ?? [];
-	$queryParams = $_GET;
+	$input = json_decode(file_get_contents('php://input'), true) ?? [];
+	$queryParams = $_GET ?? [];
+
+	$pdo = require BASE_PATH  . '/config/dbconnect.php';
 	
+	/* Remove api prefix if exists */
+	$path = preg_replace('#^api/#', '', $uri);
+		
 	/* Route Dispatcher */
-	switch ($path[1] ?? null) {
-		case 'doctors':
-			(new DoctorController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-	
-		case  'patients':
+	switch (true) {
+		case $path === 'patients':
 			(new PatientController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
-			
-		case 'appointments':
+	
+		case $path === 'appointments':
 			(new AppointmentController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
 			
-		case 'lab-tests':
+		case $path === 'doctors':
+			(new DoctorController($pdo))->handleRequest($method, $data, $queryParams);
+			break;
+			
+		case $path === 'lab-tests':
 			(new LabTestController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
 		
-		case 'medical-records':
+		case $path === 'medical-records':
 			(new MedicalRecordController))->handleRequest($method, $data, $queryParams);
 			break;
 			
-		case 'prescriptions':
+		case $path === 'prescriptions':
 			(new PrescriptionController($pdo))->handleRequest($method, $data, $queryParams);
 			break; 
 			
-		case 'pharmacies':
+		case $path === 'pharmacies':
 			(new PharmacyController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
 			
-		case 'payments': 
+		case $path === 'payments': 
 			(new PaymentController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
 		
-		case 'insurance': 
+		case $path === 'insurance': 
 			(new InsuranceController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
 			
 		default: 
-			sendResponse(404, ['message' => 'API endpoint not found']);
-			break;
+			http_response_code(404);
+			echo json_encode(['error' => 'API endpoint not found']);
 			
 		}
 		
