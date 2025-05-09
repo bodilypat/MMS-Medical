@@ -3,7 +3,7 @@ FullStack-medical-management-system/
 │   ├── backend                         	             # Backend (PHP, Node.js/Express or Laravel) custom MVC model 
 │   │   │ 
 │   │ 	├── config/                     	             # DB script and seeders
-│   │  	│ 	 ├── database.php                       	
+│   │  	│ 	 ├── dbconnect.php                       	
 │   │   │ 	 ├── schema.sql     	        
 │   │   │    └── seeds/  
                   ├── doctorSeeder.php 
@@ -38,7 +38,7 @@ FullStack-medical-management-system/
 │   │   │   └── 
 │   │   ├── public/               	        			 # Public API entry point
 │   │   │   ├── api 
-│  	│   │   │   └── patients
+│  	│   │   │   
 │   │   │   ├── index.php
 │   │   │   └── 
 │   │   ├── middleware/              	    			 # (Optional) Auth, validation middleware
