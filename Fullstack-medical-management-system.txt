@@ -9,7 +9,7 @@ FullStack-medical-management-system/
                   ├── doctorSeeder.php 
 				  └── ...  				  
 │   │   │ 
-│   │   ├── controller/              					 # Handle request logic
+│   │   ├── controllers/              					 # Handle request logic
 │   │   │   ├── DoctorController.php  
 │   │   │   ├── PatientController.php  
 │   │   │   ├── AppointmentController.php  
