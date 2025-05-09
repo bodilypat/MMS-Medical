@@ -1,71 +1,23 @@
 <?php
 	declare(strict_types=1);
 	
-	require_once __DIR__ . '../config/database.php';
-	require_once __DIR__ . '../controllers/PatientController.php'
-	require_once __DIR__ . '../controllers/AppointmentController.php';
-	require_once __DIR__ . '../controllers/DoctorController.php',
-	
-	
-	
-	/* Set JSON response header */
+	/* === Set response type and CORS headers === */
 	header('Content-Type: application/json');
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-methods: GET, POST, PUT, DELETE, OPTIONS");
+	header("Access-Control-Allow-Headers: Content-Type, Authorization");
 	
-	/* Parse request */
-	$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-	$method = $_SERVER['REQUEST_METHOD'];
-	$input = json_decode(file_get_contents("php://input"), true) ?? [];
-	$queryParams = $_GET ?? [];
-	
-	/* Remoce "/api/ prefix*/
-	$path = preg_replace('#^/api#', '', $uri);
-	
-	/* Basic routing */
-	try {
-		switch (true) {
-			case $path ==='/patients' && $method === 'GET':
-				(new PatientController($pdo))->index();
-				break;
-				
-			case strpos($path, '/appointments') === 0:
-				(new AppointmentController($pdo))->handleRequest($method, $input, $queryParams);
-				break;
-			case strpos($path,'/doctors') === 0:
-				(new DoctorController($pdo))->handleRequest($method, $input, $queryParams);
-				break;
-			default : 
-				http_response_code(404);
-				echo json_encode(['error'] => 'Endpoint not found']);
-				break;
-		}
-	} catch (Exception $e) {
-		http_response_code(500);
-		echo json_encode(['error' => 'Internal server error', 'message' => $e->getMessage()]);
+	/* === Handle preflight OPTIONS requests === */
+	if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+		http_response_code(200);
+		exit();
 	}
 	
-			if ($path === '/patients' && $method === 'GET') {
-					$controller = new PatientController($pdo);
-					$controlller->index();
-			} elseif (preg_match('#^/appointments#', $path)) {
-				$controller = new AppointmentController($pdo);
-				$controller->handleRequest($method, $input, $queryParams);
-			} else {
-				http_response_code(404);
-				echo json_encode(['error' => 'Endpoint not found']);
-			}
-		} catch (Exception $e) {
-			http_response_code(500);
-			echo json_encode(['error' => 'Server error', 'message' => $e->getMessage()]);
-		}
+	/* === Define base path content === */
+	define('BASE_PATH', dirname(__DIR__));
 	
-		break;
-	case strpos($uri,'api/appointments') === 0:
-		$controller = new AppointmentController($pdo)
-		$controller->handleRequest($method, $input, $queryParams);
-		break;
-	default:
-		http_response_code(404);
-		echo json_encode(['error' => 'Endpoint not found']);
-		break;
-	}
+	/* === load route dispatchar === */
+	require_once BASE_PATH . '/routes/api.php';
+	
+	
 	
