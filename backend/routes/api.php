@@ -1,61 +1,71 @@
 <?php
-	use App\Controllers\DoctorController;
-	use App\Core\Response;
+	require_once '../config/database.php';
+	require_once '../helpers/ResponseHelper.php';
 	
+	/* Import controller */
+	require_once '../controllers/DoctorController.php';
+	require_once '../controllers/PatientController.php';
+	require_once '../controllers/AppointmentController.php';
+	require_once '../controllers/LabTestController.php';
+	require_once '../controllers/MedicalRecordController.php';
+	require_once '../controllers/PrescriptionController.php';
+	require_once '../controllers/PharmacyController.php';
+	require_once '../controllers/PaymentController.php';
+	require_once '../controllers/InsuranceController.php';
 	
-	$uri = parse_url($_SERVER['REQUEST_URI'), PHP_URL_PATH);
+	/* Intialize database connection */
+	$pdo = require '../config/dbconnect.php';
+	
+	/* Parse request */
 	$method = $_SERVER['REQUEST_METHOD'];
-	$input = json_decode(file_get_contents('php://input', true);
+	$uri = trim($_SERVER['REQUEST_URI'],
+	$path = explode('/', $uri);
 	
-	/* Notmalize URI to prevent trailing slash issues */
-	$uri = rtrim($uri, '/');
+	/* Get input data */
+	$data = json_decode(file_get_contents("php://input"), true) ?? [];
+	$queryParams = $_GET;
 	
-	$controller = new DoctorController();
+	/* Route Dispatcher */
+	switch ($path[1] ?? null) {
+		case 'doctors':
+			(new DoctorController($pdo))->handleRequest($method, $data, $queryParams);
+			break;
 	
-	/* Route: GET /api/doctors */
-	if ($uri === '/api/doctors' && $method === 'GET') {
-		$controller->index();
-		
-		/* Route: POST/api/doctors */
-	} elseif ($uri === '/api/doctors' && $method === 'PSOT' ) {
-		$controller->store($input);
-		
-		/* Routes: /api/doctors/{id}  */
-	} elseif (preg_match('#^/api/doctors/(\d+)$#',  $uri, $matches)) {
-		
-		$id = $matches[1];
-		
-		switch ($method) {
-			case 'GET':
-			$controller->show($id);
+		case  'patients':
+			(new PatientController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
-		case 'PUT':
-			$input['doctor_id'] = $id;
-			$controller->update($input);
+			
+		case 'appointments':
+			(new AppointmentController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
-		case 'DELETE':
-			$controller->delete($id);
+			
+		case 'lab-tests':
+			(new LabTestController($pdo))->handleRequest($method, $data, $queryParams);
 			break;
-		default:
-			Response::json(405, ['message' => 'Method Not Allowed']);
+		
+		case 'medical-records':
+			(new MedicalRecordController))->handleRequest($method, $data, $queryParams);
 			break;
+			
+		case 'prescriptions':
+			(new PrescriptionController($pdo))->handleRequest($method, $data, $queryParams);
+			break; 
+			
+		case 'pharmacies':
+			(new PharmacyController($pdo))->handleRequest($method, $data, $queryParams);
+			break;
+			
+		case 'payments': 
+			(new PaymentController($pdo))->handleRequest($method, $data, $queryParams);
+			break;
+		
+		case 'insurance': 
+			(new InsuranceController($pdo))->handleRequest($method, $data, $queryParams);
+			break;
+			
+		default: 
+			sendResponse(404, ['message' => 'API endpoint not found']);
+			break;
+			
 		}
-	} else {
-		Response::json(404, ['message' => 'Route not found']);
-	}
-	
-		if ($method  === 'GET') {
-			$controller->show($id);
-		} elseif ($method === 'DELETE') {
-			$controller->delete($id);
-		} elseif ($method === 'PUT') {
-			$input['doctor_id'] = $id;
-			$controller->update($input);
-		}
-	} elseif ($url === '/api/doctors' && $method === 'POST') {
-		$controller->store($input);
-	} else {
-		\App\Core\Response::json(404, ['message' => 'Route not found']);
-	}
-	
-?>
+		
