@@ -13,7 +13,7 @@ Full-Stack-MMS-Directory-Structure/
 │   │   ├── medical_record.html
 │   │   └── profile.html
 │   │ 
-│	├── components/   
+│   ├── components/ 
 │   │   ├── navbar.html
 │   │   ├── sidebar.html
 │   │   ├── patient-card.html
