@@ -53,15 +53,15 @@ Full-Stack-MMS-Directory-Structure/
 │   │   ├── Doctors/                          
 │   │   │   ├── get-all.php  
 │   │   │   └── profile.php   
-│	│   │          
+│	│   │        
 │   │   ├── Appointments/                          
 │   │   │   ├── create.php  
 │   │   │   └── get-by-date.php 
-│	│	│
-│	│	└── records/
-│	│       ├── upload.php  
-│	│		└── get.php
-│   │
+│	│   │
+│   │   └── medical_records/  
+│   │       ├── upload.php                          
+│   │       └── get.php
+│   │   
 ├── app/                                        # Core application logic
 │	├── controllers/ 
 │   │   ├── AuthController.php
