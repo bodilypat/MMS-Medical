@@ -53,10 +53,10 @@ Full-Stack-MMS-Directory-Structure/
 │   │   ├── Doctors/                          
 │   │   │   ├── get-all.php  
 │   │   │   └── profile.php   
-│	│   │              
-│	│	├── appointemnts/
-│	│	│	├── create.php
-│	│	│	└── get-by-date.php
+│	│   │          
+│   │   ├── Appointments/                          
+│   │   │   ├── create.php  
+│   │   │   └── get-by-date.php 
 │	│	│
 │	│	└── records/
 │	│       ├── upload.php  
