@@ -40,10 +40,10 @@ Full-Stack-MMS-Directory-Structure/
 ├── backend/ 
 │   │
 │   ├── api/                                          # API endpoint for AJAX/front-end calls
-│	│   ├── auth/
-│	│   │	├── login.php  
-│	│   │	├── register.php  
-│	│	│	└── resetPassword.php
+│   │   ├── auth/
+│   │   │   ├── login.php   
+│   │   │   ├── register.php  
+│   │   │   └── resetPassword.php         
 │	│   │
 │	│   ├── patients/                      			  # Product management page
 │	│   │	├── get-all.php                         	
