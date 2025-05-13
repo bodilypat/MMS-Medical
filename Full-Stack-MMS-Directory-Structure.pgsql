@@ -1,9 +1,9 @@
 Full-Stack-MMS-Directory-Structure/
 │
 ├── Frontend/                      	 	
-│   ├── index.html                        	
-│	├── login.html
-│	├── register.html   
+│   ├── index.html     
+│   ├── login.html  
+│   ├── register.html                     	 
 │   │                     
 │   ├── pages/ 
 │   │   ├── dashboard.html
