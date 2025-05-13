@@ -45,10 +45,10 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   ├── register.php  
 │   │   │   └── resetPassword.php         
 │	│   │
-│	│   ├── patients/                      			  # Product management page
-│	│   │	├── get-all.php                         	
-│	│   │	├── create.php                          	                 
-│	│	│	└── update.php
+│   │   ├── Patients/                   			 
+│   │   │   ├── get-all.php  
+│   │   │   ├── create.php    
+│   │   │   └── profile.php                           	
 │	│   │
 │	│  	├── doctors/                          
 │	│   │	├── get-all.php   
