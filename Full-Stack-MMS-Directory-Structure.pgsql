@@ -49,10 +49,10 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   ├── get-all.php  
 │   │   │   ├── create.php    
 │   │   │   └── profile.php                           	
-│	│   │
-│	│  	├── doctors/                          
-│	│   │	├── get-all.php   
-│	│	│	└── profile.php    
+│   │   │
+│   │   ├── Doctors/                          
+│   │   │   ├── get-all.php  
+│   │   │   └── profile.php   
 │	│   │              
 │	│	├── appointemnts/
 │	│	│	├── create.php
