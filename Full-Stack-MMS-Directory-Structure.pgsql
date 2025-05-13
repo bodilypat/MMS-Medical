@@ -35,13 +35,8 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │
 │   │   └── images/  
 │   │       ├── logo.png                          
-│   │       └── icon/
-│   │
-│	└── components/                             # Reuseable UI blocks (optional)
-│		├── header.html                         
-│		├── sidebar.html                       
-│		└── footer.html
-│                         
+│   │       └── icon
+│   │                         
 ├── backend/ 
 │   │
 │   ├── api/                                          # API endpoint for AJAX/front-end calls
