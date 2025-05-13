@@ -62,21 +62,22 @@ Full-Stack-MMS-Directory-Structure/
 │   │       ├── upload.php                          
 │   │       └── get.php
 │   │   
-├── app/                                        # Core application logic
-│	├── controllers/ 
-│   │   ├── AuthController.php
-│   │   ├── PatientController.php
-│   │   ├── DoctorController.php
-│	│	├── AppointmentControlle.php
-│	│	└── RecordController.php 
-│	│	
-│	├── models/                                
-│	│   ├── User.php
-│	│   ├── Patient.php
-│	│   ├── Doctor.php
-│	│   ├── Appointment.php
-│	│	└── MedicalRecord.php 
-│	│	
+│   ├── api/                                
+│   │   ├── controllers/
+│   │   │   ├── AuthController.php
+│   │   │   ├── PatientController.php      
+│   │   │   ├── DoctorController.php  
+│   │   │   ├── AppointmentController.php
+│   │   │   └── recordController.php 
+│	│   │    
+│   │   ├── models/     
+│   │   │   ├── User.php
+│   │   │   ├── Patient.php
+│   │   │   ├── Doctors.php
+│   │   │   ├── Appointment.php
+│   │   │   └── Record.php
+│	│   │   
+│	│   │    
 │	└── helpers/                               
 │	    ├── Auth.php
 │	    ├── Validator.php
