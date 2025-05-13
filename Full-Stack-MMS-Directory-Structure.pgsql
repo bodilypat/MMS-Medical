@@ -69,15 +69,14 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   ├── DoctorController.php  
 │   │   │   ├── AppointmentController.php
 │   │   │   └── recordController.php 
-│	│   │    
+│   │   │    
 │   │   ├── models/     
 │   │   │   ├── User.php
 │   │   │   ├── Patient.php
 │   │   │   ├── Doctors.php
 │   │   │   ├── Appointment.php
 │   │   │   └── Record.php
-│	│   │   
-│	│   │    
+│   │   │    
 │	└── helpers/                               
 │	    ├── Auth.php
 │	    ├── Validator.php
