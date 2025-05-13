@@ -44,7 +44,7 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   ├── login.php   
 │   │   │   ├── register.php  
 │   │   │   └── resetPassword.php         
-│	│   │
+│   │   │
 │   │   ├── Patients/                   			 
 │   │   │   ├── get-all.php  
 │   │   │   ├── create.php    
