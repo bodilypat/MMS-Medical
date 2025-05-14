@@ -84,7 +84,7 @@ Full-Stack-MMS-Directory-Structure/
 │	    ├── Auth.php
 │	    ├── Validator.php
 │	    ├── Response.php
-│	 	└── Logger.php                         
+│	 	└── logger.php                     
 │	
 ├── config/
 │	├── config.php                              
