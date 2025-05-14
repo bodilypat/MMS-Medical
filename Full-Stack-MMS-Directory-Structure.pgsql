@@ -1,56 +1,60 @@
 Full-Stack-MMS-Directory-Structure/
 │
-├── Frontend/                      	 	
-│   ├── index.html     
-│   ├── login.html  
-│   ├── register.html                     	 
-│   │                     
-│   ├── pages/ 
-│   │   ├── dashboard.html
-│   │   ├── patient.html
-│   │   ├── doctors.html
-│   │   ├── appointment.html
-│   │   ├── medical_record.html
-│   │   └── profile.html
-│   │ 
-│   ├── components/ 
-│   │   ├── navbar.html
-│   │   ├── sidebar.html
-│   │   ├── patient-card.html
-│   │   └── appointment-form.html
-│   │                                                  
-│   │
-│   ├── assets/                                 
+├── Frontend/  
+│   │                      	 	
+│   ├── public/ 
+│   │   │   
 │   │   ├── css/
-│   │   │   ├── style.css
+│   │   │   ├── main.css
 │   │   │   ├── dashboard.css
 │   │   │   └── form.css
-│   │   │
+│   │   │  
 │   │   ├── js/
-│   │   │   ├── auth.js    
-│   │   │   ├── main.js 
+│   │   │   ├── main.js
+│   │   │   ├── auth.js
+│   │   │   ├── patients.js 
 │   │   │   ├── appointments.js 
-│   │   │   ├── patients.js                      
-│   │   │   └── utils.js                    
-│   │   │
-│   │   └── images/  
-│   │       ├── logo.png                          
-│   │       └── icon
-│   │                         
+│   │   │   └── utils.js
+│   │   │  
+│   │   └── images/
+│   │       ├── logo.png  
+│   │       └── icons/                          	 
+│   │                     
+│   ├── views/ 
+│   │   ├── auth/
+│   │   │   ├── login.html
+│   │   │   ├── register.html
+│   │   │   └── reset-password.html
+│   │   ├── dashboards/
+│   │   │   ├── dashboard.html
+│   │   │   ├── patient.html
+│   │   │   ├── doctor.html
+│   │   │   ├── appointment.html
+│   │   │   ├── medical_record.html
+│   │   │   └── profile.html
+│   │   └── components/
+│   │       ├── navbar.html
+│   │       ├── sidebar.html
+│   │       ├── patient-card.html
+│   │       └── appointment-form.html
+│   │ 
+│	└── index.html
+│	
+                    
 ├── backend/ 
 │   │
 │   ├── api/                                          # API endpoint for AJAX/front-end calls
 │   │   ├── auth/
 │   │   │   ├── login.php   
 │   │   │   ├── register.php  
-│   │   │   └── resetPassword.php         
+│   │   │   └── reset-password.php         
 │   │   │
-│   │   ├── Patients/                   			 
+│   │   ├── patients/                   			 
 │   │   │   ├── get-all.php  
 │   │   │   ├── create.php    
 │   │   │   └── profile.php                           	
 │   │   │
-│   │   ├── Doctors/                          
+│   │   ├── doctors/                          
 │   │   │   ├── get-all.php  
 │   │   │   └── profile.php   
 │   │   │       
@@ -58,11 +62,10 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   ├── create.php  
 │   │   │   └── get-by-date.php 
 │   │   │
-│   │   └── medical_records/  
-│   │       ├── upload.php                          
-│   │       └── get.php
-│   │   
-│   ├── api/                                
+│   │   ├── medical-records/                          
+│   │   │   ├── upload.php  
+│   │   │   └── get.php 
+│   │   │                     
 │   │   ├── controllers/
 │   │   │   ├── AuthController.php
 │   │   │   ├── PatientController.php      
