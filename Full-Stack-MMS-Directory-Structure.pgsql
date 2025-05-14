@@ -39,8 +39,7 @@ Full-Stack-MMS-Directory-Structure/
 │   │       └── appointment-form.html
 │   │ 
 │	└── index.html
-│	
-                    
+│	                   
 ├── backend/ 
 │   │
 │   ├── api/                                          # API endpoint for AJAX/front-end calls
