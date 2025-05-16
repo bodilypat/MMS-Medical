@@ -3,38 +3,44 @@ Full-Stack-MMS-Directory-Structure/
 ├── Frontend/  
 │   │                      	 	
 │   ├── public/ 
-│   ├── login.html
-│   ├── register.html
 │   ├── pages/
+│   │   ├── auth/
+│   │   │   ├── login.html 
+│   │   │   └── register.html
 │   │   │   
 │   │   ├── dashboard/
 │   │   │   ├── admin.html                 #Key Pages Used
 │   │   │   ├── doctor.html
 │   │   │   └── patient.html
 │   │   │  
-│   │   ├── users/
-│   │   │   └── patient.html
 │   │   ├── patients/
 │   │   │   ├── patient-list.html
 │   │   │   ├── patient-profile.html
 │   │   │   └── patient-edit.html
+│   │   │  
 │   │   ├── doctors/
 │   │   │   ├── doctor-list.html
 │   │   │   ├── doctor-profile.html
 │   │   │   └── doctor-schedule.html
+│   │   │  
 │   │   ├── appointments/
 │   │   │   ├── appointment-list.html
 │   │   │   └── appointment-form.html
+│   │   │  
 │   │   ├── records/
 │   │   │   ├── medical-records.html
 │   │   │   └── record-detail.html
+│   │   │  
 │   │   ├── prescriptions/
 │   │   │   └── prescription-list.html
+│   │   │  
 │   │   ├── lab-tests/
 │   │   │   └── lab-tests.html
+│   │   │  
 │   │   ├── billing/
 │   │   │   ├── payments.html
 │   │   │   └── invoice-detail.html
+│   │   │  
 │   │   ├── insurance/
 │   │   │   └── pharmacy-directory.html
 │   │   │  
@@ -45,9 +51,9 @@ Full-Stack-MMS-Directory-Structure/
 │   ├── assets/ 
 │   │   ├── css/
 │   │   │   ├── main.css
-│   │   │   ├── auth.css
-│   │   │   ├── dashboard.css
 │   │   │   └── modules/
+│   │   │   	├── auth.css
+│   │   │   	├── dashboard.css
 │   │   │   	├── forms.css
 │   │   │       ├── tables.css
 │   │   │       └── modal.css    
@@ -59,9 +65,9 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │       ├── patient.js
 │   │   │   	├── doctors.js
 │   │   │  	    ├── appointments.js
-│   │   │   	├── medical_records.js
-│   │   │   	├── lab_tests.js
+│   │   │   	├── records.js
 │   │   │   	├── priscriptions.js
+│   │   │   	├── lab_tests.js
 │   │   │   	├── pharmacy.js 
 │   │   │   	├── insurance.js 
 │   │   │       └── payments.js.css   
@@ -80,9 +86,9 @@ Full-Stack-MMS-Directory-Structure/
 │   │   ├── navbar.html
 │   │   └── modal.html
 │   ├── data/
-│   │   ├── patients.html
-│   │   ├── doctors.html
-│   │   └── appointments.html
+│   │   ├── patients.json
+│   │   ├── doctors.json
+│   │   └── appointments.json
 │   │   
 │   ├── uploads/
 │   ├── .gitignore
@@ -118,14 +124,24 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   ├── PatientController.php      
 │   │   │   ├── DoctorController.php  
 │   │   │   ├── AppointmentController.php
-│   │   │   └── recordController.php 
+│   │   │   ├── RecordController.php
+│   │   │   ├── PrescriptionController.php
+│   │   │   ├── LabController.php
+│   │   │   ├── BillingController.php
+│   │   │   ├── InsuranceController.php
+│   │   │   └── PaymentController.php 
 │   │   │    
 │   │   ├── models/     
 │   │   │   ├── User.php
 │   │   │   ├── Patient.php
 │   │   │   ├── Doctors.php
 │   │   │   ├── Appointment.php
-│   │   │   └── Record.php
+│   │   │   ├── Records.php
+│   │   │   ├── prescription.php
+│   │   │   ├── Labs.php
+│   │   │   ├── Billing.php
+│   │   │   ├── Insurance.php
+│   │   │   └── Payment.php
 │   │   │    
 │	└── helpers/                               
 │	    ├── Auth.php
