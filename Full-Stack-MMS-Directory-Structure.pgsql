@@ -3,42 +3,90 @@ Full-Stack-MMS-Directory-Structure/
 ├── Frontend/  
 │   │                      	 	
 │   ├── public/ 
+│   ├── login.html
+│   ├── register.html
+│   ├── pages/
 │   │   │   
+│   │   ├── dashboard/
+│   │   │   ├── admin.html                 #Key Pages Used
+│   │   │   ├── doctor.html
+│   │   │   └── patient.html
+│   │   │  
+│   │   ├── users/
+│   │   │   └── patient.html
+│   │   ├── patients/
+│   │   │   ├── patient-list.html
+│   │   │   ├── patient-profile.html
+│   │   │   └── patient-edit.html
+│   │   ├── doctors/
+│   │   │   ├── doctor-list.html
+│   │   │   ├── doctor-profile.html
+│   │   │   └── doctor-schedule.html
+│   │   ├── appointments/
+│   │   │   ├── appointment-list.html
+│   │   │   └── appointment-form.html
+│   │   ├── records/
+│   │   │   ├── medical-records.html
+│   │   │   └── record-detail.html
+│   │   ├── prescriptions/
+│   │   │   └── prescription-list.html
+│   │   ├── lab-tests/
+│   │   │   └── lab-tests.html
+│   │   ├── billing/
+│   │   │   ├── payments.html
+│   │   │   └── invoice-detail.html
+│   │   ├── insurance/
+│   │   │   └── pharmacy-directory.html
+│   │   │  
+│   │   └── profile/
+│   │       ├── profile.html  
+│   │       └── settings.html                          	 
+│   │                     
+│   ├── assets/ 
 │   │   ├── css/
 │   │   │   ├── main.css
+│   │   │   ├── auth.css
 │   │   │   ├── dashboard.css
-│   │   │   └── form.css
-│   │   │  
+│   │   │   └── modules/
+│   │   │   	├── forms.css
+│   │   │       ├── tables.css
+│   │   │       └── modal.css    
 │   │   ├── js/
 │   │   │   ├── main.js
 │   │   │   ├── auth.js
-│   │   │   ├── patients.js 
-│   │   │   ├── appointments.js 
-│   │   │   └── utils.js
+│   │   │   ├── api.js
+│   │   │   └── modules/
+│   │   │       ├── patient.js
+│   │   │   	├── doctors.js
+│   │   │  		├── appointments.js
+│   │   │   	├── medical_records.js
+│   │   │   	├── lab_tests.js
+│   │   │   	├── priscriptions.js
+│   │   │   	├── pharmacy.js 
+│   │   │   	├── insurance.js 
+│   │   │       └── payments.js.css   
 │   │   │  
-│   │   └── images/
-│   │       ├── logo.png  
-│   │       └── icons/                          	 
-│   │                     
-│   ├── views/ 
-│   │   ├── auth/
-│   │   │   ├── login.html
-│   │   │   ├── register.html
-│   │   │   └── reset-password.html
-│   │   ├── dashboards/
-│   │   │   ├── dashboard.html
-│   │   │   ├── patient.html
-│   │   │   ├── doctor.html
-│   │   │   ├── appointment.html
-│   │   │   ├── medical_record.html
-│   │   │   └── profile.html
-│   │   └── components/
+│   │   ├── images/ 
+│   │   └── fonts/
 │   │       ├── navbar.html
 │   │       ├── sidebar.html
 │   │       ├── patient-card.html
 │   │       └── appointment-form.html
 │   │ 
-│	└── index.html
+│   ├── components/ 
+│   │   ├── header.html
+│   │   ├── footer.html
+│   │   ├── sidebar.html
+│   │   ├── navbar.html
+│   │   └── modal.html
+│   ├── data/
+│   │   ├── patients.html
+│   │   ├── doctors.html
+│   │   └── appointments.html
+│   │   
+│   ├── uploads/
+│   ├── .gitignore
+│	└── package.json
 │	                   
 ├── backend/ 
 │   │
