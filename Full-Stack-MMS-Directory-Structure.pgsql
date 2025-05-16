@@ -64,13 +64,13 @@ Full-Stack-MMS-Directory-Structure/
 │   │   │   └── modules/
 │   │   │       ├── patient.js
 │   │   │   	├── doctors.js
-│   │   │  	    ├── appointments.js
+│   │   │   	├── appointments.js
 │   │   │   	├── records.js
 │   │   │   	├── priscriptions.js
 │   │   │   	├── lab_tests.js
 │   │   │   	├── pharmacy.js 
 │   │   │   	├── insurance.js 
-│   │   │       └── payments.js.css   
+│   │   │       └── payments.js  
 │   │   │  
 │   │   ├── images/ 
 │   │   └── fonts/
@@ -147,7 +147,7 @@ Full-Stack-MMS-Directory-Structure/
 │	    ├── Auth.php
 │	    ├── Validator.php
 │	    ├── Response.php
-│	 	└── logger.php                     
+│	 	└── logger.php                   
 │	
 ├── config/
 │	├── config.php                              
