@@ -1,5 +1,11 @@
 <?php
-	class MidicalRecord {
+	namespace App\Models
+	
+	use App\Core\Database;
+	use PDO;
+	use PDOException;
+	
+	class MedicalRecord {
 		private PDO $pdo;
 		
 		public function __construct(PDO $pdo) {
@@ -32,14 +38,14 @@
 		
 		/* Create new medical record */
 		public function create(array $data): bool {
-			if (!$this->isValidCreateData($data) {
+			if (!$this->isValidCreateData($data)) {
 				return false;
 			}
 			try {
 					$stmt = $this->pdo->prepare("
 						INSERT INTO medical_records (
 							patient_id, appointment_id, diagnosis, treatment_plan, note, status,
-							created_by, update_by, attachments
+							created_by, updated_by, attachments
 						)
 						VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?)
 					");
@@ -81,8 +87,8 @@
 						$data['treatment_plan'] ?? null,
 						$data['note'] ?? null,
 						$data['status'] ?? 'Active',
-						$data['updated_by'],
-						$data['attachments'],
+						$data['updated_by'] ?? null,
+						$data['attachments'] ?? null,
 						$data['record_id'],
 					]);
 			} catch (PDOException $e) {
@@ -96,7 +102,7 @@
 					$stmt = $this->pdo->prepare("DELETE FROM medical_records WHERE record_id = ?");
 					return $stmt->execute([$recordId]);
 			} catch (PDOException $e) {
-				error_log($e->message());
+				error_log($e->getMessage());
 				return false;
 			}
 		}
