@@ -10,7 +10,7 @@
 		public function getAll(): array {
 			try {
 					$stmt = $this->pdo->query("SELECT * FROM appointments");
-					return $this->fetchAll(PDO::FETCH_ASSOC);
+					return $stmt->fetchAll(PDO::FETCH_ASSOC);
 			} catch (PDOException $e) {
 				error_log($e->getMessage());
 				return [];
@@ -60,7 +60,7 @@
 			try {
 					$stmt = $this->pdo->prepare("
 						UPDATE appointments
-						SET patient_id = ?, appointment_date = ?, status = ?
+						SET patient_id = ?, doctor_id = ?, appointment_date = ?, status = ?
 						WHERE appointment_id = ?
 					");
 					return $stmt->execute([
@@ -92,7 +92,7 @@
 			return isset($data['patient_id'], $data['doctor_id'], $data['appointment_date']);
 		}
 		
-		/* Validate data for appointment udpate */
+		/* Validate data for appointment update */
 		private function isValidUpdateData(array $data):bool {
 			return isset($data['appointment_id'], 
 			$data['patient_id'], $data['doctor_id'], 
