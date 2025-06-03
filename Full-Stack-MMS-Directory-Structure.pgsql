@@ -1,162 +1,144 @@
 Full-Stack-MMS-Directory-Structure/
 │
-├── Frontend/  
-│   │                      	 	
-│   ├── public/ 
-│   ├── pages/
+├── frontend/  
+│   ├── public/                          # Public root, assets served from here
+│   ├── pages/                           # HTML views grouped by domain
 │   │   ├── auth/
-│   │   │   ├── login.html 
+│   │   │   ├── login.html
 │   │   │   └── register.html
-│   │   │   
 │   │   ├── dashboard/
-│   │   │   ├── admin.html                 #Key Pages Used
+│   │   │   ├── admin.html
 │   │   │   ├── doctor.html
 │   │   │   └── patient.html
-│   │   │  
 │   │   ├── patients/
-│   │   │   ├── patient-list.html
-│   │   │   ├── patient-profile.html
-│   │   │   └── patient-edit.html
-│   │   │  
+│   │   │   ├── list.html
+│   │   │   ├── profile.html
+│   │   │   └── edit.html
 │   │   ├── doctors/
-│   │   │   ├── doctor-list.html
-│   │   │   ├── doctor-profile.html
-│   │   │   └── doctor-schedule.html
-│   │   │  
+│   │   │   ├── list.html
+│   │   │   ├── profile.html
+│   │   │   └── schedule.html
 │   │   ├── appointments/
-│   │   │   ├── appointment-list.html
-│   │   │   └── appointment-form.html
-│   │   │  
+│   │   │   ├── list.html
+│   │   │   └── form.html
 │   │   ├── records/
-│   │   │   ├── medical-records.html
-│   │   │   └── record-detail.html
-│   │   │  
+│   │   │   ├── list.html
+│   │   │   └── detail.html
 │   │   ├── prescriptions/
-│   │   │   └── prescription-list.html
-│   │   │  
+│   │   │   └── list.html
 │   │   ├── lab-tests/
-│   │   │   └── lab-tests.html
-│   │   │  
+│   │   │   └── index.html
 │   │   ├── billing/
 │   │   │   ├── payments.html
-│   │   │   └── invoice-detail.html
-│   │   │  
+│   │   │   └── invoice.html
 │   │   ├── insurance/
-│   │   │   └── pharmacy-directory.html
-│   │   │  
+│   │   │   └── pharmacy.html
 │   │   └── profile/
-│   │       ├── profile.html  
-│   │       └── settings.html                          	 
-│   │                     
-│   ├── assets/ 
+│   │       ├── profile.html
+│   │       └── settings.html
+│   │
+│   ├── assets/                         
 │   │   ├── css/
 │   │   │   ├── main.css
 │   │   │   └── modules/
-│   │   │   	├── auth.css
-│   │   │   	├── dashboard.css
-│   │   │   	├── forms.css
+│   │   │       ├── auth.css
+│   │   │       ├── dashboard.css
+│   │   │       ├── forms.css
 │   │   │       ├── tables.css
-│   │   │       └── modal.css    
+│   │   │       └── modal.css
 │   │   ├── js/
 │   │   │   ├── main.js
-│   │   │   ├── auth.js
 │   │   │   ├── api.js
+│   │   │   ├── auth.js
 │   │   │   └── modules/
-│   │   │       ├── patient.js
-│   │   │   	├── doctors.js
-│   │   │   	├── appointments.js
-│   │   │   	├── records.js
-│   │   │   	├── priscriptions.js
-│   │   │   	├── lab_tests.js
-│   │   │   	├── pharmacy.js 
-│   │   │   	├── insurance.js 
-│   │   │       └── payments.js  
-│   │   │  
-│   │   ├── images/ 
+│   │   │       ├── patients.js
+│   │   │       ├── doctors.js
+│   │   │       ├── appointments.js
+│   │   │       ├── records.js
+│   │   │       ├── prescriptions.js
+│   │   │       ├── lab-tests.js
+│   │   │       ├── pharmacy.js
+│   │   │       ├── insurance.js
+│   │   │       └── payments.js
+│   │   ├── images/
 │   │   └── fonts/
-│   │       ├── navbar.html
-│   │       ├── sidebar.html
-│   │       ├── patient-card.html
-│   │       └── appointment-form.html
-│   │ 
-│   ├── components/ 
+│   │
+│   ├── components/                     # Reusable HTML includes
 │   │   ├── header.html
 │   │   ├── footer.html
 │   │   ├── sidebar.html
 │   │   ├── navbar.html
 │   │   └── modal.html
+│   │
 │   ├── data/
 │   │   ├── patients.json
 │   │   ├── doctors.json
 │   │   └── appointments.json
-│   │   
-│   ├── uploads/
-│   ├── .gitignore
-│	└── package.json
-│	                   
-├── backend/ 
 │   │
-│   ├── api/                                          # API endpoint for AJAX/front-end calls
+│   ├── uploads/                        # Local file uploads (images, documents)
+│   ├── .gitignore
+│   └── package.json                    # Optional, if you manage frontend dependencies
+│
+├── backend/
+│   ├── api/                            # Entry points (AJAX & REST)
 │   │   ├── auth/
-│   │   │   ├── login.php   
-│   │   │   ├── register.php  
-│   │   │   └── reset-password.php         
-│   │   │
-│   │   ├── patients/                   			 
-│   │   │   ├── get-all.php  
-│   │   │   ├── create.php    
-│   │   │   └── profile.php                           	
-│   │   │
-│   │   ├── doctors/                          
-│   │   │   ├── get-all.php  
-│   │   │   └── profile.php   
-│   │   │       
-│   │   ├── Appointments/                          
-│   │   │   ├── create.php  
-│   │   │   └── get-by-date.php 
-│   │   │
-│   │   ├── medical-records/                          
-│   │   │   ├── upload.php  
-│   │   │   └── get.php 
-│   │   │                     
-│   │   ├── controllers/
-│   │   │   ├── AuthController.php
-│   │   │   ├── PatientController.php      
-│   │   │   ├── DoctorController.php  
-│   │   │   ├── AppointmentController.php
-│   │   │   ├── RecordController.php
-│   │   │   ├── PrescriptionController.php
-│   │   │   ├── LabController.php
-│   │   │   ├── BillingController.php
-│   │   │   ├── InsuranceController.php
-│   │   │   └── PaymentController.php 
-│   │   │    
-│   │   ├── models/     
-│   │   │   ├── User.php
-│   │   │   ├── Patient.php
-│   │   │   ├── Doctors.php
-│   │   │   ├── Appointment.php
-│   │   │   ├── Records.php
-│   │   │   ├── prescription.php
-│   │   │   ├── Labs.php
-│   │   │   ├── Billing.php
-│   │   │   ├── Insurance.php
-│   │   │   └── Payment.php
-│   │   │    
-│	└── helpers/                               
-│	    ├── Auth.php
-│	    ├── Validator.php
-│	    ├── Response.php
-│       └── Logger.php                  
-│	
+│   │   │   ├── login.php
+│   │   │   ├── register.php
+│   │   │   └── reset-password.php
+│   │   ├── patients/
+│   │   │   ├── get-all.php
+│   │   │   ├── create.php
+│   │   │   └── profile.php
+│   │   ├── doctors/
+│   │   │   ├── get-all.php
+│   │   │   └── profile.php
+│   │   ├── appointments/
+│   │   │   ├── create.php
+│   │   │   └── get-by-date.php
+│   │   ├── medical-records/
+│   │   │   ├── upload.php
+│   │   │   └── get.php
+│   │   └── prescriptions/
+│   │       ├── create.php
+│   │       └── get.php
+│
+│   ├── controllers/                    # Logic layer
+│   │   ├── AuthController.php
+│   │   ├── PatientController.php
+│   │   ├── DoctorController.php
+│   │   ├── AppointmentController.php
+│   │   ├── RecordController.php
+│   │   ├── PrescriptionController.php
+│   │   ├── LabController.php
+│   │   ├── BillingController.php
+│   │   ├── InsuranceController.php
+│   │   └── PaymentController.php
+│
+│   ├── models/                         # Data layer
+│   │   ├── User.php
+│   │   ├── Patient.php
+│   │   ├── Doctor.php
+│   │   ├── Appointment.php
+│   │   ├── Record.php
+│   │   ├── Prescription.php
+│   │   ├── Lab.php
+│   │   ├── Billing.php
+│   │   ├── Insurance.php
+│   │   └── Payment.php
+│
+│   └── helpers/                        # Utility classes
+│       ├── Auth.php
+│       ├── Validator.php
+│       ├── Response.php
+│       └── Logger.php
+│
 ├── config/
-│	├── config.php                              
-│	└── database.php                            
-│                           
-├── uploads/
-├── logs/
-├── vendor/
-├── composer.json
-├── .env
-│	
-└── README.md  
+│   ├── config.php                      # Global configuration (timezone, app name, etc.)
+│   └── database.php                    # DB connection settings
+│
+├── uploads/                            # Backend file uploads (PDFs, medical scans, etc.)
+├── logs/                               # Error and access logs
+├── vendor/                             # Composer dependencies (if any)
+├── composer.json                       # Backend dependencies
+├── .env                                # Environment variables (DB credentials, API keys)
+└── README.md
