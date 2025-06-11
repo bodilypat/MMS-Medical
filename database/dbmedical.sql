@@ -32,6 +32,34 @@ CREATE TABLE IF NOT EXISTS patients (
     status ENUM('active', 'inactive', 'deceased') DEFAULT 'active'
 );
 
+
+-- Table to store appointment information
+CREATE TABLE IF NOT EXISTS appointments (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATETIME NOT NULL,
+	check_in_time DATETIME DEFAULT NULL,
+	check_out_time DATETIME DEFAULT NULL,
+    reason_for_visit VARCHAR(255) NOT NULL,
+	appointment_type ENUM('Consultation','Follow-up','Surgery','Lab Test','Emergency') DEFAULT 'Consultation' NOT NULL,
+    status ENUM('Scheduled', 'Checked-In', 'Cancelled', 'No-Show') DEFAULT 'Scheduled' NOT NULL,
+    duration_minutes INT (duration_minutes > 0),
+   
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE SET NULL,
+	FOREIGN KEY (created_by) REFERENCES users(id),
+	FOREIGN KEY (updated_by) REFERENCES users(id),
+	
+    INDEX idx_patient_id (patient_id),
+    INDEX idx_doctor_id (doctor_id),
+	INDEX idx_appointment_date (appointment_date),
+    CONSTRAINT check_appointment_date CHECK (appointment_date >= CURRENT_TIMESTAMP)
+);
+
 -- Table to store doctor information
 CREATE TABLE IF NOT EXISTS doctors (
     doctor_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,25 +78,6 @@ CREATE TABLE IF NOT EXISTS doctors (
     CONSTRAINT check_phone_number CHECK (phone_number REGEXP '^[0-9]{10,15}$')
 );
 
--- Table to store appointment information
-CREATE TABLE IF NOT EXISTS appointments (
-    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
-    patient_id INT NOT NULL,
-    doctor_id INT NOT NULL,
-    appointment_date DATETIME NOT NULL,
-    reason_for_visit VARCHAR(255),
-    status ENUM('Scheduled', 'Completed', 'Cancelled', 'No-Show') DEFAULT 'Scheduled',
-    duration INT,
-    appointment_type VARCHAR(100),
-    notes TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id),
-    INDEX (patient_id),
-    INDEX (doctor_id),
-    CONSTRAINT check_appointment_date CHECK (appointment_date >= CURRENT_TIMESTAMP)
-);
 
 -- Table to store medical records of patients
 CREATE TABLE IF NOT EXISTS medical_records (
