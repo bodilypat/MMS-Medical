@@ -63,31 +63,22 @@ CREATE TABLE IF NOT EXISTS appointments (
 -- Table to store doctor information
 CREATE TABLE IF NOT EXISTS doctors (
     doctor_id INT AUTO_INCREMENT PRIMARY KEY,
-	
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-	
 	full_name AS (CONCAT(first_name, '' , Last_name)) STORED,
-	
     specialization VARCHAR(100) NOT NULL,
 	department VARCHAR(100),
-	
     email VARCHAR(150) UNIQUE NOT NULL,
     phone_number VARCHAR(20) UNIQUE NOT NULL,
-	
 	birthdate DATE,
 	gender ENUM('male','female','other') DEFAULT 'other',
-	
 	address VARCHAR(255),
-	
 	status ENUM('active', 'inactive', 'retired','on_leave') DEFAULT 'active',
 	hire_date DATE DEFAULT CURRENT_DATE,
 	retirement_date DATE DEFAULT NULL,
-	
 	notes TEXT,
 	created_by INT,
 	updated_by INT, 
-	
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
