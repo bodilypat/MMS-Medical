@@ -148,28 +148,21 @@ CREATE TABLE IF NOT EXISTS lab_tests (
     CONSTRAINT uc_patient_app_test UNIQUE (patient_id, appointment_id, test_name)
 );
 
--- Table to store prescriptions given to patients
-CREATE TABLE IF NOT EXISTS prescriptions (
-    prescription_id INT AUTO_INCREMENT PRIMARY KEY,
-    record_id INT NOT NULL,
-    medication_name VARCHAR(255) NOT NULL,
-    dosage VARCHAR(50) NOT NULL,
-    frequency VARCHAR(50) NOT NULL,
+-- Table to store insurance details of patients
+CREATE TABLE IF NOT EXISTS insurance (
+    insurance_id INT AUTO_INCREMENT PRIMARY KEY,
+    provider_name VARCHAR(255) NOT NULL,
+    policy_number VARCHAR(50) NOT NULL UNIQUE,
+    coverage_type ENUM('Full', 'Partial') DEFAULT 'Partial',
+    coverage_amount DECIMAL(10, 2) DEFAULT 0.00,
+    patient_id INT NOT NULL,
     start_date DATE NOT NULL,
-    end_date DATE,
-    instructions TEXT,
-    status ENUM('Active', 'Completed', 'Expired', 'Cancelled') DEFAULT 'Active',
+    end_date DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    created_by INT,
-    updated_by INT,
-    FOREIGN KEY (record_id) REFERENCES medical_records(record_id),
-    INDEX (record_id),
-    INDEX (medication_name),
-    CONSTRAINT check_dosage CHECK (CHAR_LENGTH(dosage) <= 50)
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
+    CONSTRAINT chk_dates CHECK (start_date <= end_date)
 );
-
-
 
 -- Table to store payment information
 CREATE TABLE IF NOT EXISTS payments (
@@ -193,6 +186,43 @@ CREATE TABLE IF NOT EXISTS payments (
     CONSTRAINT uc_patient_appointment UNIQUE (patient_id, appointment_id)
 );
 
+-- Table to store prescriptions given to patients
+CREATE TABLE IF NOT EXISTS prescriptions (
+    prescription_id INT AUTO_INCREMENT PRIMARY KEY,
+    record_id INT NOT NULL,
+	patient_id INT NOT NULL,
+	doctor_id INT NOT NULL,
+	appointment_id INT, 
+    medication_name VARCHAR(150) NOT NULL,
+	generic_name VARCHAR(150),
+    dosage VARCHAR(50) NOT NULL,
+    unit ENUM('mg','ml','g','units','tablet','capsule','drop','patch') DEFAULT 'mg',
+	frequency VARCHAR(100) NOT NULL,
+	route ENUM ('Oral','IV','IM','Topical','Subcutaneous','Nasal','Other') DEFAULT 'Oral',
+	duration_days INT,
+	start_date DATE NOT NULL,
+	end_date DATE,
+    instructions TEXT,
+	notes TEXTS,
+	refill_count INT DEFAULT 0,
+    status ENUM('Active', 'Completed', 'Expired', 'Cancelled') DEFAULT 'Active',
+	created_by INT,
+	updated_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+
+    FOREIGN KEY (record_id) REFERENCES medical_records(record_id) NO DELETE CASCADE,
+	FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
+	FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id),
+	FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id),
+	FOREIGN KEY (create_by) REFERENCES users(id),
+	FOREIGN KEY (updated_by) REFERENCES users(id),
+	
+	INDEX idx_record_id (record_id),
+	INDEX idx_medication_name (medication_name),
+	INDEX idx_status (status)
+);
+
 -- Table to store pharmacy information
 CREATE TABLE IF NOT EXISTS pharmacies (
     pharmacy_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -205,18 +235,3 @@ CREATE TABLE IF NOT EXISTS pharmacies (
     CONSTRAINT chk_phone_number CHECK (phone_number REGEXP '^[0-9]+$')
 );
 
--- Table to store insurance details of patients
-CREATE TABLE IF NOT EXISTS insurance (
-    insurance_id INT AUTO_INCREMENT PRIMARY KEY,
-    provider_name VARCHAR(255) NOT NULL,
-    policy_number VARCHAR(50) NOT NULL UNIQUE,
-    coverage_type ENUM('Full', 'Partial') DEFAULT 'Partial',
-    coverage_amount DECIMAL(10, 2) DEFAULT 0.00,
-    patient_id INT NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
-    CONSTRAINT chk_dates CHECK (start_date <= end_date)
-);
