@@ -151,17 +151,30 @@ CREATE TABLE IF NOT EXISTS lab_tests (
 -- Table to store insurance details of patients
 CREATE TABLE IF NOT EXISTS insurance (
     insurance_id INT AUTO_INCREMENT PRIMARY KEY,
+	patient_id INT NOT NULL,
     provider_name VARCHAR(255) NOT NULL,
-    policy_number VARCHAR(50) NOT NULL UNIQUE,
-    coverage_type ENUM('Full', 'Partial') DEFAULT 'Partial',
-    coverage_amount DECIMAL(10, 2) DEFAULT 0.00,
-    patient_id INT NOT NULL,
+    policy_number VARCHAR(50) NOT NULL,
+	plan_name VARCHAR(100),
+	group_number VARCHAR(50),
+    coverage_type ENUM('Full', 'Partial','nONE') DEFAULT 'Partial',
+	coverage_percentage DECIMAL(5,2) DEFAULT 0.00 CHECK (coverage_percentage BETWEEN 0 AND 100),
+    coverage_amount DECIMAL(10, 2) DEFAULT 0.00 CHECK (coverage_amount >= 0),
+	is_primary BOOLEAN DEFAULT TRUE,
+	status ENUM('Active','Expired','Terminated','Pending Verification') DEFAULT 'Active',
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	renwal_date DATE,
+	contact_number VARCHAR(20),
+	provider_email VARCHAR(100),
+	notes TEXT,
+	created_by INT,
+	updated_by INT,
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
-    CONSTRAINT chk_dates CHECK (start_date <= end_date)
+	FOREIGN KEY (created_by) REFERENCES users(id),
+	FOREIGN KEY (updated_by) REFERENCES users(id),
+	
+    CONSTRAINT uc_policy_per_patient UNIQUE (policy_number, patient_id),
+	CONSTRAINT chk_valid_dates CHECK (start_date <= end_date) 
 );
 
 -- Table to store payment information
