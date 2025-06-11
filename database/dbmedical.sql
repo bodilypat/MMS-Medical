@@ -4,11 +4,12 @@ USE MEDICAL;
 
 -- Table to store user information
 CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Corrected PRIMARY to PRIMARY KEY
+    id INT AUTO_INCREMENT PRIMARY KEY,  
     username VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'user') DEFAULT 'user' NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'doctor','norse','receptionist','lab_technician','user') DEFAULT 'user' NOT NULL,
+	is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 );
