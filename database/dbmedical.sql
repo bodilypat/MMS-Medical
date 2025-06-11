@@ -63,19 +63,42 @@ CREATE TABLE IF NOT EXISTS appointments (
 -- Table to store doctor information
 CREATE TABLE IF NOT EXISTS doctors (
     doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+	
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
+	
+	full_name AS (CONCAT(first_name, '' , Last_name)) STORED,
+	
     specialization VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+	department VARCHAR(100),
+	
+    email VARCHAR(150) UNIQUE NOT NULL,
     phone_number VARCHAR(20) UNIQUE NOT NULL,
-    department VARCHAR(100),
-    birthdate DATE,
-    address VARCHAR(255),
-    status ENUM('active', 'inactive', 'retired') DEFAULT 'active',
-    notes TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT check_phone_number CHECK (phone_number REGEXP '^[0-9]{10,15}$')
+	
+	birthdate DATE,
+	gender ENUM('male','female','other') DEFAULT 'other',
+	
+	address VARCHAR(255),
+	
+	status ENUM('active', 'inactive', 'retired','on_leave') DEFAULT 'active',
+	hire_date DATE DEFAULT CURRENT_DATE,
+	retirement_date DATE DEFAULT NULL,
+	
+	notes TEXT,
+	created_by INT,
+	updated_by INT, 
+	
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+
+    CONSTRAINT chk_phone_format CHECK (phone_number REGEXP '^[0-9]{10,15}$'),
+	CONSTRAINT chk_birthdate_valid CHECK (birthdate <= CURRENT_DATE), 
+	
+	FOREIGN KEY (created_by) REFERENCES users(id),
+	FOREIGN KEY (updated_by) REFERENCES users(id),
+	
+	INDEX idx_specialization (specialization),
+	INDEX idx_status (status) 
 );
 
 
