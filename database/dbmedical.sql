@@ -115,6 +115,39 @@ CREATE TABLE IF NOT EXISTS medical_records (
     INDEX (appointment_id),
 );
 
+-- Table to store lab tests performed on patients
+CREATE TABLE IF NOT EXISTS lab_tests (
+    test_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    appointment_id INT NOT NULL,
+    test_name VARCHAR(150) NOT NULL,
+	test_code VARCHAR(50),
+	test_category ENUM('Blood','Imaging','Urine','Pathology','Genetic','Other') DEFAULT 'Other',
+    test_date DATE NOT NULL,
+	test_time TIME DEFAULT NULL,
+    result_summary TEXT,
+	result_details TEXT,
+	result_file_url VARCHAR(255),
+    test_status ENUM('Pending', 'In Progress', 'Completed', 'Failed','Cancelled') DEFAULT 'Pending' NOT NULL,
+	reviewed_by INT DEFAULT NULL,
+	created_by INT DEFAULT NULL,
+	updated_by INT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE,
+	FOREIGN KEY (created_by) REFERENCES users(id),
+	FOREIGN KEY (updated_by) REFERENCES users(id),
+	FOREIGN KEY (reviewed_by) REFERENCES users(id),
+	
+    INDEX idx_patient_id (patient_id),
+    INDEX idx_appointment_id (appointment_id),
+	INDEX idx_test_date (test_date),
+	INDEX idx_test_status (test_status),
+	
+    CONSTRAINT uc_patient_app_test UNIQUE (patient_id, appointment_id, test_name)
+);
+
 -- Table to store prescriptions given to patients
 CREATE TABLE IF NOT EXISTS prescriptions (
     prescription_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -136,23 +169,7 @@ CREATE TABLE IF NOT EXISTS prescriptions (
     CONSTRAINT check_dosage CHECK (CHAR_LENGTH(dosage) <= 50)
 );
 
--- Table to store lab tests performed on patients
-CREATE TABLE IF NOT EXISTS lab_tests (
-    test_id INT AUTO_INCREMENT PRIMARY KEY,
-    patient_id INT NOT NULL,
-    appointment_id INT NOT NULL,
-    test_name VARCHAR(255) NOT NULL,
-    test_date DATE NOT NULL,
-    results TEXT,
-    test_status ENUM('Pending', 'Completed', 'Failed', 'In Progress') DEFAULT 'Pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
-    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id),
-    INDEX (patient_id),
-    INDEX (appointment_id),
-    CONSTRAINT uc_patient_appointment UNIQUE (patient_id, appointment_id, test_name)
-);
+
 
 -- Table to store payment information
 CREATE TABLE IF NOT EXISTS payments (
