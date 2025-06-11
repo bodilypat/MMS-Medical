@@ -23,8 +23,6 @@ CREATE TABLE IF NOT EXISTS patients (
     email VARCHAR(100) UNIQUE,
     phone_number VARCHAR(20) UNIQUE NOT NULL,
     address VARCHAR(255),
-    insurance_provider VARCHAR(100),
-    insurance_policy_number VARCHAR(100),
     primary_care_physician VARCHAR(100),
     medical_history TEXT,
     allergies TEXT,
@@ -87,9 +85,10 @@ CREATE TABLE IF NOT EXISTS medical_records (
     attachments VARCHAR(255),
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
     FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id),
+	FOREIGN KEY (created_by) REFERENCES users(id),
+	FOREIGN KEY (updated_by) REFERENCES users(id),
     INDEX (patient_id),
     INDEX (appointment_id),
-    CONSTRAINT check_diagnosis_length CHECK (CHAR_LENGTH(diagnosis) <= 500)
 );
 
 -- Table to store prescriptions given to patients
@@ -177,11 +176,9 @@ CREATE TABLE IF NOT EXISTS insurance (
     end_date DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
     CONSTRAINT chk_dates CHECK (start_date <= end_date)
-);CREATE DATABASE IF NOT EXISTS MEDICAL;
-
-USE MEDICAL;
+);
 
 -- Table to store user information
 CREATE TABLE IF NOT EXISTS users (
