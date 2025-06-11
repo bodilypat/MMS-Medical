@@ -1,8 +1,9 @@
-Full-Stack-MMS-Directory-Structure/
+Full-Stack-MMS-Directory-Structure(no framework)/
 │
 ├── frontend/  
-│   ├── public/                          # Public root, assets served from here
-│   ├── pages/                           # HTML views grouped by domain
+│   ├── public/                          # Public web root for hosting
+│   │   └── index.html                   
+│   ├── pages/                           # Page templates grouped by domain
 │   │   ├── auth/
 │   │   │   ├── login.html
 │   │   │   └── register.html
