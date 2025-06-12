@@ -1,50 +1,50 @@
 Full-Stack-MMS-Directory-Structure(no framework)/
 │
 ├── frontend/  
-│   ├── index.html                          # Entry point (login or home)
-│   ├── dashboard.html                      # Main dashboard after login   
+│   ├── index.html                           # Entry point (login or home)
+│   ├── dashboard.html                       # Main dashboard after login   
 │   │   └── index.html                   
-│   ├── patients/                           # Patient module
+│   ├── patients/                            # Patient module
 │   │   ├── list.html
 │   │   ├── add.html
 │   │   ├── view.html
 │   │   └── edit.html 
-│   ├── doctors/                            # Doctor module
+│   ├── doctors/                             # Doctor module
 │   │   ├── list.html
 │   │   ├── add.html
 │   │   ├── profile.html
 │   │   └── schedule.html 
-│   ├── appointments/                       # Appointment module
+│   ├── appointments/                        # Appointment module
 │   │   ├── list.html
 │   │   ├── book.html
 │   │   └── calender.html 
-│   ├── prescriptions/                      # Prescription module
+│   ├── prescriptions/                       # Prescription module
 │   │   ├── list.html
 │   │   └── add.html 
-│   ├── lab-tests/                          # Lab test module
+│   ├── lab-tests/                           # Lab test module
 │   │   ├── list.html
 │   │   └── results.html 
-│   ├── payments/                           # Payment & billing module
+│   ├── payments/                            # Payment & billing module
 │   │   ├── invoices.html
 │   │   └── receipt.html 
-│   ├── insurance/                          # Insurance module
+│   ├── insurance/                           # Insurance module
 │   │   ├── polices.html
 │   │   └── claim.html 
-│   ├── pharmacies/                         # Pharmacy module
+│   ├── pharmacies/                          # Pharmacy module
 │   │   ├── list.html
 │   │   └── orders.html 
-│   ├── assets/                             # Static resource
+│   ├── assets/                              # Static resource
 │   │   ├── css/
-│   │   │   ├── style.css                   # Global styles
-│   │   │   ├── layout.css                  # Layout/grid system
-│   │   │   └── module/                     # Per-module styles
+│   │   │   ├── style.css                    # Global styles
+│   │   │   ├── layout.css                   # Layout/grid system
+│   │   │   └── module/                      # Per-module styles
 │   │   │       ├── patients.css
 │   │   │       └── doctors.css
 │   │   ├── js/
-│   │   │   ├── main.js                     # Entry point script
-│   │   │   ├── auth.js                     # Login/logout logic
-│   │   │   ├── api.js                      # Fetch and XHR utils
-│   │   │   └── module/                     # Per-module logic
+│   │   │   ├── main.js                      # Entry point script
+│   │   │   ├── auth.js                      # Login/logout logic
+│   │   │   ├── api.js                       # Fetch and XHR utils
+│   │   │   └── module/                      # Per-module logic
 │   │   │       ├── patients.js
 │   │   │       ├── doctors.js
 │   │   │       └── appointments.css
