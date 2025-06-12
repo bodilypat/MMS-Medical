@@ -1,24 +1,24 @@
 Full-Stack-MMS-Directory-Structure(no framework)/
 │
-├── frontend/  
-│   ├── index.html                           # Entry point (login or home)
-│   ├── dashboard.html                       # Main dashboard after login   
+├── frontend/                                # Static front-end UI
+│   ├── index.html                           # Landing/login page
+│   ├── dashboard.html                       # dashboard home  
 │   │   └── index.html                   
-│   ├── patients/                            # Patient module
+│   ├── patients/                            # Patient module UI
 │   │   ├── list.html
 │   │   ├── add.html
 │   │   ├── view.html
 │   │   └── edit.html 
-│   ├── doctors/                             # Doctor module
+│   ├── doctors/                             # Doctor module UI
 │   │   ├── list.html
 │   │   ├── add.html
 │   │   ├── profile.html
 │   │   └── schedule.html 
-│   ├── appointments/                        # Appointment module
+│   ├── appointments/                        # Appointment module UI
 │   │   ├── list.html
 │   │   ├── book.html
 │   │   └── calender.html 
-│   ├── prescriptions/                       # Prescription module
+│   ├── prescriptions/                       # Prescription module 
 │   │   ├── list.html
 │   │   └── add.html 
 │   ├── lab-tests/                           # Lab test module
@@ -39,7 +39,8 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   │   ├── layout.css                   # Layout/grid system
 │   │   │   └── module/                      # Per-module styles
 │   │   │       ├── patients.css
-│   │   │       └── doctors.css
+│   │   │       ├── doctors.css
+│   │   │       └── appointments.css
 │   │   ├── js/
 │   │   │   ├── main.js                      # Entry point script
 │   │   │   ├── auth.js                      # Login/logout logic
@@ -47,7 +48,7 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   │   └── module/                      # Per-module logic
 │   │   │       ├── patients.js
 │   │   │       ├── doctors.js
-│   │   │       └── appointments.css
+│   │   │       └── appointments.js
 │   │   └── images/
 │   │       └── Logo.png
 │   ├── components/                           # Reusable UI parts
