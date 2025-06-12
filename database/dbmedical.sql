@@ -252,10 +252,25 @@ CREATE TABLE IF NOT EXISTS pharmacies (
     pharmacy_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL UNIQUE,
-    phone_number VARCHAR(15) NOT NULL UNIQUE,
-    email VARCHAR(255) NOT NULL UNIQUE,
+	city VARCHAR(100) NOT NULL,
+	state VARCHAR(100) NOT NULL,
+	post_code VARCHAR(20) NOT NULL,
+	country VARCHAR(100) DEFAULT 'USA'
+    phone_number VARCHAR(20) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+	license_number VARCHAR(100) UNIQUE,
+	license_expiry_date DATE,
+	operating_hours TEXT,
+	contact_person VARCHAR(100),
+	status ENUM('Active','Inactive','Pending Verification') DEFAULT 'Active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT chk_phone_number CHECK (phone_number REGEXP '^[0-9]+$')
+	created_by INT,
+	created_by INT,
+	UNIQUE (email),
+	UNIQUE (phone_number),
+	
+    CONSTRAINT chk_phone_number CHECK (phone_number REGEXP '^[0-9]{7,15}$'),
+	CONSTRAINT chk_postal_code CHECK (postal_code REGEXP '^[0-9A-Za-z -]{4, 10}$')
 );
 
