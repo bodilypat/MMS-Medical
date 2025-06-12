@@ -1,72 +1,122 @@
 <?php
-	require_once BASE_PATH . '/config/dbconenct.php';
-	require_once BASE_PATH . '/helpers/ResponseHelper.php';
-	
-	/* Import controller */
-	require_once BASE_PATH . '/controllers/DoctorController.php';
-	require_once BASE_PATH . '/controllers/PatientController.php';
-	require_once BASE_PATH . '/controllers/AppointmentController.php';
-	require_once BASE_PATH . '/controllers/LabTestController.php';
-	require_once BASE_PATH . '/controllers/MedicalRecordController.php';
-	require_once BASE_PATH . '/controllers/PrescriptionController.php';
-	require_once BASE_PATH . '/controllers/PharmacyController.php';
-	require_once BASE_PATH . '/controllers/PaymentController.php';
-	require_once BASE_PATH . '/controllers/InsuranceController.php';	
-	
-	/* Parse request */
-	$method = $_SERVER['REQUEST_METHOD'];
-	$uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-	
-	/* Get input data */
-	$input = json_decode(file_get_contents('php://input'), true) ?? [];
-	$queryParams = $_GET ?? [];
 
-	$pdo = require BASE_PATH  . '/config/dbconnect.php';
-	
-	/* Remove api prefix if exists */
-	$path = preg_replace('#^api/#', '', $uri);
-		
-	/* Route Dispatcher */
-	switch (true) {
-		case $path === 'patients':
-			(new PatientController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-	
-		case $path === 'appointments':
-			(new AppointmentController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-			
-		case $path === 'doctors':
-			(new DoctorController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-			
-		case $path === 'lab-tests':
-			(new LabTestController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-		
-		case $path === 'medical-records':
-			(new MedicalRecordController))->handleRequest($method, $data, $queryParams);
-			break;
-			
-		case $path === 'prescriptions':
-			(new PrescriptionController($pdo))->handleRequest($method, $data, $queryParams);
-			break; 
-			
-		case $path === 'pharmacies':
-			(new PharmacyController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-			
-		case $path === 'payments': 
-			(new PaymentController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-		
-		case $path === 'insurance': 
-			(new InsuranceController($pdo))->handleRequest($method, $data, $queryParams);
-			break;
-			
-		default: 
-			http_response_code(404);
-			echo json_encode(['error' => 'API endpoint not found']);
-			
-		}
-		
+use Core\Router;
+use App\Controllers\{
+    UserController,
+    PatientController,
+    DoctorController,
+    AppointmentController,
+    MedicalRecordController,
+    LabTestController,
+    InsuranceController,
+    PaymentController,
+    PrescriptionController,
+    PharmacyController
+};
+
+require_once '../config/database.php'; // Assume this returns $pdo
+require_once '../auth/Login.php';
+require_once '../auth/Register.php';
+require_once '../auth/ResetPassword.php';
+
+$router = new Router();
+
+// Instantiate Controllers with PDO
+$userController = new UserController($pdo);
+$patientController = new PatientController($pdo);
+$doctorController = new DoctorController($pdo);
+$appointmentController = new AppointmentController($pdo);
+$medicalRecordController = new MedicalRecordController($pdo);
+$labTestController = new LabTestController($pdo);
+$insuranceController = new InsuranceController($pdo);
+$paymentController = new PaymentController($pdo);
+$prescriptionController = new PrescriptionController($pdo);
+$pharmacyController = new PharmacyController($pdo);
+
+/* User Routes */
+$router->get('/api/users', [$userController, 'index']);
+$router->get('/api/users/{id}', [$userController, 'show']);
+$router->post('/api/users', [$userController, 'store']);
+$router->put('/api/users/{id}', [$userController, 'update']);
+$router->delete('/api/users/{id}', [$userController, 'destroy']);
+
+/* Patient Routes */
+$router->get('/api/patients', [$patientController, 'index']);
+$router->get('/api/patients/{id}', [$patientController, 'show']);
+$router->post('/api/patients', [$patientController, 'store']);
+$router->put('/api/patients/{id}', [$patientController, 'update']);
+$router->delete('/api/patients/{id}', [$patientController, 'destroy']);
+
+/* Doctor Routes */
+$router->get('/api/doctors', [$doctorController, 'index']);
+$router->get('/api/doctors/{id}', [$doctorController, 'show']);
+$router->post('/api/doctors', [$doctorController, 'store']);
+$router->put('/api/doctors/{id}', [$doctorController, 'update']);
+$router->delete('/api/doctors/{id}', [$doctorController, 'destroy']);
+
+/* Appointment Routes */
+$router->get('/api/appointments', [$appointmentController, 'index']);
+$router->get('/api/appointments/{id}', [$appointmentController, 'show']);
+$router->post('/api/appointments', [$appointmentController, 'store']);
+$router->put('/api/appointments/{id}', [$appointmentController, 'update']);
+$router->delete('/api/appointments/{id}', [$appointmentController, 'destroy']);
+
+/* Medical Records Routes */
+$router->get('/api/medical_records', [$medicalRecordController, 'index']);
+$router->get('/api/medical_records/{id}', [$medicalRecordController, 'show']);
+$router->post('/api/medical_records', [$medicalRecordController, 'store']);
+$router->put('/api/medical_records/{id}', [$medicalRecordController, 'update']);
+$router->delete('/api/medical_records/{id}', [$medicalRecordController, 'destroy']);
+
+/* Lab Tests Routes */
+$router->get('/api/lab_tests', [$labTestController, 'index']);
+$router->get('/api/lab_tests/{id}', [$labTestController, 'show']);
+$router->post('/api/lab_tests', [$labTestController, 'store']);
+$router->put('/api/lab_tests/{id}', [$labTestController, 'update']);
+$router->delete('/api/lab_tests/{id}', [$labTestController, 'destroy']);
+
+/* Insurance Routes */
+$router->get('/api/insurance', [$insuranceController, 'index']);
+$router->get('/api/insurance/{id}', [$insuranceController, 'show']);
+$router->post('/api/insurance', [$insuranceController, 'store']);
+$router->put('/api/insurance/{id}', [$insuranceController, 'update']);
+$router->delete('/api/insurance/{id}', [$insuranceController, 'destroy']);
+
+/* Payments Routes */
+$router->get('/api/payments', [$paymentController, 'index']);
+$router->get('/api/payments/{id}', [$paymentController, 'show']);
+$router->post('/api/payments', [$paymentController, 'store']);
+$router->put('/api/payments/{id}', [$paymentController, 'update']);
+$router->delete('/api/payments/{id}', [$paymentController, 'destroy']);
+
+/* Prescriptions Routes */
+$router->get('/api/prescriptions', [$prescriptionController, 'index']);
+$router->get('/api/prescriptions/{id}', [$prescriptionController, 'show']);
+$router->post('/api/prescriptions', [$prescriptionController, 'store']);
+$router->put('/api/prescriptions/{id}', [$prescriptionController, 'update']);
+$router->delete('/api/prescriptions/{id}', [$prescriptionController, 'destroy']);
+
+/* Pharmacies Routes */
+$router->get('/api/pharmacies', [$pharmacyController, 'index']);
+$router->get('/api/pharmacies/{id}', [$pharmacyController, 'show']);
+$router->post('/api/pharmacies', [$pharmacyController, 'store']);
+$router->put('/api/pharmacies/{id}', [$pharmacyController, 'update']);
+$router->delete('/api/pharmacies/{id}', [$pharmacyController, 'destroy']);
+
+/* Auth Routes */
+$router->post('/api/login', function () use ($pdo) {
+    $login = new \App\Auth\Login($pdo);
+    $login->handle();
+});
+
+$router->post('/api/register', function () use ($pdo) {
+    $register = new \App\Auth\Register($pdo);
+    $register->handle();
+});
+
+$router->post('/api/reset-password', function () use ($pdo) {
+    $reset = new \App\Auth\ResetPassword($pdo);
+    $reset->handle();
+});
+
+return $router;
