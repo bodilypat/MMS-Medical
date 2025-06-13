@@ -28,11 +28,10 @@
 	$router->get('/dashboard', [DashboardController::class, 'index']);
 	
 	/* Protected Pages  */
-	$router->group('/admin', function ($router) {
-		$router->get('/patients', [DashboardController::class, 'patients']);
-		$router->get('/doctors', [DashboardController::class, 'doctors']);
-		$router->get('/appointment', [DashboardController::class, 'appointments']);
-	});
+	$router->get('/admin/patients', [DashboardController::class, 'patients']);
+	$router->get('/admin/doctors', [DashboardController::class, 'doctors']);
+	$router->get('/admin/appointment', [DashboardController::class, 'appointments']);
+	
 	
 	return $router;
 	
