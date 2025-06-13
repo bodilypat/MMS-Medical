@@ -26,12 +26,12 @@
 	$patientController = new PatientController($pdo);
 	$doctorController = new DoctorController($pdo);
 	$appointmentController = new AppointmentController($pdo);
-	$medicalController = new MedicalRecordController($pdo);
+	$medicaRecordController = new MedicalRecordController($pdo);
 	$labTestController = new LabTestController($pdo);
 	$insuranceController = new InsuranceController($pdo);
 	$paymentController = new PaymentController($pdo);
-	$prescriptionController = new PrecriptionController($pdo);
-	$pharmarcyController = new PharmarcyController($pdo);
+	$prescriptionController = new PrescriptionController($pdo);
+	$pharmacyController = new PharmacyController($pdo);
 	
 	/* User Routes */
 	$router->get('/api/users', [$userController,'index']);
@@ -44,21 +44,21 @@
 	$router->get('/api/patients', [$patientController,'index']);
 	$router->get('/api/patients/{id}', [$patientController,'show']);
 	$router->post('api/patients', [$patientController,'store']);
-	$router->put('api/users/{id}', [$patientController,'update']);
-	$router->delete('api/users/{id}', [$userController,'destroy']);
+	$router->put('/api/patients/{id}', [$patientController,'update']);
+	$router->delete('api/patients/{id}', [$userController,'destroy']);
 	
 	/* Doctor Routes */
-	$router->get('api/doctors', [$doctorController,'index']);
+	$router->get('/api/doctors', [$doctorController,'index']);
 	$router->get('/api/doctors/{id}', [$doctorController, 'show']);
 	$router->post('/api/doctors', [$doctorController,'store']);
 	$router->put('/api/doctors/{id}', [$doctorController,'update']);
-	$router->delete('/api/appointments/{id}', [$doctorController,'destroy']);
+	$router->delete('/api/doctors/{id}', [$doctorController,'destroy']);
 	
 	/* Appointment Routes */
 	$router->get('/api/appointments', [$appointmentController,'index']);
 	$router->get('/api/appointments/{id}', [$appointmentController,'show']);
 	$router->post('/api/appointments', [$appointmentController,'store']);
-	$router->put('/api/appointment/{id}', [$appointmentController,'update']);
+	$router->put('/api/appointments/{id}', [$appointmentController,'update']);
 	$router->delete('api/appointments/{id}', [$appointmentController,'destroy']);
 	
 	/* Medical Records Routes */
