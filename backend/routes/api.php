@@ -62,7 +62,7 @@
 	$router->delete('api/appointments/{id}', [$appointmentController,'destroy']);
 	
 	/* Medical Records Routes */
-	$router->get('/api/medical_records', [$medicalRecordController,' index']);
+	$router->get('/api/medical_records', [$medicalRecordController,'index']);
 	$router->get('/api/medical_record/{id}', [$medicalRecordController,'show']);
 	$router->post('/api/medical_records', [$medicalRecordController,'store']);
 	$router->put('/api/medical_records/{id}', [$medicalRecordController,'update']);
