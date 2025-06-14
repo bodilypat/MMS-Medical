@@ -3,7 +3,7 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 ├── frontend/                         # Front-end static app       
 │   ├── index.html                    # Entry point (login/landing)       
 │   ├── dashboard.html                # Authenticated home & layout
-│   │   ├── index.html                # Main dashboard       
+│   │   ├── home.html                 # Main dashboard       
 │   │   └── overview.html             # Summary / widgets
 │   │                
 │   ├── modules/                             
@@ -82,7 +82,7 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │                                        
 │   ├── config/                              
 │   │   ├── database.php
-│   │   ├── constan.php
+│   │   ├── constants.php
 │   │   └── env.php
 │   │ 
 │   ├── routes/                              
@@ -90,7 +90,8 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   │   ├── auth.php
 │   │   │   ├── patients.php
 │   │   │   ├── doctors.php
-│   │   │   └── appintments.php
+│   │   │   ├── appointments.php
+│   │   │   └── reports.php
 │   │   └── web.php
 │   │
 │   ├── controllers/                         
@@ -103,7 +104,8 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   ├── LabTestController.php
 │   │   ├── BillingController.php
 │   │   ├── InsuranceController.php
-│   │   └── PaymentController.php
+│   │   ├── PaymentController.php
+│   │   └── ReportController.php
 │   │ 
 │   ├── models/                               
 │   │   ├── User.php
@@ -138,8 +140,10 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   ├── schema.sql
 │   │   └── seed.sql.php
 │   │
-│   └── tests/                                 
-│		└── PatientTest.php              
+│   └── tests/ 
+│       ├── PatientTest.php
+│       ├── AppointmentTest.php                                
+│		└── AuthTest.php              
 │
 ├── .env                                      
 ├── .htaccess                                 
