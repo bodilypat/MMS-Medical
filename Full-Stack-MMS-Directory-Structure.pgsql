@@ -1,10 +1,10 @@
 Full-Stack-MMS-Directory-Structure(no framework)/
 │
-├── frontend/                                
-│   ├── index.html                           
-│   ├── dashboard.html   
-│   │   ├── index.html                       
-│   │   └── overview.html    
+├── frontend/                         # Front-end static app       
+│   ├── index.html                    # Entry point (login/landing)       
+│   ├── dashboard.html                # Authenticated home & layout
+│   │   ├── index.html                # Main dashboard       
+│   │   └── overview.html             # Summary / widgets
 │   │                
 │   ├── modules/                             
 │   │   ├── patients/
@@ -40,7 +40,7 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │       ├── summary.html                   
 │   │       └── charts.html
 │   │ 
-│   ├── components/
+│   ├── components/							# Reusable UI parts
 │   │   ├── navbar.html      
 │   │   ├── sidebar.html     
 │   │   ├── footer.html                      
