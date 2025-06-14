@@ -1,46 +1,60 @@
 Full-Stack-MMS-Directory-Structure(no framework)/
 │
-├── frontend/                                # Static front-end UI
-│   ├── index.html                           # Landing/login page
-│   ├── dashboard.html                       # dashboard home  
-│   │   └── index.html                   
-│   ├── patients/                            # Patient module UI
-│   │   ├── list.html
-│   │   ├── add.html
-│   │   ├── view.html
-│   │   └── edit.html 
-│   ├── doctors/                             # Doctor module UI
-│   │   ├── list.html
-│   │   ├── add.html
-│   │   ├── profile.html
-│   │   └── schedule.html 
-│   ├── appointments/                        # Appointment module UI
-│   │   ├── list.html
-│   │   ├── book.html
-│   │   └── calender.html 
-│   ├── prescriptions/                       # Prescription module 
-│   │   ├── list.html
-│   │   └── add.html 
-│   ├── lab-tests/                           # Lab test module
-│   │   ├── list.html
-│   │   └── results.html 
-│   ├── payments/                            # Payment & billing module
-│   │   ├── invoices.html
-│   │   └── receipt.html 
-│   ├── insurance/                           # Insurance module
-│   │   ├── polices.html
-│   │   └── claim.html 
-│   ├── pharmacies/                          # Pharmacy module
-│   │   ├── list.html
-│   │   └── orders.html 
-│   ├── assets/                              # Static resource
+├── frontend/                                
+│   ├── index.html                           
+│   ├── dashboard.html   
+│   │   ├── index.html                       
+│   │   └── overview.html    
+│   │                
+│   ├── modules/                             
+│   │   ├── patients/
+│   │   │   ├── list.html                    
+│   │   │   ├── add.html                     
+│   │   │   ├── view.html                    
+│   │   │   └── edit.html 
+│   │   ├── doctors/
+│   │   │   ├── list.html                    
+│   │   │   ├── add.html                     
+│   │   │   ├── profile.html                    
+│   │   │   └── schedule.html  
+│   │   ├── appointments/                
+│   │   │   ├── list.html                     
+│   │   │   ├── book.html                    
+│   │   │   └── calendor.html      
+│   │   ├── prescriptions/
+│   │   │   ├── list.html                                 
+│   │   │   └── add.html 
+│   │   ├── lab-tests/
+│   │   │   ├── list.html                                
+│   │   │   └── results.html     
+│   │   ├── payments/
+│   │   │   ├── invoices.html                                   
+│   │   │   └── receipt.html          
+│   │   ├── insurance/
+│   │   │   ├── polices.html                                      
+│   │   │   └── claim.html  
+│   │   ├── pharmacies/
+│   │   │   ├── list.html                                    
+│   │   │   └── orders.html  
+│   │   └── reports/ 
+│   │       ├── summary.html                   
+│   │       └── charts.html
+│   │ 
+│   ├── components/
+│   │   ├── navbar.html      
+│   │   ├── sidebar.html     
+│   │   ├── footer.html                      
+│   │   └── modals/ 
+│   │       └── confirm-delete.html
+│   ├── assets/                              
 │   │   ├── css/
-│   │   │   ├── style.css                    # Global styles
-│   │   │   ├── layout.css                   # Layout/grid system
-│   │   │   └── module/                      # Per-module styles
+│   │   │   ├── style.css                    
+│   │   │   ├── layout.css                   
+│   │   │   └── module/                      
 │   │   │       ├── patients.css
 │   │   │       ├── doctors.css
 │   │   │       └── appointments.css
+│   │   │ 
 │   │   ├── js/
 │   │   │   ├── main.js                      # Entry point script
 │   │   │   ├── auth.js                      # Login/logout logic
@@ -51,32 +65,35 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   │       └── appointments.js
 │   │   └── images/
 │   │       └── Logo.png
-│   ├── components/                           # Reusable UI parts
-│   │   ├── navbar.html
-│   │   ├── sidebar.html
-│   │   └── footer.html 
-│   ├── utils/                                # Helpers (optional)
+│   │ 
+│   │ 
+│   ├── utils/                               
 │   │   ├── form-validation.js
 │   │   └── date-utils.js 
+│   │ 
 │   ├── README.md 
 │   └── LICENSE                    
 │
 ├── backend/
-│   ├── public/                               # Publicly accesssible files (entry point)
-│   │   ├── index.php                         # Entry script 
-│   │   ├── assets/                           # Public assets (CSS,JS if needed here)
-│   │   └── uploads/                          # file upload (medical records)
-│   ├── config/                               # Configuration files
+│   ├── public/                              
+│   │   ├── index.php                        
+│   │   ├── assets/                          
+│   │   └── uploads/     
+│   │                                        
+│   ├── config/                              
 │   │   ├── database.php
-│   │   └── constant.php
-│   ├── routes/                               # Entry points (AJAX & REST)
+│   │   ├── constan.php
+│   │   └── env.php
+│   │ 
+│   ├── routes/                              
 │   │   ├── api/
+│   │   │   ├── auth.php
 │   │   │   ├── patients.php
 │   │   │   ├── doctors.php
-│   │   │   └── appointments.php
+│   │   │   └── appintments.php
 │   │   └── web.php
 │   │
-│   ├── controllers/                          # Logic for each entity/module
+│   ├── controllers/                         
 │   │   ├── AuthController.php
 │   │   ├── PatientController.php
 │   │   ├── DoctorController.php
@@ -87,7 +104,8 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   ├── BillingController.php
 │   │   ├── InsuranceController.php
 │   │   └── PaymentController.php
-│   ├── models/                               # DB interactive / orm-style PHP classes
+│   │ 
+│   ├── models/                               
 │   │   ├── User.php
 │   │   ├── Patient.php
 │   │   ├── Doctor.php
@@ -98,21 +116,32 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   ├── Billing.php
 │   │   ├── Insurance.php
 │   │   └── Payment.php
-│   ├── helpers/                              # Utility/helper functions
+│   │ 
+│   ├── middleware/                           
+│   │   └── authMiddleware.php
+│   │ 
+│   ├── services/
+│   │   ├── AppointmentService                
+│   │   └── ReportService.php
+│   │ 
+│   ├── helpers/                              
 │   │   ├── auth.php
 │   │   ├── response.php
 │   │   └── validator.php
-│   ├── middleware/                           # Access control, validation
+│   │
+│   ├── middleware/                           
 │   │   └── authMiddleware.php
-│   ├── logs/                                 # Log files
+│   │
+│   ├── logs/                                
 │   │   └── error.log
-│   ├── sql/                                  # SQL scripts (schema and seed data)
+│   ├── sql/                                  
 │   │   ├── schema.sql
 │   │   └── seed.sql.php
-│   └── tests/                                # Basic test files or test data       
+│   │
+│   └── tests/                                 
 │		└── PatientTest.php              
 │
-├── .env                                      # Environment variable
-├── .htaccess                                 # Apache rewrite rules (if applicable)
-├── composer.json                             # PHP dependency manager (optional)
+├── .env                                      
+├── .htaccess                                 
+├── composer.json                             
 └── README.md
