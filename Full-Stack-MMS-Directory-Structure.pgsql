@@ -131,9 +131,6 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   ├── response.php
 │   │   └── validator.php
 │   │
-│   ├── middleware/                           
-│   │   └── authMiddleware.php
-│   │
 │   ├── logs/                                
 │   │   └── error.log
 │   ├── sql/                                  
@@ -143,7 +140,7 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   └── tests/ 
 │       ├── PatientTest.php
 │       ├── AppointmentTest.php                                
-│		└── AuthTest.php              
+│	    └── AuthTest.php              
 │
 ├── .env                                      
 ├── .htaccess                                 
