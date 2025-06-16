@@ -1,65 +1,66 @@
 Full-Stack-MMS-Directory-Structure(no framework)/
 │
 ├── frontend/                         # Front-end static app       
-│   ├── index.html                    # Entry point (login/landing)       
-│   ├── dashboard.html                # Authenticated home & layout
-│   │   ├── home.html                 # Main dashboard       
-│   │   └── overview.html             # Summary / widgets
-│   │                
-│   ├── modules/                             
-│   │   ├── patients/
-│   │   │   ├── list.html                    
-│   │   │   ├── add.html                     
-│   │   │   ├── view.html                    
-│   │   │   └── edit.html 
-│   │   ├── doctors/
-│   │   │   ├── list.html                    
-│   │   │   ├── add.html                     
-│   │   │   ├── profile.html                    
-│   │   │   └── schedule.html  
-│   │   ├── appointments/                
-│   │   │   ├── list.html                     
-│   │   │   ├── book.html                    
-│   │   │   └── calendor.html      
-│   │   ├── prescriptions/
-│   │   │   ├── list.html                                 
-│   │   │   └── add.html 
-│   │   ├── lab-tests/
-│   │   │   ├── list.html                                
-│   │   │   └── results.html     
-│   │   ├── payments/
-│   │   │   ├── invoices.html                                   
-│   │   │   └── receipt.html          
-│   │   ├── insurance/
-│   │   │   ├── polices.html                                      
-│   │   │   └── claim.html  
-│   │   ├── pharmacies/
-│   │   │   ├── list.html                                    
-│   │   │   └── orders.html  
-│   │   └── reports/ 
-│   │       ├── summary.html                   
-│   │       └── charts.html
-│   │ 
+│   ├── public                        # Static entry point for deployment  
+│   │   └── index.html                # Entry login/landing page
+│   ├── pages/                        # Pages routed via hash or history 
+│   │   ├── dasdboard/                # Dashboard & layout-specific views    
+│   │   │   ├── home.html                    
+│   │   │   └── overview.html    
+│   │   └── modules/  
+│   │ 		├── patients/
+│   │   	│   ├── list.html                    
+│   │  		│   ├── add.html                     
+│   │   	│   ├── view.html                    
+│   │   	│   └── edit.html 
+│   │   	├── doctors/
+│   │   	│   ├── list.html                    
+│   │   	│   ├── add.html                     
+│   │   	│   ├── profile.html                    
+│   │   	│   └── schedule.html  
+│   │   	├── appointments/                
+│   │   	│   ├── list.html                     
+│   │   	│   ├── book.html                    
+│   │   	│   └── calendor.html      
+│   │   	├── prescriptions/
+│   │   	│   ├── list.html                                 
+│   │   	│   └── add.html 
+│   │   	├── lab-tests/
+│   │   	│   ├── list.html                                
+│   │   	│   └── results.html     
+│   │   	├── payments/
+│   │   	│   ├── invoices.html                                   
+│   │   	│   └── receipt.html          
+│   │   	├── insurance/
+│   │   	│   ├── polices.html                                      
+│   │   	│   └── claim.html  
+│   │   	├── pharmacies/
+│   │   	│   ├── list.html                                    
+│   │   	│   └── orders.html  
+│   │   	└── reports/ 
+│   │       	├── summary.html                   
+│   │       	└── charts.html                
 │   ├── components/							# Reusable UI parts
-│   │   ├── navbar.html      
-│   │   ├── sidebar.html     
-│   │   ├── footer.html                      
+│   │   ├── layout/  
+│   │   │   ├── navbar.html 
+│   │   │   ├── sidebar.html 
+│   │   │   └── footer.html            
 │   │   └── modals/ 
 │   │       └── confirm-delete.html
 │   ├── assets/                              
 │   │   ├── css/
-│   │   │   ├── style.css                    
-│   │   │   ├── layout.css                   
-│   │   │   └── module/                      
+│   │   │   ├── main.css                    # Global styles
+│   │   │   ├── layout.css                  # Layout-specific styles 
+│   │   │   └── module/                     # Module-specific styles 
 │   │   │       ├── patients.css
 │   │   │       ├── doctors.css
 │   │   │       └── appointments.css
 │   │   │ 
 │   │   ├── js/
-│   │   │   ├── main.js                      # Entry point script
-│   │   │   ├── auth.js                      # Login/logout logic
-│   │   │   ├── api.js                       # Fetch and XHR utils
-│   │   │   └── module/                      # Per-module logic
+│   │   │   ├── main.js                      # Bootstrap/init script
+│   │   │   ├── auth.js                      # Auth logic
+│   │   │   ├── api.js                       # API service (XHR/fetch)
+│   │   │   └── module/                      # Module-specific JS
 │   │   │       ├── patients.js
 │   │   │       ├── doctors.js
 │   │   │       └── appointments.js
@@ -67,9 +68,11 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │       └── Logo.png
 │   │ 
 │   │ 
-│   ├── utils/                               
+│   ├── utils/                               # Utility scripts/helpers
 │   │   ├── form-validation.js
 │   │   └── date-utils.js 
+│   ├── store/                               # (optional) Shared data/state (local/session/user)
+│   │   └── session.js 
 │   │ 
 │   ├── README.md 
 │   └── LICENSE                    
