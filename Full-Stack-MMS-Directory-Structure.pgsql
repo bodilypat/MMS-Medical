@@ -140,7 +140,7 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   │
 │   │   └── Validators/ 
 │   │       ├── PatientTest.php                        
-│	│       └── AuthTest.php   
+│   │       └── AuthTest.php   
 │   ├── storage/    
 │   │   ├── database.php
 │   │   │   └── error.log
