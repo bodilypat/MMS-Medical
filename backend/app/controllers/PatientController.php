@@ -1,71 +1,91 @@
 <?php
-	include_once '../models/Patient.php';
-	include_once '../helpers/ResposeHelper.php';
-	include_once '../config/dbconnect.php'; // Ensure PDO is available
+	require_once __DIR__ '../models/Patient.php';
+	require_once __DIR__ '../helpers/ResposeHelper.php';
+	require_once __DIR__ '../config/dbconnect.php'; // Ensure PDO is available
 	
-	
-	$method = $_SERVER['REQUEST_METHOD'];
-	$input = json_decode(file_get_contents("php://input"), true);
-	
-	$patientModel = new Patient($pdo);
-	
-	switch ($method) {
-		case 'GET':
-			if (isset($_GET['id'])) {
-				$patient = $patientModel->getById($_GET['id']);
-				sendJson($patient ? 200 : 404 , $patient ?: ['message' => 'Patient Not found']);
-			} else {
-				sendJson(200, $patientModel->getAll());
-			}
-			break;
+	class PatientController {
+		private Patient $model;
+		
+		public function __construct($pdo) {
+			$this->model = new Patient($pdo);
+		}
+		
+		public function handleRequest(string , array $input = [], array $requeryParams = [], void {
+			switch ($method) {
+				case 'GET':
+					if (!empty($queryParams['id'])) {
+						$this->show(($queryParams['id']);
+					} else {
+						$this->index();
+					}
+				break;
 			
-		case 'POST':
-			if (!$input || !isset($input['email'], $input['phone_number'])) {
-				sendJson(400, ['message' => 'Missing required fields']);
+				case 'POST':
+					$this->store($input);
 				break;
 				
-			} 
-			if ($patientModel->exists($input['email'], $input['phone_number'])) {
-				$patientModel->create($input);
-				sendJson(400, ['message' -> 'Patient already exists']);
-			} else {
-				try {
-					$patientModel->create($input);
-					sendJson(201, ['message' => 'Patient created']);
-				} catch (Exception $e) {
-					sendJson(500, ['error' => $e->getMessage()]);
-				}
+				case 'DELETE':
+					$this->update($input);
+					break;
+				
+				default: 
+					sendJson(405, ['message' => 'Method Not Allowed']);
 			}
-			break;
+		}
+		public function index(): void {
+			$patients = $this->model->getAll();
+			sendJson(200, $patients);
+		}
+		
+		public function show($id): void {
+			$patient = $this->model->getById($id);
+			if ($patient) {
+				sendJson(200, $patient);
+			} else {
+				sendJson(404, ['message' => 'Patient not found']);
+			}
+		}
+		
+		public function store(array $data): void {
+			if (empty($data['email']) || empty($data['phone_number'])) {
+				sendJson(400, ['message' => 'Email and phone number are required']);
+				return;
+			}
 			
-		case 'PUT':
-			if (!$input || !isset($input['patient_id'])) {
-				sendJson(400, ['message' => 'Patient ID is required']);
-			break;
-			} 
+			if ($this->model->exists($data['email'], $data['phone_number'])) {
+				sendJson(409, ['message' => 'Patient already exists']);
+				return;
+			}
+			
 			try {
-					$patientModel->update($input);
-					sendJson(200, ['message' => 'Patient updated']);
+				$this->model->create($data);
+				sendJson(201, ['message' => 'Patient created']);
 			} catch (Exception $e) {
 				sendJson(500, ['error' => $e->getMessage()]);
 			}
-			break;
-			
-			
-		case 'DELETE':
-			if (!input || !isset($input['patient_id'])) {
-				sendJson[400, ['message' => 'Patient ID is required']);
-			break;
+		}
+		public function update(array $data): void {
+			if (empty($data['patient_id'])) {
+				sendJson(400, ['message' => 'Patient ID is required']);
+				return;
 			}
 			try {
-				$patientModel->delete($input['patient-id']);
+				$this->model->update($data);
+				sendJson(200, ['message' => 'Patient updated']);
+			} catch (Exception $e) {
+				sendJson(500, ['error' => $e->getMessage()]);
+			}
+		}
+		public function delete(array $data):void {
+			if (empty($data['patient_id'])) {
+				sendJson(400, ['message' => 'Patient ID is required']);
+				return;
+			}
+			try {
+				$this->model->delete($data['patient_id']);
 				sendJson(200, ['message' => 'Patient deleted']);
 			} catch (Exception $e) {
 				sendJson(500, ['error' => $e->getMessage()]);
 			}
-			break;
-			
-		default:
-			sendJson(405, ['message' => 'Method Not Allowed']);
 		}
-		
+	}
