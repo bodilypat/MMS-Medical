@@ -124,8 +124,8 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │	│   ├── ReportService.php
 │   │	│   └── NotificationService.php
 │   │	│ 
-│  	│	├── middleware/      
-│  	│   │   ├── AuthMiddleware.php                     
+│   │   ├── middleware/      
+│   │   │   ├── AuthMiddleware.php                     
 │   │   │   └── RoleMiddleware.php
 │   │   │ 
 │   │   ├── Repositories/
