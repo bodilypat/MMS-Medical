@@ -97,53 +97,66 @@ Full-Stack-MMS-Directory-Structure(no framework)/
 │   │   │   └── reports.php
 │   │   └── web.php
 │   │
-│   ├── controllers/                         
-│   │   ├── AuthController.php
-│   │   ├── PatientController.php
-│   │   ├── DoctorController.php
-│   │   ├── AppointmentController.php
-│   │   ├── MedicalRecordController.php
-│   │   ├── PrescriptionController.php
-│   │   ├── LabTestController.php
-│   │   ├── BillingController.php
-│   │   ├── InsuranceController.php
-│   │   ├── PaymentController.php
-│   │   └── ReportController.php
-│   │ 
-│   ├── models/                               
-│   │   ├── User.php
-│   │   ├── Patient.php
-│   │   ├── Doctor.php
-│   │   ├── Appointment.php
-│   │   ├── MedicalRecord.php
-│   │   ├── Prescription.php
-│   │   ├── LabTest.php
-│   │   ├── Billing.php
-│   │   ├── Insurance.php
-│   │   └── Payment.php
-│   │ 
-│   ├── middleware/                           
-│   │   └── authMiddleware.php
-│   │ 
-│   ├── services/
-│   │   ├── AppointmentService                
-│   │   └── ReportService.php
-│   │ 
-│   ├── helpers/                              
-│   │   ├── auth.php
-│   │   ├── response.php
-│   │   └── validator.php
-│   │
-│   ├── logs/                                
-│   │   └── error.log
-│   ├── sql/                                  
-│   │   ├── schema.sql
-│   │   └── seed.sql.php
-│   │
-│   └── tests/ 
-│       ├── PatientTest.php
-│       ├── AppointmentTest.php                                
-│	      └── AuthTest.php              
+│   ├── app/                         
+│   │   ├── controllers/
+│   │   │   ├── AuthController.php
+│   │   │   ├── PatientController.php
+│   │   │   ├── DoctorController.php
+│   │   │   ├── Appointments.php
+│   │   │   ├── PrescriptionController.php
+│   │   │   ├── MedicalRecordController.php
+│   │   │   ├── LabTestController.php
+│   │   │   ├── BillingControllers.php
+│   │   │   ├── InsuranceController.php
+│   │   │   └── reportController.php
+│   │   ├── Models/
+│   │   │   ├── User.php
+│   │   │   ├── Patient.php
+│   │   │   ├── Doctor.php
+│   │   │   ├── Appointment.php
+│   │   │   ├── Prescription.php
+│   │   │   ├── LabTest.php
+│   │   │   ├── Billing.php
+│   │   │   ├── Insurance.php
+│   │   │   └── Payment.php
+│   │	├── Services/                               
+│   │	│   ├── AppointmentService.php
+│   │	│   ├── ReportService.php
+│   │	│   └── NotificationService.php
+│   │	│ 
+│  	│	├── middleware/      
+│  	│   │   ├── AuthMiddleware.php                     
+│   │   │   └── RoleMiddleware.php
+│   │   │ 
+│   │   ├── Repositories/
+│   │   │   ├── PatientRepository              
+│   │   │   └── ReportService.php
+│   │   │ 
+│   │   ├── helpers/                              
+│   │   │   ├── auth.php
+│   │   │   ├── response.php
+│   │   │   ├── validator.php
+│   │   │   └── logger.php
+│   │   │
+│   │   └── Validators/ 
+│   │       ├── PatientTest.php                        
+│	│       └── AuthTest.php   
+│   ├── storage/    
+│   │   ├── database.php
+│   │   │   └── error.log
+│   │   ├── temp/
+│   │   └── exports/   
+│   ├── database/                              
+│   │   ├── migrations/
+│   │   ├── seeders/
+│   │   └── backups/ 
+│   └── test/  
+│   	├── unit/
+│       │   ├── PatientTest.php
+│       │   └── AuthTest.php
+│   	├── Integration/
+│       │   └── AppointmentFlowTest.php
+│       └── README.md    
 │
 ├── .env                                      
 ├── .htaccess                                 
