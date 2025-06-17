@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS appointments (
 	appointment_type ENUM('Consultation','Follow-up','Surgery','Lab Test','Emergency') DEFAULT 'Consultation' NOT NULL,
     status ENUM('Scheduled', 'Checked-In', 'Cancelled', 'No-Show') DEFAULT 'Scheduled' NOT NULL,
     duration_minutes INT (duration_minutes > 0),
-   
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
@@ -53,11 +52,6 @@ CREATE TABLE IF NOT EXISTS appointments (
     FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE SET NULL,
 	FOREIGN KEY (created_by) REFERENCES users(id),
 	FOREIGN KEY (updated_by) REFERENCES users(id),
-	
-    INDEX idx_patient_id (patient_id),
-    INDEX idx_doctor_id (doctor_id),
-	INDEX idx_appointment_date (appointment_date),
-    CONSTRAINT check_appointment_date CHECK (appointment_date >= CURRENT_TIMESTAMP)
 );
 
 -- Table to store doctor information
@@ -65,7 +59,6 @@ CREATE TABLE IF NOT EXISTS doctors (
     doctor_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-	full_name AS (CONCAT(first_name, '' , Last_name)) STORED,
     specialization VARCHAR(100) NOT NULL,
 	department VARCHAR(100),
     email VARCHAR(150) UNIQUE NOT NULL,
@@ -81,15 +74,9 @@ CREATE TABLE IF NOT EXISTS doctors (
 	updated_by INT, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-
-    CONSTRAINT chk_phone_format CHECK (phone_number REGEXP '^[0-9]{10,15}$'),
-	CONSTRAINT chk_birthdate_valid CHECK (birthdate <= CURRENT_DATE), 
 	
 	FOREIGN KEY (created_by) REFERENCES users(id),
 	FOREIGN KEY (updated_by) REFERENCES users(id),
-	
-	INDEX idx_specialization (specialization),
-	INDEX idx_status (status) 
 );
 
 
@@ -111,8 +98,6 @@ CREATE TABLE IF NOT EXISTS medical_records (
     FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id),
 	FOREIGN KEY (created_by) REFERENCES users(id),
 	FOREIGN KEY (updated_by) REFERENCES users(id),
-    INDEX (patient_id),
-    INDEX (appointment_id),
 );
 
 -- Table to store lab tests performed on patients
@@ -139,13 +124,6 @@ CREATE TABLE IF NOT EXISTS lab_tests (
 	FOREIGN KEY (created_by) REFERENCES users(id),
 	FOREIGN KEY (updated_by) REFERENCES users(id),
 	FOREIGN KEY (reviewed_by) REFERENCES users(id),
-	
-    INDEX idx_patient_id (patient_id),
-    INDEX idx_appointment_id (appointment_id),
-	INDEX idx_test_date (test_date),
-	INDEX idx_test_status (test_status),
-	
-    CONSTRAINT uc_patient_app_test UNIQUE (patient_id, appointment_id, test_name)
 );
 
 -- Table to store insurance details of patients
@@ -202,12 +180,6 @@ CREATE TABLE IF NOT EXISTS payments (
     FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (created_by) REFERENCES users(id),
 	FOREIGN KEY (updated_by) REFERENCES users(id),
-    INDEX idx_patient_id (patient_id),
-    INDEX idx_appointment_id (appointment_id),
-    INDEX idx_payment_date (payment_date),
-	INDEX idx_payment_status (payment_status),
-	INDEX idx_method_status (payment_method, payment_status),
-    CONSTRAINT uc_patient_appointment UNIQUE (patient_id, appointment_id)
 );
 
 -- Table to store prescriptions given to patients
@@ -241,10 +213,6 @@ CREATE TABLE IF NOT EXISTS prescriptions (
 	FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id),
 	FOREIGN KEY (create_by) REFERENCES users(id),
 	FOREIGN KEY (updated_by) REFERENCES users(id),
-	
-	INDEX idx_record_id (record_id),
-	INDEX idx_medication_name (medication_name),
-	INDEX idx_status (status)
 );
 
 -- Table to store pharmacy information
