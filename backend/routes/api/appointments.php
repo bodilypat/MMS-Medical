@@ -17,6 +17,7 @@
 				sendJson(400, ['error' => 'Invalid GET action']);
 			}
 			break;
+			
 		case 'POST':
 			switch ($action) {
 				case 'create':
@@ -44,10 +45,10 @@
 			break;
 	}
 	/* FUNCTION */
-	function listAppointment($db) {
+	function listAppointments($db) {
 		$stmt = $db->query("SELECT * FROM appointments ORDER BY appointment_date DESC");
 		$appointments = $stmt->fetchAll();
-		sendaJson(200, $appointments);
+		sendJson(200, $appointments);
 	}
 	
 	function createAppointment($db) {
@@ -105,7 +106,7 @@
 			'appointment_id' => $input['appointment_id'],
 		]);
 		
-		$message = $success ? 'Appointment updatge' : 'Failed to update';
+		$message = $success ? 'Appointment updated' : 'Failed to update';
 		sendJson($success ? 200 : 500, ['message' => $message]);
 	}
 	
@@ -125,7 +126,7 @@
 		$input = json_decode(file_get_contents("php://input"), true);
 		
 		if (!isset($input['appointment_id'])) {
-				sendJson(422, ['error' => 'Appointemnt ID required']);
+				sendJson(422, ['error' => 'Appointment ID required']);
 		}
 		
 		$stmt = $db->prepare("UPDATE appointments SET status = :status, updated_by = :updated_by WHERE appointment_id = :id");
