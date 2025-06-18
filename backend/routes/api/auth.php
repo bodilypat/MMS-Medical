@@ -1,44 +1,87 @@
 <?php
+	require_once __DIR__ . '/../../storage/database.php';
+	require_once __DIR__ . '/../../helpers/response.php';
+	require_once __DIR__ . '/../../helpers/auth.php';
 	
-	require_once '../../config/database.php';
-	require_once '../../models/User.php';
-	require_once '../../helpers/response.php';
+	$method = $_SERVER['REQUEST_METHOD'];
+	$action = $_GET['action'] ?? '';
 	
-	header('Content-Type: application/json');
+	$db = Database::getConnection();
+	session_start();
 	
-	/* ensyre it's a POST request */
-	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-		return jsonResponse(['message' => 'Only POST requests allowed'], 405);
+	switch ($method) {
+		case 'POST':
+			if ($action === 'login') {
+				login($db);
+			} elseif ($action === 'logout') {
+				logout();
+			} else {
+				sendJson(400, ['error' => 'Invalid POST action']);
+			}
+			break;
+			
+		case 'GET':
+			if ($action === 'me') {
+				getCurrentUser();
+			} else {
+				sendJson(400, ['error' => 'Invalid GET action']);
+			}
+			break;
+		
+		default: 
+			sendJson(405, ['error' => 'Mothod not allowed']);
+			break;
 	}
 	
-	/* Get input data */
-	$data = json_decode(file_get_contents('php://input'), true);
-	$username = $data['username'] ?? '';
-	$password = $data['password'] ?? '';
-	
-	/* Basic Validation */
-	if (empty($username) || empty($password)) {
-		return jsonResponse(['message' => 'Username and password required'], 400);
+	/* FUNCTION DEFINITION */
+	function login($db) {
+		$input = json_decode(file_get_contents("php://input"), true);
+		
+		$usernameOrEmail = $input['username'] ?? '';
+		$password = $input['password'] ?? '';
+		
+		if (empty($usernameOrEmail) || empty($password)) {
+			sendJson(422, ['error' => 'Username/email and password are required']);
+		}
+		
+		$stmt = $db->prepare("SELECT * FROM users WHERE username = :u OR email = :u LIMIT 1");
+		$stmt->execute(['u' => $usernameOrEmail]);
+		$user = $stmt->fetch();
+		
+		if (!$user || !password_verify($password, $user['password_hash'])) {
+			sendJson(401, ['error' => 'Invalid credentials']);
+		}
+		
+		if (!$user['is_active']) {
+			sendJson(403, ['error' => 'Account is inactive']);
+		}
+		
+		/* Set session */
+		$_SESSION['user'] = [
+			'id' => $user['id'],
+			'username' => $user['username'],
+			'email' => $user['email'],
+			'role' => $user['role']
+		];
+		
+		sendJson(200, ['message' => 'Login successful', 'user' => $_SESSION['user']]);
 	}
 	
-	/* Initialize DB and user model */
-	$db = new Database();
-	$conn = $db->connect();
-	$user = new User($conn);
-	
-	/* Try to authenticate */
-	$foundUser = $user->findByUsername($username);
-	
-	if ($foundUser && password_verify($password, $foundUser['password'])) {
-		/* Create a session or return a mack token */
-		session_start();
-		$_SESSION['user_0id'] = $foundUser['id'];
-		return jsonResponse([
-			'success' => true,
-			'message' => 'Login suuccessful',
-			'token' => session_id(); // or JWT if perfered
-		]);
-	} else {
-		return jsonResponse(['success' => false,'message' => 'Invalid credentials'], 401);
+	function logout() {
+		session_unset();
+		session_destroy();
+		sendJson(200, ['message' => 'Logout successful']);
 	}
+	
+	function getCurrentUser() {
+		if (isset($_SESSION['user'])) {
+			sendJson(200, $_SESSION['user']);
+		} else {
+			sendJson(401, ['error' => 'Not authenticated']);
+		}
+	}
+	
+	
+		
+		
 	
