@@ -9,9 +9,13 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('admin', 'doctor','nurse','receptionist','lab_technician','user') DEFAULT 'user' NOT NULL,
-	is_active BOOLEAN DEFAULT TRUE,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_by INT NULL,
+    last_login TIMESTAMP NULL DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
+    FOREIGN KEY (created_by) REFERENCES users(id)
+    INDEX idx_users_email (email) 
 );
 
 -- Table to store patient information
