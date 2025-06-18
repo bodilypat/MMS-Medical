@@ -52,7 +52,7 @@
 	}
 	
 	function createAppointment($db) {
-		$input = json_decode(file_get_contents("php://input", true);
+		$input = json_decode(file_get_contents("php://input"), true);
 		
 		if (!isset($input['patient_id'], $input['doctor_id'], $input['appointment_date'], $input['reason_for_visit'])) {
 			sendJson(422, ['error' => 'Missing required fields']);
@@ -75,7 +75,7 @@
 			]);
 			
 			if ($success) {
-				sendJson(201, ['error' => 'Appointment created']);
+				sendJson(201, ['message' => 'Appointment created']);
 			} else {
 				sendJson(500, ['error' => 'Failed to create appointment']);
 			}
@@ -117,7 +117,7 @@
 			sendJson(422,['error' => 'Appointment ID required']);
 		}
 		$stmt = $db->prepare("DELETE FROM appointments WHERE appointment_id = :id");
-		$success = $stmt->execute['id' => $input['appointment_id']]);
+		$success = $stmt->execute(['id' => $input['appointment_id']]);
 		
 		sendJson($success ? 200 : 500, ['message' => $success ? 'Deleted' : 'Delete failed']);
 	}
