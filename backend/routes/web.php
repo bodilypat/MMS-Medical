@@ -1,37 +1,38 @@
 <?php
+
+	require_once __DIR__ . '/../config/constants.php';
+	require_once __DIR__ . '/../helpers/auth.php';
 	
-	use Core\Router;
-	use App\Controller\{
-		HomeController,
-		DashboardController,
-		AuthController
-	};
+	/* Simple route resolver */
+	$page = $_GET['page'] ?? 'home';
 	
-	require_once '../config/database.php';
+	session_start();
 	
-	$router = new Router();
+	/* Redirect if not logged in */
+	$publicPages = ['login'];
 	
-	/* Public Web Routes */
-	$router->get('/', [HomeController::class, 'index']); //Homepage
-	$router->get('/about', [HomeController::class, 'about']);
-	$router->get('/contact', [HomeController::class, 'contact']);
-	$router->post('/contact',  [HomeController::class, 'sendMessage']);
+	if (!in_array($page, $publicPages) && !isLoggedIn()) {
+		header('Location: /public/index.php?page=login');
+		exit;
+	}
 	
-	/* Authentication Views */
-	$router->get('/login', [AuthController::class, 'showLoginForm']);
-	$router->post('/login', [AuthController::class, 'login']);
-	$router->get('/register', [AuthController::class, 'showRegisterForm']);
-	$router->post('/register', [AuthController::class, 'register']);
-	$router->get('/logout', [AuthController::class, 'logout']);
-	
-	/* Dashboard Views */
-	$router->get('/dashboard', [DashboardController::class, 'index']);
-	
-	/* Protected Pages  */
-	$router->get('/admin/patients', [DashboardController::class, 'patients']);
-	$router->get('/admin/doctors', [DashboardController::class, 'doctors']);
-	$router->get('/admin/appointment', [DashboardController::class, 'appointments']);
-	
-	
-	return $router;
-	
+	switch ($page) {
+		case 'home':
+			include_once __DIR__ . '/../public/pages/dashboard/home.php';
+			break;
+			
+		case 'overview':
+			include_once __DIR__ .'/../public/pages/dashboard/overview.php';
+			break;
+			
+		case 'login':
+			include_once __DIR__ .'/../public/index.php';
+			break;
+			
+		case 'reports':
+			include_once __DIR__ .'/../public/pages/modules/reports/summary.php';
+			break;
+			
+		default: 
+			include_once __DIR__ .'/../public/404.php';
+	}
