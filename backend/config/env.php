@@ -1,7 +1,9 @@
 <?php
-
-	define('DB_HOST', 'localhost');
-	define('DB_NAME', 'dbmedical');
-	define('DB_USER', 'root');
-	define('DB_PASS', '');
+	return [
+		define('DB_HOST', 'localhost');
+		define('DB_NAME', 'dbmedical');
+		define('DB_USER', 'root');
+		define('DB_PASS', '');
+	];
+	
 	
