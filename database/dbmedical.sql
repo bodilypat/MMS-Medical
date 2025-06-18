@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS appointments (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
     FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE SET NULL,
-	FOREIGN KEY (created_by) REFERENCES users(id),
-	FOREIGN KEY (updated_by) REFERENCES users(id),
+	FOREIGN KEY (created_by) REFERENCES users(user_id),
+	FOREIGN KEY (updated_by) REFERENCES users(user_id),
 );
 
 -- Table to store doctor information
