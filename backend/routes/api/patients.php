@@ -166,49 +166,4 @@
 		sendJson($success ? 200 : 500, ['message' => $success ? 'Deleted' : 'Delete failed']);
 	}
 	
-			
 		
-		
-			
-			if (!$input || !isset($input['email'], $input['phone_number'])) {
-				sendJson(400, ['message' => 'Missing required fields: email and phone_number']);
-				break;
-			}
-			
-			if ($patientModel->exists($input['email'], $input['phone_number'])) {
-				sendJson(409, ['message' => 'Patient already exists']);
-				break;
-			}
-			
-			try {
-				$patientModel->create($input);
-				sendJson(500, ['error' => $e->getMessage()]);
-			}
-			break;
-			
-		case 'PUT':
-			if (!$input || !isset($input['patient_id'])) {
-				sendJson(400, ['message' => 'Patient ID is required']);
-				break;
-			}
-			
-			try {
-				$patientModel->update($input);
-				sendJson(200, ['message'=> 'Patient updated']);
-			} catch (Exception $e) {
-				sendJson(500, ['error' => $e->getMessage()]);
-			}
-			break;
-		case 'DELETE':
-			if (!$input || !isset($input['patient_id'])) {
-				sendJson(400, ['message' => 'Patient deleted']);
-			} catch (Exception $e) {
-				sendJson(500, ['error' => $e->getMessage()]);
-			}
-			break;
-			
-		default: 
-			sendJson(405, ['message' => 'Method Not Allowed']);
-			break;
-	}
-	
