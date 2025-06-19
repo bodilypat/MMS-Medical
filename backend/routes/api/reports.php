@@ -43,8 +43,9 @@
 	function getAppointmentByDoctor($db) {
 		try {
 			$sql = "
-				SELECT d.doctor_id, CANCAT(d.first_name, ' ' , d.last_name) AS doctor_name,
-                        COUNT(a.appointment_id) AS total_appointments
+				SELECT d.doctor_id, 
+    				CANCAT(d.first_name, ' ' , d.last_name) AS doctor_name,
+                        	COUNT(a.appointment_id) AS total_appointments
 				FROM doctors d 
 				LEFT JION appointments a ON d.doctor_id = a.doctor_id 
 				GROUP BY d.doctor_id
